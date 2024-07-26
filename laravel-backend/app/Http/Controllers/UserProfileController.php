@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
+
+    //Admin create profile for the users
     public function getAllProfiles() {
         $profiles = UserProfile::with('user')->get();
     
@@ -89,8 +91,7 @@ class UserProfileController extends Controller
     }
 
 
-
-
+    //Current User view and edit profile
     public function viewOwnProfile()
     {
         try {
