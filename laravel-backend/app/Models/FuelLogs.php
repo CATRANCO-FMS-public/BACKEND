@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class FuelLogs extends Model
+{
+    use HasFactory;
+
+    protected $table = "fuel_logs";
+
+    protected $primaryKey = "fuel_logs_id";
+
+    protected $fillable = [
+        "purchase_date",
+        "fuel_cost",
+        "fuel_type",
+        "fuel_quantity",
+        "odometer_km",
+        "vehicle_id",
+        "created_by",
+        "updated_by",
+        "deleted_by",
+    ];
+}

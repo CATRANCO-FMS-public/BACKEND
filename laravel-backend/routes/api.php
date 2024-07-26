@@ -33,6 +33,7 @@ Route::prefix('user')->group(function () {
 
         // User profile routes
         Route::prefix('profile')->group(function () {
+            Route::get('view', [UserProfileController::class, 'viewOwnProfile']);
             Route::patch('update', [UserProfileController::class, 'updateOwnProfile']);
         });
     });

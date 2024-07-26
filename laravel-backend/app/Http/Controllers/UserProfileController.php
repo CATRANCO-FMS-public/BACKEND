@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest\UserProfileRequest;
+use App\Http\Requests\ProfileRequest\UpdateOwnProfile;
 use App\Models\UserProfile;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -81,6 +83,50 @@ class UserProfileController extends Controller
             $profile = UserProfile::findOrFail($id);
             $profile->delete();
             return response()->json(["message" => "User Profile Deleted Successfully"], 200);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
+
+
+
+
+    public function viewOwnProfile()
+    {
+        try {
+            $user = Auth::user();
+            $profile = UserProfile::where('user_id', $user->user_id)->firstOrFail();
+    
+            $formattedProfile = [
+                'user' => [
+                    'username' => $user->username,
+                    'email' => $user->email,
+                ],
+                'profile' => $profile->only([
+                    'last_name',
+                    'first_name',
+                    'middle_initial',
+                    'license_number',
+                    'address',
+                    'date_of_birth',
+                    'contact_number',
+                    'position'
+                ]),
+            ];
+    
+            return response()->json($formattedProfile);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
+
+    public function updateOwnProfile(UpdateOwnProfile $request)
+    {
+        try {
+            $user = Auth::user();
+            $profile = UserProfile::where('user_id', $user->user_id)->firstOrFail();
+            $profile->update($request->validated());
+            return response()->json(["message" => "User Profile Updated Successfully", "profile" => $profile], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
