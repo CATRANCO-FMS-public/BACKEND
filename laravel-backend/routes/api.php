@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehicleAssignmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->group(function () {
@@ -51,6 +52,15 @@ Route::prefix('user')->group(function () {
                 Route::get('{id}', [VehicleController::class, 'getVehicleById']);
                 Route::patch('update/{id}', [VehicleController::class, 'updateVehicle']);
                 Route::delete('delete/{id}', [VehicleController::class, 'deleteVehicle']);
+            });
+
+            // Admin can create and manage vehicle assignments
+            Route::prefix('assignments')->group(function () {
+                Route::post('create', [VehicleAssignmentController::class, 'createAssignment']);
+                Route::get('all', [VehicleAssignmentController::class, 'getAllAssignments']);
+                Route::get('{id}', [VehicleAssignmentController::class, 'getAssignmentById']);
+                Route::patch('update/{id}', [VehicleAssignmentController::class, 'updateAssignment']);
+                Route::delete('delete/{id}', [VehicleAssignmentController::class, 'deleteAssignment']);
             });
 
         });

@@ -48,4 +48,23 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class, 'user_id');
     }
+
+    
+     // Define relationship with VehicleAssignment for created_by
+     public function createdAssignments()
+     {
+         return $this->hasMany(VehicleAssignment::class, 'created_by');
+     }
+ 
+     // Define relationship with VehicleAssignment for updated_by
+     public function updatedAssignments()
+     {
+         return $this->hasMany(VehicleAssignment::class, 'updated_by');
+     }
+ 
+     // Define relationship with VehicleAssignment for deleted_by
+     public function deletedAssignments()
+     {
+         return $this->hasMany(VehicleAssignment::class, 'deleted_by');
+     }
 }

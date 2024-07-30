@@ -11,7 +11,7 @@ class VehicleAssignment extends Model
 
     protected $table = "vehicle_assignment";
 
-    protected $primaryKey = "assignment_id";
+    protected $primaryKey = "vehicle_assignment_id";
 
     protected $fillable = [
         "assignment_date",
@@ -22,4 +22,34 @@ class VehicleAssignment extends Model
         "updated_by",
         "deleted_by",
     ];
+
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+
+    public function userProfile()
+    {
+        return $this->belongsTo(UserProfile::class, 'user_profile_id');
+    }
+
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+
+    public function deleter()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
 }

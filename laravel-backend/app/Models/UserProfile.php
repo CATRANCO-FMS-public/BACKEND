@@ -33,4 +33,10 @@ class UserProfile extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    
+    public function assignments()
+    {
+        return $this->hasMany(VehicleAssignment::class, 'user_profile_id');
+    }
 }

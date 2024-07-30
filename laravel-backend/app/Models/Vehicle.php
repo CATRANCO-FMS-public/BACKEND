@@ -23,4 +23,10 @@ class Vehicle extends Model
         "current_mileage",
         "vehicle_status",
     ];
+
+    
+    public function assignments()
+    {
+        return $this->hasMany(VehicleAssignment::class, 'vehicle_id');
+    }
 }
