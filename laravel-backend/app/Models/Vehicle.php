@@ -16,7 +16,6 @@ class Vehicle extends Model
     protected $fillable = [
         "vehicle_type",
         "model",
-        "status",
         "purchase_cost",
         "purchase_date",
         "license_plate",

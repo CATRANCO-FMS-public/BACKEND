@@ -6,13 +6,8 @@ use App\Http\Requests\AuthRequest\UserStoreRequest;
 use App\Http\Requests\AuthRequest\AccountUpdateRequest;
 use App\Models\User;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
-    public function getAllUsers() {
-        $users = User::all();
-        return response()->json($users);
-    }
-
     public function createUser(UserStoreRequest $request) {
         try {
             $data = $request->all();
@@ -28,6 +23,23 @@ class AdminController extends Controller
         }
     }
 
+
+    public function getAllUsers() {
+        $users = User::all();
+        return response()->json($users);
+    }
+
+    
+    public function getUserById($id) {
+        try {
+            $user = User::findOrFail($id);
+            return response()->json($user);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 404);
+        }
+    }
+
+    
     public function updateUser(AccountUpdateRequest $request, $id) {
         try {
             $user = User::findOrFail($id);
