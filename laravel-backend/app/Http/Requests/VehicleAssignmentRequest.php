@@ -28,9 +28,6 @@ class VehicleAssignmentRequest extends FormRequest
             "return_date" => "required|date_format:Y-m-d H:i:s|after:assignment_date",
             "user_profile_id" => "required|exists:user_profiles,user_profile_id|integer",
             "vehicle_id" => "required|exists:vehicles,vehicle_id|integer",
-            "created_by" => "required|exists:users,user_id|integer",
-            "updated_by" => "nullable|exists:users,user_id|integer",
-            "deleted_by" => "nullable|exists:users,user_id|integer",
         ];
     }
 }
