@@ -24,4 +24,29 @@ class FuelLogs extends Model
         "updated_by",
         "deleted_by",
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function createdFuelLogs()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedFuelLogs()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function deletedFuelLogs()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    public function dispatchLogs()
+    {
+        return $this->hasMany(DispatchLogs::class, 'fuel_logs_id');
+    }
 }

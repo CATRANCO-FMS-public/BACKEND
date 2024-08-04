@@ -24,9 +24,13 @@ class Vehicle extends Model
         "vehicle_status",
     ];
 
-    
     public function assignments()
     {
         return $this->hasMany(VehicleAssignment::class, 'vehicle_id');
+    }
+
+    public function fuelLogs()
+    {
+        return $this->hasMany(FuelLogs::class, 'vehicle_id');
     }
 }

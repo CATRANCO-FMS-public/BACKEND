@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaintenanceSchedulingRequest extends FormRequest
+class UserCreateStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class MaintenanceSchedulingRequest extends FormRequest
     public function rules()
     {
         return [
-            'maintenance_type' => 'required|in:oil_change,tire_rotation,brake_inspection,engine_check,transmission_service',
-            'maintenance_cost' => 'required|numeric|min:0',
-            'maintenance_date' => 'required|date',
-            'vehicle_id' => 'required|exists:vehicles,vehicle_id',
+            'username' => 'required|string|max:150',
+            'email' => 'required|string|email|max:150|unique:users,email',
+            'password' => 'required|string|min:8',
+            'user_profile_id' => 'required|int|exists:user_profiles,user_profile_id' // Added this line
         ];
     }
 }

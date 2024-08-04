@@ -19,4 +19,9 @@ class Dispatch extends Model
         "dispatch_status",
         "dispatch_logs_id",
     ];
+
+    public function dispatchLog() 
+    {
+        return $this->belongsTo(DispatchLogs::class, 'dispatch_logs_id');
+    }
 }

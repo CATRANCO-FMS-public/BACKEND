@@ -32,7 +32,7 @@ class UserProfileRequest extends FormRequest
             'date_of_birth' => 'required|date',
             'contact_number' => 'required|string|max:20',
             'position' => 'required|string|max:255',
-            'user_id' => 'required|integer|exists:users,user_id',
+            'user_id' => 'nullable|integer|exists:users,user_id',
         ];
     }
 }

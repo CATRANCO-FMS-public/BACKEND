@@ -36,19 +36,19 @@ class VehicleAssignment extends Model
     }
 
 
-    public function creator()
+    public function createdAssignments()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
 
-    public function updater()
+    public function updatedAssignments()
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
 
 
-    public function deleter()
+    public function deletedAssignments()
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('contact_number');
             $table->enum('position', ['Admin','Dispatcher','Driver','Conductor']);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

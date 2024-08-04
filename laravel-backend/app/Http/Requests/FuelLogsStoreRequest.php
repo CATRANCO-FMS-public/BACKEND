@@ -13,7 +13,7 @@ class FuelLogsStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true; // Allow the request to be authorized
     }
 
     /**
@@ -24,7 +24,12 @@ class FuelLogsStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'purchase_date' => 'required|date',
+            'fuel_cost' => 'required|numeric|min:0',
+            'fuel_type' => 'required|string|max:50',
+            'fuel_quantity' => 'required|numeric|min:0',
+            'odometer_km' => 'required|integer|min:0',
+            'vehicle_id' => 'required|exists:vehicles,vehicle_id',
         ];
     }
 }

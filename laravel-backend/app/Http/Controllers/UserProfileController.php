@@ -9,18 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
-
-    //Admin create profile for the users
+    // Admin create profile for the users
     public function getAllProfiles() {
         $profiles = UserProfile::with('user')->get();
-    
+
         $formattedProfiles = $profiles->map(function ($profile) {
             return [
                 'user' => [
-                    'username' => $profile->user->username,
-                    'email' => $profile->user->email,
+                    'user_id' => $profile->user->user_id ?? 'N/A',
+                    'username' => $profile->user->username ?? 'N/A',
+                    'email' => $profile->user->email ?? 'N/A',
                 ],
                 'profile' => $profile->only([
+                    'user_profile_id',
                     'last_name',
                     'first_name',
                     'middle_initial',
@@ -32,7 +33,7 @@ class UserProfileController extends Controller
                 ]),
             ];
         });
-    
+
         return response()->json($formattedProfiles);
     }
 
@@ -47,14 +48,20 @@ class UserProfileController extends Controller
     }
 
     public function getProfileById($id) {
-        $profile = UserProfile::with('user')->findOrFail($id);
-    
+        $profile = UserProfile::with('user')->find($id);
+        
+        if (!$profile) {
+            return response()->json(["message" => "Profile not found"], 404);
+        }
+
         $formattedProfile = [
             'user' => [
-                'username' => $profile->user->username,
-                'email' => $profile->user->email,
+                'user_id' => $profile->user->user_id ?? 'N/A',
+                'username' => $profile->user->username ?? 'N/A',
+                'email' => $profile->user->email ?? 'N/A',
             ],
             'profile' => $profile->only([
+                'user_profile_id',
                 'last_name',
                 'first_name',
                 'middle_initial',
@@ -65,14 +72,18 @@ class UserProfileController extends Controller
                 'position'
             ]),
         ];
-    
+
         return response()->json($formattedProfile);
     }
-    
 
     public function updateProfile(UserProfileRequest $request, $id) {
         try {
-            $profile = UserProfile::findOrFail($id);
+            $profile = UserProfile::find($id);
+            
+            if (!$profile) {
+                return response()->json(["message" => "Profile not found"], 404);
+            }
+
             $profile->update($request->validated());
             return response()->json(["message" => "User Profile Updated Successfully", "profile" => $profile], 200);
         } catch (\Exception $e) {
@@ -82,7 +93,12 @@ class UserProfileController extends Controller
 
     public function deleteProfile($id) {
         try {
-            $profile = UserProfile::findOrFail($id);
+            $profile = UserProfile::find($id);
+            
+            if (!$profile) {
+                return response()->json(["message" => "Profile not found"], 404);
+            }
+
             $profile->delete();
             return response()->json(["message" => "User Profile Deleted Successfully"], 200);
         } catch (\Exception $e) {
@@ -90,20 +106,42 @@ class UserProfileController extends Controller
         }
     }
 
-
-    //Current User view and edit profile
+    // Current User view and edit profile
     public function viewOwnProfile()
     {
         try {
             $user = Auth::user();
-            $profile = UserProfile::where('user_id', $user->user_id)->firstOrFail();
-    
+            $profile = UserProfile::where('user_id', $user->user_id)->first();
+
+            if (!$profile) {
+                return response()->json([
+                    'user' => [
+                        'user_id' => $user->user_id ?? 'N/A',
+                        'username' => $user->username ?? 'N/A',
+                        'email' => $user->email ?? 'N/A',
+                    ],
+                    'profile' => [
+                        'user_profile_id' => 'N/A',
+                        'last_name' => 'N/A',
+                        'first_name' => 'N/A',
+                        'middle_initial' => 'N/A',
+                        'license_number' => 'N/A',
+                        'address' => 'N/A',
+                        'date_of_birth' => 'N/A',
+                        'contact_number' => 'N/A',
+                        'position' => 'N/A'
+                    ]
+                ], 200);
+            }
+
             $formattedProfile = [
                 'user' => [
-                    'username' => $user->username,
-                    'email' => $user->email,
+                    'user_id' => $user->user_id ?? 'N/A',
+                    'username' => $user->username ?? 'N/A',
+                    'email' => $user->email ?? 'N/A',
                 ],
                 'profile' => $profile->only([
+                    'user_profile_id',
                     'last_name',
                     'first_name',
                     'middle_initial',
@@ -114,7 +152,7 @@ class UserProfileController extends Controller
                     'position'
                 ]),
             ];
-    
+
             return response()->json($formattedProfile);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
@@ -125,7 +163,12 @@ class UserProfileController extends Controller
     {
         try {
             $user = Auth::user();
-            $profile = UserProfile::where('user_id', $user->user_id)->firstOrFail();
+            $profile = UserProfile::where('user_id', $user->user_id)->first();
+
+            if (!$profile) {
+                return response()->json(["message" => "Profile not found"], 404);
+            }
+
             $profile->update($request->validated());
             return response()->json(["message" => "User Profile Updated Successfully", "profile" => $profile], 200);
         } catch (\Exception $e) {

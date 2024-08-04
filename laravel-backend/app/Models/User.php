@@ -38,7 +38,7 @@ class User extends Authenticatable
             'is_logged_in' => 'boolean',
         ];
     }
-    
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
@@ -49,22 +49,70 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class, 'user_id');
     }
 
+    // VehicleAssignments relationships
+    public function createdAssignments()
+    {
+        return $this->hasMany(VehicleAssignment::class, 'created_by');
+    }
+
+    public function updatedAssignments()
+    {
+        return $this->hasMany(VehicleAssignment::class, 'updated_by');
+    }
+
+    public function deletedAssignments()
+    {
+        return $this->hasMany(VehicleAssignment::class, 'deleted_by');
+    }
+
     
-     // Define relationship with VehicleAssignment for created_by
-     public function createdAssignments()
-     {
-         return $this->hasMany(VehicleAssignment::class, 'created_by');
-     }
- 
-     // Define relationship with VehicleAssignment for updated_by
-     public function updatedAssignments()
-     {
-         return $this->hasMany(VehicleAssignment::class, 'updated_by');
-     }
- 
-     // Define relationship with VehicleAssignment for deleted_by
-     public function deletedAssignments()
-     {
-         return $this->hasMany(VehicleAssignment::class, 'deleted_by');
-     }
+    // DispatchLogs relationships
+    public function createdDispatchLogs()
+    {
+        return $this->hasMany(DispatchLogs::class, 'created_by');
+    }
+
+    public function updatedDispatchLogs()
+    {
+        return $this->hasMany(DispatchLogs::class, 'updated_by');
+    }
+
+    public function deletedDispatchLogs()
+    {
+        return $this->hasMany(DispatchLogs::class, 'deleted_by');
+    }
+
+
+    // FuelLogs relationships
+    public function createdFuelLogs()
+    {
+        return $this->hasMany(FuelLogs::class, 'created_by');
+    }
+
+    public function updatedFuelLogs()
+    {
+        return $this->hasMany(FuelLogs::class, 'updated_by');
+    }
+
+    public function deletedFuelLogs()
+    {
+        return $this->hasMany(FuelLogs::class, 'deleted_by');
+    }
+
+
+    // MaintenanceScheduling relationships
+    public function createdMaintenanceSchedules()
+    {
+        return $this->hasMany(MaintenanceScheduling::class, 'created_by');
+    }
+
+    public function updatedMaintenanceSchedules()
+    {
+        return $this->hasMany(MaintenanceScheduling::class, 'updated_by');
+    }
+
+    public function deletedMaintenanceSchedules()
+    {
+        return $this->hasMany(MaintenanceScheduling::class, 'deleted_by');
+    }
 }
