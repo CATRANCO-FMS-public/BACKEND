@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleAssignmentController;
 use App\Http\Controllers\FuelLogsController;
 use App\Http\Controllers\DispatchLogsController;
+use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\MaintenanceSchedulingController;
 use Illuminate\Support\Facades\Route;
 
@@ -102,10 +102,12 @@ Route::prefix('user')->group(function () {
 
             // Dispatcher can create and manage dispatch logs
             Route::prefix('dispatches')->group(function () {
-                Route::post('create', [DispatchController::class, 'createDispatch']);
+                Route::post('start', [DispatchController::class, 'startDispatch']);
                 Route::get('all', [DispatchController::class, 'getAllDispatches']);
                 Route::get('{id}', [DispatchController::class, 'getDispatchById']);
                 Route::patch('update/{id}', [DispatchController::class, 'updateDispatch']);
+                Route::patch('end/{id}', [DispatchController::class, 'endDispatch']);
+                Route::patch('cancel/{id}', [DispatchController::class, 'cancelDispatch']);
                 Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
             });
 

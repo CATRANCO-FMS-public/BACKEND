@@ -26,9 +26,7 @@ class DispatchStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time', // Ensure end_time is after start_time
-            'dispatch_status' => 'required|in:in_progress,completed,cancelled',
+            'end_time' => 'nullable|date|after:start_time',
             'dispatch_logs_id' => 'required|exists:dispatch_logs,dispatch_logs_id',
         ];
     }
