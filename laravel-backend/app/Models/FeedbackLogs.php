@@ -20,4 +20,8 @@ class FeedbackLogs extends Model
         "created_date",
         "vehicle_id",
     ];
+
+    public function vehicle() {
+        return $this ->belongsTo(Vehicle::class, 'vehicle_id');
+    }
 }

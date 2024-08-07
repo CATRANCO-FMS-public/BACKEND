@@ -33,4 +33,8 @@ class Vehicle extends Model
     {
         return $this->hasMany(FuelLogs::class, 'vehicle_id');
     }
+
+    public function feedback() {
+        return $this->hasMany(FeedbackLogs::class,'vehicle_id');
+    }
 }

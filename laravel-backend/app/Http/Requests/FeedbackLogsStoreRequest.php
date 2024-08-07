@@ -13,7 +13,7 @@ class FeedbackLogsStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class FeedbackLogsStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'phone_number' => 'required|string|max:20',
+            'rating' => 'required|integer|min:1|max:5',
+            'comments' => 'nullable|string',
+            'vehicle_id' => 'required|exists:vehicles,vehicle_id',
         ];
     }
 }

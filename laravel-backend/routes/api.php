@@ -9,6 +9,8 @@ use App\Http\Controllers\FuelLogsController;
 use App\Http\Controllers\DispatchLogsController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\MaintenanceSchedulingController;
+use App\Http\Controllers\OTPController;
+use App\Http\Controllers\FeedbackLogsController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('user')->group(function () {
@@ -85,6 +87,27 @@ Route::prefix('user')->group(function () {
                 Route::delete('delete/{id}', [VehicleAssignmentController::class, 'deleteAssignment']);
             });
             
+            // Admin can view and delete dispatch logs
+            Route::prefix('dispatch_logs')->group(function () {
+                Route::get('all', [DispatchLogsController::class, 'getAllDispatchLogs']);
+                Route::get('{id}', [DispatchLogsController::class, 'getDispatchLogById']);
+                Route::delete('delete/{id}', [DispatchLogsController::class, 'deleteDispatchLog']);
+            });
+
+            // Admin can view and delete dispatch
+            Route::prefix('dispatches')->group(function () {
+                Route::get('all', [DispatchController::class, 'getAllDispatches']);
+                Route::get('{id}', [DispatchController::class, 'getDispatchById']);
+                Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
+            });
+
+            // Admin can view and delete dispatch
+            Route::prefix('feedbacks')->group(function () {
+                Route::get('all', [FeedbackLogsController::class, 'getAllFeedbackLogs']);
+                Route::get('{id}', [FeedbackLogsController::class, 'getFeedbackLogById']);
+                Route::delete('delete/{id}', [FeedbackLogsController::class, 'deleteFeedbackLog']);
+            });
+
         });
 
 
@@ -114,4 +137,12 @@ Route::prefix('user')->group(function () {
         });
 
     }); 
+
+    // OTP routes (public)
+    Route::post('generate-otp', [OTPController::class, 'generateOTP']);
+    Route::post('verify-otp', [OTPController::class, 'verifyOTP']);
+    Route::get('show-otp', [OTPController::class, 'showOTP']);
+
+    // Feedback logs routes (public)
+    Route::post('submit-feedback', [FeedbackLogsController::class, 'createFeedbackLog']);
 });
