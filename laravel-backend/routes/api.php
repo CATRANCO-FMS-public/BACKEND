@@ -135,7 +135,12 @@ Route::prefix('user')->group(function () {
             });
 
         });
-
+        
+        // Driver Routes
+        Route::middleware(['driver'])->prefix('driver')->group(function () {
+            Route::post('updateReturn', [VehicleAssignmentController::class, 'updateReturnDate']);
+        });        
+        
     }); 
 
     // OTP routes (public)

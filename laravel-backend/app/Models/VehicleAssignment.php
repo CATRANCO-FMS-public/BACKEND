@@ -52,4 +52,9 @@ class VehicleAssignment extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+
+    public function dispatchLogs()
+    {
+        return $this->belongsToMany(DispatchLogs::class, 'dispatch_log_vehicle_assignment', 'vehicle_assignment_id', 'dispatch_logs_id')->using(DispatchLogVehicleAssignment::class);
+    }
 }

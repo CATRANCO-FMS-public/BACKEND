@@ -11,7 +11,7 @@ class DispatchLogsController extends Controller
 {
     // Get all dispatch logs
     public function getAllDispatchLogs() {
-        $dispatchlogs = DispatchLogs::with(['fuelLogs', 'vehicleAssignment.vehicle', 'vehicleAssignment.userProfile'])->get();
+        $dispatchlogs = DispatchLogs::with(['fuelLogs', 'vehicleAssignments.vehicle', 'vehicleAssignments.userProfile'])->get();
         return response()->json($dispatchlogs);
     }
 
@@ -20,17 +20,29 @@ class DispatchLogsController extends Controller
         try {
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
+    
+            // Remove vehicle_assignment_id from $data
+            unset($data['vehicle_assignment_id']);
+    
+            // Create the dispatch log
             $dispatchlog = DispatchLogs::create($data);
+    
+            // Attach the vehicle assignments
+            if ($request->has('vehicle_assignment_ids')) {
+                $dispatchlog->vehicleAssignments()->attach($request->input('vehicle_assignment_ids'));
+            }
+    
             return response()->json(["message" => "Dispatch Log Successfully Created", "dispatchlog" => $dispatchlog], 201);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
+    
 
     // Get a specific dispatch log by ID
     public function getDispatchLogById($id) {
         try {
-            $dispatchlog = DispatchLogs::with(['fuelLogs', 'vehicleAssignment.vehicle', 'vehicleAssignment.userProfile'])->findOrFail($id);
+            $dispatchlog = DispatchLogs::with(['fuelLogs', 'vehicleAssignments.vehicle', 'vehicleAssignments.userProfile'])->findOrFail($id);
             return response()->json($dispatchlog);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 404);
@@ -40,11 +52,20 @@ class DispatchLogsController extends Controller
     // Update a specific dispatch log by ID
     public function updateDispatchLog(DispatchLogsStoreRequest $request, $id) {
         try {
-            $dispatchlog = DispatchLogs::with(['fuelLogs', 'vehicleAssignment.vehicle', 'vehicleAssignment.userProfile'])->findOrFail($id);
+            $dispatchlog = DispatchLogs::findOrFail($id);
             $data = $request->validated();
             $data['updated_by'] = Auth::id(); // Automatically set updated_by
-            $dispatchlog->update($data);
-            return response()->json(["message" => "Dispatch Log Updated Successfully", "log" => $dispatchlog], 200);
+            $dispatchlog->update([
+                'fuel_logs_id' => $data['fuel_logs_id'],
+                'updated_by' => $data['updated_by']
+            ]);
+
+            // Sync vehicle assignments
+            if (isset($data['vehicle_assignment_ids'])) {
+                $dispatchlog->vehicleAssignments()->sync($data['vehicle_assignment_ids']);
+            }
+
+            return response()->json(["message" => "Dispatch Log Updated Successfully", "dispatchlog" => $dispatchlog], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
@@ -53,7 +74,7 @@ class DispatchLogsController extends Controller
     // Delete a specific dispatch log by ID
     public function deleteDispatchLog($id) {
         try {
-            $dispatchlog = DispatchLogs::with(['fuelLogs', 'vehicleAssignment.vehicle', 'vehicleAssignment.userProfile'])->findOrFail($id);
+            $dispatchlog = DispatchLogs::findOrFail($id);
             $dispatchlog->deleted_by = Auth::id(); // Automatically set deleted_by
             $dispatchlog->save();
             $dispatchlog->delete();
@@ -63,3 +84,4 @@ class DispatchLogsController extends Controller
         }
     }
 }
+

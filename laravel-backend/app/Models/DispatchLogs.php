@@ -14,16 +14,15 @@ class DispatchLogs extends Model
     protected $primaryKey = "dispatch_logs_id";
 
     protected $fillable = [
-        "vehicle_assignment_id",
         "fuel_logs_id",
         "created_by",
         "updated_by",
         "deleted_by",
     ];
 
-    public function vehicleAssignment()
+    public function vehicleAssignments()
     {
-        return $this->belongsTo(VehicleAssignment::class, 'vehicle_assignment_id');
+        return $this->belongsToMany(VehicleAssignment::class, 'dispatch_log_vehicle_assignment', 'dispatch_logs_id', 'vehicle_assignment_id')->using(DispatchLogVehicleAssignment::class);
     }
 
     public function fuelLogs()

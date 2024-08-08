@@ -13,7 +13,7 @@ class DispatchLogsStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true; // Allow the request to be authorized
+        return true;
     }
 
     /**
@@ -24,8 +24,10 @@ class DispatchLogsStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_assignment_id' => 'required|exists:vehicle_assignment,vehicle_assignment_id',
+            'vehicle_assignment_ids' => 'required|array',
+            'vehicle_assignment_ids.*' => 'exists:vehicle_assignment,vehicle_assignment_id',
             'fuel_logs_id' => 'required|exists:fuel_logs,fuel_logs_id',
         ];
     }
 }
+

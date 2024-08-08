@@ -58,20 +58,35 @@ class VehicleAssignmentController extends Controller
     }
 
     // Update only the return date of a specific vehicle assignment by ID
-    public function updateReturnDate(Request $request, $id) {
+    public function updateReturnDate() {
         try {
-            $assignment = VehicleAssignment::findOrFail($id);
-            $request->validate([
-                'return_date' => 'required|date_format:Y-m-d H:i:s|after:assignment_date'
-            ]);
-            $data['return_date'] = $request->input('return_date');
-            $data['updated_by'] = Auth::id(); // Automatically set updated_by
+            // Get the logged-in user's profile ID
+            $userProfileId = Auth::user()->profile->user_profile_id;
+            
+            // Find the active vehicle assignment for the logged-in user's profile
+            $assignment = VehicleAssignment::where('user_profile_id', $userProfileId)
+                                           ->whereNull('return_date') // Assumes return_date being null means the vehicle hasn't been returned
+                                           ->first();
+            
+            if (!$assignment) {
+                return response()->json(["message" => "No active vehicle assignment found for the logged-in user"], 404);
+            }
+            
+            // Automatically set return_date to the current date and time
+            $data = [
+                'return_date' => now(), // Set return_date to the current date and time
+                'updated_by' => Auth::id() // Automatically set updated_by
+            ];
+            
+            // Update the assignment with the new return_date and updated_by
             $assignment->update($data);
+            
             return response()->json(["message" => "Return Date Updated Successfully", "assignment" => $assignment], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
+    
 
     // Delete a specific vehicle assignment by ID
     public function deleteAssignment($id) {
