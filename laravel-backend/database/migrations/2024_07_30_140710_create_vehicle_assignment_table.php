@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -15,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('vehicle_assignment', function (Blueprint $table) {
             $table->id('vehicle_assignment_id');
-            $table->dateTime('assignment_date');
-            $table->dateTime('return_date');
+            $table->dateTime('assignment_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('return_date')->nullable();
             $table->unsignedBigInteger('user_profile_id');
             $table->unsignedBigInteger('vehicle_id');
             $table->unsignedBigInteger('created_by');
