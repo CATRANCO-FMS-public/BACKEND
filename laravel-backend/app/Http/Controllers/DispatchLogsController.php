@@ -20,16 +20,15 @@ class DispatchLogsController extends Controller
         try {
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
-    
-            // Remove vehicle_assignment_id from $data
-            unset($data['vehicle_assignment_id']);
-    
-            // Create the dispatch log
             $dispatchlog = DispatchLogs::create($data);
     
-            // Attach the vehicle assignments
-            if ($request->has('vehicle_assignment_ids')) {
-                $dispatchlog->vehicleAssignments()->attach($request->input('vehicle_assignment_ids'));
+            // Attach vehicle assignments with timestamps
+            if (isset($data['vehicle_assignment_ids'])) {
+                $timestamp = now(); // Get the current timestamp
+                $dispatchlog->vehicleAssignments()->attach(
+                    $data['vehicle_assignment_ids'], 
+                    ['created_at' => $timestamp, 'updated_at' => $timestamp]
+                );
             }
     
             return response()->json(["message" => "Dispatch Log Successfully Created", "dispatchlog" => $dispatchlog], 201);

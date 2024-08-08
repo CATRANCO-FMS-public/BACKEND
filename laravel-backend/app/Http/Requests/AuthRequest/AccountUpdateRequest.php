@@ -24,7 +24,7 @@ class AccountUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string|max:150',
+            'username' => 'nullable|string|max:150',
             'password' => 'nullable|string|min:8',
         ];
     }
