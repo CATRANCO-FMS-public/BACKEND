@@ -78,7 +78,7 @@
 						"bearer": [
 							{
 								"key": "token",
-								"value": "1|V1SyBcSD4EqXzbD9W6IQcdmljhx8HpHrfMWO3FDy00b02dc2",
+								"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
 								"type": "string"
 							}
 						]
@@ -113,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"driver@gmail.com\",\n  \"password\": \"driver123\"\n}",
+							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"admin123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "10|dFO0bqKHATaYE7MH4GfzcwuFwmvZypJ9P5cMOgtE5adce4d9",
+									"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
 									"type": "string"
 								}
 							]
@@ -181,7 +181,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "11|VKduvyqsRtF42w5U8hhzDdV6bBaudbn7Aw3tvzs3dd123043",
+									"value": "5|O2F9BoGNU1QFb8s0OmjNXSSRmkLLDKqvyJli2z6be15ec290",
 									"type": "string"
 								}
 							]
@@ -215,7 +215,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|V1SyBcSD4EqXzbD9W6IQcdmljhx8HpHrfMWO3FDy00b02dc2",
+									"value": "1|gwOH0WMuZDDTvyQsTrRLWk0zV4ttQc4ELbhYnwkzb1e7ee4d",
 									"type": "string"
 								}
 							]
@@ -231,8 +231,7 @@
 								},
 								{
 									"key": "password",
-									"value": "",
-									"disabled": true
+									"value": "admin123"
 								}
 							]
 						},
@@ -303,7 +302,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"last_name\": \"Callo\",\n  \"first_name\": \"Ian\",\n  \"middle_initial\": \"A\",\n  \"license_number\": \"123123\",\n  \"address\": \"Balulang\",\n  \"date_of_birth\": \"1990-01-01\",\n  \"contact_number\": \"123-456-7890\",\n  \"position\": \"driver\"\n}\n",
+									"raw": "{\n  \"last_name\": \"Llanera\",\n  \"first_name\": \"J10\",\n  \"middle_initial\": \"A\",\n  \"license_number\": \"222222\",\n  \"address\": \"Iponan\",\n  \"date_of_birth\": \"1990-01-01\",\n  \"contact_number\": \"123-456-7890\",\n  \"position\": \"conductor\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -474,21 +473,11 @@
 						{
 							"name": "createUser",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "8|ywmCkLFAQrx0qTWxYFx4K90UNWUwciMCjS8MSgkNb0948825",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"username\": \"driver\",\r\n  \"email\": \"driver@gmail.com\",\r\n  \"password\": \"driver123\",\r\n  \"user_profile_id\": 6\r\n}",
+									"raw": "{\r\n  \"username\": \"conductor\",\r\n  \"email\": \"conductor@gmail.com\",\r\n  \"password\": \"conductor\",\r\n  \"user_profile_id\": 4\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -548,7 +537,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/users/2",
+									"raw": "http://127.0.0.1:8000/api/user/admin/users/4",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -562,7 +551,7 @@
 										"user",
 										"admin",
 										"users",
-										"2"
+										"4"
 									]
 								}
 							},
@@ -806,7 +795,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_profile_id\": 6,\n    \"vehicle_id\": 1\n}\n",
+									"raw": "{\n    \"user_profile_id\": 4,\n    \"vehicle_id\": 1\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -866,7 +855,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/2",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -880,7 +869,7 @@
 										"user",
 										"admin",
 										"assignments",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1336,7 +1325,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatch_logs/3",
+									"raw": "http://127.0.0.1:8000/api/user/admin/dispatch_logs/2",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1350,7 +1339,7 @@
 										"user",
 										"admin",
 										"dispatch_logs",
-										"3"
+										"2"
 									]
 								}
 							},
@@ -1429,7 +1418,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatches/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/dispatches/2",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1443,7 +1432,7 @@
 										"user",
 										"admin",
 										"dispatches",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1568,7 +1557,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "10|dFO0bqKHATaYE7MH4GfzcwuFwmvZypJ9P5cMOgtE5adce4d9",
+						"value": "5|O2F9BoGNU1QFb8s0OmjNXSSRmkLLDKqvyJli2z6be15ec290",
 						"type": "string"
 					}
 				]
@@ -1669,7 +1658,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/1",
+									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/2",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1683,7 +1672,7 @@
 										"user",
 										"dispatcher",
 										"dispatch-logs",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1784,7 +1773,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"dispatch_logs_id\": 1\n}",
+									"raw": "{\n  \"dispatch_logs_id\": 2\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1968,7 +1957,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "6|27tZ9yBOAUWCDPIkOIF8qzeLu2YjurKKdHc9ed2L8fbe6550",
+						"value": "3|7rtpSSStP7Shm86AfSYZPltSW5OrM1s9DTPmSgDU309b1b06",
 						"type": "string"
 					}
 				]
@@ -2035,7 +2024,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "11|VKduvyqsRtF42w5U8hhzDdV6bBaudbn7Aw3tvzs3dd123043",
+						"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
 						"type": "string"
 					}
 				]
@@ -2175,7 +2164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"196285\"\r\n}",
+							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"725972\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
