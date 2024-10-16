@@ -11,17 +11,25 @@ class Vehicle extends Model
 
     protected $table = "vehicles";
 
+    // If vehicle_id is not auto-incrementing
+    public $incrementing = false;
+
     protected $primaryKey = "vehicle_id";
 
     protected $fillable = [
-        "vehicle_type",
-        "model",
-        "purchase_cost",
-        "purchase_date",
-        "license_plate",
-        "capacity",
-        "current_mileage",
-        "vehicle_status",
+        "vehicle_id",
+        "or_id",
+        "cr_id",
+        "plate_number",
+        "engine_number",
+        "chasis_number",
+        "third_pli",
+        "third_pli_policy_no",
+        "third_pli_validity",
+        "ci",
+        "ci_validity",
+        "date_purchased",
+        "supplier",
     ];
 
     public function assignments()

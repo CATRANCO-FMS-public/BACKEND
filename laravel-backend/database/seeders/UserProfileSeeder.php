@@ -16,17 +16,19 @@ class UserProfileSeeder extends Seeder
     public function run()
     {
         // Insert user profile for admin user
-        DB::table('user_profiles')->insert([
+        DB::table('user_profile')->insert([
             [
-                'user_id' => 1,
                 'last_name' => 'Admin',
                 'first_name' => 'Admin',
                 'middle_initial' => null,
                 'license_number' => null,
                 'address' => 'Admin Address',
                 'date_of_birth' => '1980-01-01',
+                'sex' => 'Male',
                 'contact_number' => '1234567890',
-                'position' => 'Admin',
+                'contact_person' => 'John Doe',
+                'contact_person_number' => '0987654321', 
+                'user_profile_image' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

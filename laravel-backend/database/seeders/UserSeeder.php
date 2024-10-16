@@ -22,10 +22,11 @@ class UserSeeder extends Seeder
             [
                 'username'=> 'admin',
                 'email'=> 'admin@gmail.com',
-                'password'=> Hash::make('admin'),
+                'password'=> Hash::make('admin123'),
                 'status' => 1,
                 'is_logged_in' => 0,
                 'role_id'=> 1,
+                'user_profile_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

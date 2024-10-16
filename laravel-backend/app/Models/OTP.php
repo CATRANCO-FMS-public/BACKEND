@@ -17,8 +17,8 @@ class OTP extends Model
         'phone_number',
         'otp',
         'is_verified',
-        'expires_at', // Add this line
+        'expires_at',
     ];
 
-    protected $dates = ['expires_at']; // Add this line for date handling
+    protected $dates = ['expires_at'];
 }

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicle_assignment', function (Blueprint $table) {
-            $table->id('vehicle_assignment_id');
-            $table->dateTime('assignment_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->dateTime('return_date')->nullable();
-            $table->unsignedBigInteger('user_profile_id');
-            $table->unsignedBigInteger('vehicle_id');
+        Schema::create('fuel_logs', function (Blueprint $table) {
+            $table->id('fuel_logs_id');
+            $table->dateTime( 'purchase_date');
+            $table->integer('distance_travelled');
+            $table->integer('odometer_km');
+            $table->enum('fuel_type', ['unleaded', 'premium', 'diesel']);
+            $table->decimal('fuel_quantity', 10, 2);
+            $table->decimal('fuel_price', 10, 2); 
+            $table->decimal('total_cost', 10, 2); 
+            $table->string('vehicle_id', 10);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -27,7 +30,6 @@ return new class extends Migration
             $table->softDeletes();
 
             // Foreign key constraints
-            $table->foreign('user_profile_id')->references('user_profile_id')->on('user_profiles')->onDelete('cascade');
             $table->foreign('vehicle_id')->references('vehicle_id')->on('vehicles')->onDelete('cascade');
             $table->foreign('created_by')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('user_id')->on('users')->onDelete('set null');
@@ -42,13 +44,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vehicle_assignment', function (Blueprint $table) {
-            $table->dropForeign(['user_profile_id']);
+        Schema::table('fuel_logs', function (Blueprint $table) {
             $table->dropForeign(['vehicle_id']);
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
         });
-        Schema::dropIfExists('vehicle_assignment');
+        Schema::dropIfExists('fuel_logs');
     }
 };

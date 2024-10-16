@@ -30,9 +30,12 @@ class UserProfileRequest extends FormRequest
             'license_number' => 'nullable|string|max:255',
             'address' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
+            'sex' => 'required|in:Male,Female', 
             'contact_number' => 'required|string|max:20',
-            'position' => 'required|string|max:255',
-            'user_id' => 'nullable|integer|exists:users,user_id',
+            'contact_person' => 'nullable|string|max:255',
+            'contact_person_number' => 'nullable|string|max:20',
+            'user_profile_image' => 'nullable|image|max:2048',
+            'position' => 'required|in:operation_manager,dispatcher,driver,passenger_assistant_officer',
         ];
     }
 }

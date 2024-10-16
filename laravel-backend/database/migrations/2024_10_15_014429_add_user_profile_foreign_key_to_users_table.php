@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('dispatch', function (Blueprint $table) {
-            $table->dateTime('end_time')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('user_profile_id')
+              ->references('user_profile_id')
+              ->on('user_profile')
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
         });
     }
 
@@ -25,8 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('dispatch', function (Blueprint $table) {
-            $table->dateTime('end_time')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['user_profile_id']);
         });
     }
 };

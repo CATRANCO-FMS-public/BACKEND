@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('maintenance_scheduling', function (Blueprint $table) {
-            $table->id('maintenance_scheduling_id');
-            $table->enum('maintenance_type', ['oil_change', 'tire_rotation', 'brake_inspection', 'engine_check', 'transmission_service']);
-            $table->decimal('maintenance_cost', 10, 2);
-            $table->dateTime('maintenance_date');
-            $table->unsignedBigInteger('vehicle_id');
+        Schema::create('vehicle_assignment', function (Blueprint $table) {
+            $table->id('vehicle_assignment_id');
+            $table->string('vehicle_id', length: 10);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -40,12 +37,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('maintenance_scheduling', function (Blueprint $table) {
+        Schema::table('vehicle_assignment', function (Blueprint $table) {
             $table->dropForeign(['vehicle_id']);
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
         });
-        Schema::dropIfExists('maintenance_scheduling');
+        Schema::dropIfExists('vehicle_assignment');
     }
 };

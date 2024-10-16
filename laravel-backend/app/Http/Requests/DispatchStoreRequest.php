@@ -27,7 +27,8 @@ class DispatchStoreRequest extends FormRequest
     {
         return [
             'end_time' => 'nullable|date|after:start_time',
-            'dispatch_logs_id' => 'required|exists:dispatch_logs,dispatch_logs_id',
+            'fuel_logs_id' => 'required|exists:fuel_logs,fuel_logs_id',
+            'vehicle_assignment_id' => 'required|exists:vehicle_assignment,vehicle_assignment_id',
         ];
     }
 }

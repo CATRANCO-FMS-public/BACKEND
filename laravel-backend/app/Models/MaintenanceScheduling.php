@@ -18,6 +18,7 @@ class MaintenanceScheduling extends Model
         "maintenance_type",
         "maintenance_cost",
         "maintenance_date",
+        "maintenance_status",
         "vehicle_id",
         "created_by",
         "updated_by",

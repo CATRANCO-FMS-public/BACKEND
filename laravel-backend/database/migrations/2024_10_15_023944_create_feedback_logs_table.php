@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('rating');
             $table->text('comments');
             $table->dateTime('created_date');
-            $table->unsignedBigInteger('vehicle_id');
+            $table->string('vehicle_id', 10);
             $table->timestamps();
 
             $table->foreign('vehicle_id')->references('vehicle_id')->on('vehicles')->onDelete('cascade');

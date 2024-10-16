@@ -14,9 +14,6 @@ class VehicleAssignment extends Model
     protected $primaryKey = "vehicle_assignment_id";
 
     protected $fillable = [
-        "assignment_date",
-        "return_date",
-        "user_profile_id",
         "vehicle_id",
         "created_by",
         "updated_by",
@@ -28,13 +25,6 @@ class VehicleAssignment extends Model
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
-
-
-    public function userProfile()
-    {
-        return $this->belongsTo(UserProfile::class, 'user_profile_id');
-    }
-
 
     public function createdAssignments()
     {
@@ -53,8 +43,8 @@ class VehicleAssignment extends Model
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-    public function dispatchLogs()
+    public function userProfiles()
     {
-        return $this->belongsToMany(DispatchLogs::class, 'dispatch_log_vehicle_assignment', 'vehicle_assignment_id', 'dispatch_logs_id')->using(DispatchLogVehicleAssignment::class);
+        return $this->belongsToMany(UserProfile::class, 'user_profile_vehicle_assignment', 'vehicle_assignment_id', 'user_profile_id')->using(UserProfileVehicleAssignment::class);
     }
 }

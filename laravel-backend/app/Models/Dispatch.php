@@ -17,11 +17,35 @@ class Dispatch extends Model
         "start_time",
         "end_time",
         "dispatch_status",
-        "dispatch_logs_id",
+        "fuel_logs_id",
+        "vehicle_assignment_id",
+        "created_by",
+        "updated_by",
+        "deleted_by",
     ];
-
-    public function dispatchLog() 
+    
+    public function fuelLogs()
     {
-        return $this->belongsTo(DispatchLogs::class, 'dispatch_logs_id');
+        return $this->belongsTo(FuelLogs::class, 'fuel_logs_id');
+    }
+
+    public function vehicleAssignments()
+    {
+        return $this->belongsTo(VehicleAssignment::class, 'vehicle_assignment_id');
+    }
+
+    public function createdDispatch()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedDispatch()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function deletedDispatch()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 }

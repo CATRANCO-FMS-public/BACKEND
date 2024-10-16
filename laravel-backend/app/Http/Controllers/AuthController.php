@@ -36,7 +36,7 @@ class AuthController extends Controller
 
     public function loginAccount(LoginRequest $request) {
         try {
-            $credentials = $request->only(["email", "password"]);
+            $credentials = $request->only(["username", "password"]);
     
             if (!Auth::attempt($credentials)) {
                 return response()->json(["message" => "Account doesn't exist"], 404);

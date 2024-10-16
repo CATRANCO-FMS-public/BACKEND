@@ -22,6 +22,7 @@ class User extends Authenticatable
         'password',
         'status',
         'is_logged_in',
+        'user_profile_id',
         'role_id',
     ];
 
@@ -46,7 +47,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(UserProfile::class, 'user_id');
+        return $this->belongsTo(UserProfile::class, 'user_profile_id');
     }
 
     // VehicleAssignments relationships
@@ -64,24 +65,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(VehicleAssignment::class, 'deleted_by');
     }
-
-    
-    // DispatchLogs relationships
-    public function createdDispatchLogs()
-    {
-        return $this->hasMany(DispatchLogs::class, 'created_by');
-    }
-
-    public function updatedDispatchLogs()
-    {
-        return $this->hasMany(DispatchLogs::class, 'updated_by');
-    }
-
-    public function deletedDispatchLogs()
-    {
-        return $this->hasMany(DispatchLogs::class, 'deleted_by');
-    }
-
 
     // FuelLogs relationships
     public function createdFuelLogs()
@@ -114,5 +97,21 @@ class User extends Authenticatable
     public function deletedMaintenanceSchedules()
     {
         return $this->hasMany(MaintenanceScheduling::class, 'deleted_by');
+    }
+
+    // Dispatch relationships
+    public function createDispatch()
+    {
+        return $this->hasMany(Dispatch::class, 'created_by');
+    }
+
+    public function updateDispatch()
+    {
+        return $this->hasMany(Dispatch::class, 'updated_by');
+    }
+
+    public function deleteDispatch()
+    {
+        return $this->hasMany(Dispatch::class, 'deleted_by');
     }
 }

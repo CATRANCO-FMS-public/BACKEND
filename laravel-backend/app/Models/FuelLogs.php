@@ -15,10 +15,12 @@ class FuelLogs extends Model
 
     protected $fillable = [
         "purchase_date",
-        "fuel_cost",
-        "fuel_type",
+        "distance_travelled", 
+        "odometer_km",        
+        "fuel_type",          
         "fuel_quantity",
-        "odometer_km",
+        "fuel_price",
+        "total_cost",         
         "vehicle_id",
         "created_by",
         "updated_by",
@@ -28,6 +30,11 @@ class FuelLogs extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function dispatch()
+    {
+        return $this->hasMany(Dispatch::class, 'fuel_logs_id');
     }
 
     public function createdFuelLogs()
@@ -45,8 +52,4 @@ class FuelLogs extends Model
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-    public function dispatchLogs()
-    {
-        return $this->hasMany(DispatchLogs::class, 'fuel_logs_id');
-    }
 }

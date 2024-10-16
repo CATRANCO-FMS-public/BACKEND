@@ -9,7 +9,7 @@ class UserProfile extends Model
 {
     use HasFactory;
 
-    protected $table = "user_profiles";
+    protected $table = "user_profile";
 
     protected $primaryKey = "user_profile_id";
 
@@ -20,9 +20,12 @@ class UserProfile extends Model
         "license_number",
         "address",
         "date_of_birth",
+        "sex",
         "contact_number",
+        "contact_person",
+        "contact_person_number",
+        "user_profile_image",
         "position",
-        "user_id",
     ];
 
     protected $casts = [
@@ -31,12 +34,17 @@ class UserProfile extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasOne(User::class, 'user_profile_id');
     }
 
     
     public function assignments()
     {
         return $this->hasMany(VehicleAssignment::class, 'user_profile_id');
+    }
+
+    public function vehicleAssignments()
+    {
+        return $this->belongsToMany(VehicleAssignment::class, 'user_profile_vehicle_assignment', 'user_profile_id', 'vehicle_assignment_id')->using(UserProfileVehicleAssignment::class);
     }
 }

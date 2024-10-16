@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VehicleStoreRequest;
+use App\Http\Requests\VehicleUpdateRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class VehicleController extends Controller
     }
 
     // Update a specific vehicle by ID
-    public function updateVehicle(VehicleStoreRequest $request, $id) {
+    public function updateVehicle(VehicleUpdateRequest $request, $id) {
         try {
             $vehicle = Vehicle::findOrFail($id);
             $vehicle->update($request->validated());

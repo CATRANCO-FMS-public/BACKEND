@@ -18,8 +18,8 @@ class RoleSeeder extends Seeder
          // Insert roles
          DB::table('roles')->insert([
             [
-                "role"=> "admin",
-                "description"=> "fleet manager",
+                "role"=> "operation_manager",
+                "description"=> "operation manager",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -36,8 +36,8 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                "role"=> "conductor",
-                "description"=> "mini-bus conductor",
+                "role"=> "passenger_assistant_officer",
+                "description"=> "passenger assistant officer",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

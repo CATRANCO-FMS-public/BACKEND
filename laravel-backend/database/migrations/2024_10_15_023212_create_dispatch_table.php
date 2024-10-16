@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fuel_logs', function (Blueprint $table) {
-            $table->id('fuel_logs_id');
-            $table->dateTime('purchase_date');
-            $table->decimal('fuel_cost', 10, 2);
-            $table->string('fuel_type', 50);
-            $table->decimal('fuel_quantity', 10, 2);
-            $table->integer('odometer_km');
-            $table->unsignedBigInteger('vehicle_id');
+        Schema::create('dispatch', function (Blueprint $table) {
+            $table->id('dispatch_id');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time')->nullable();
+            $table->enum('dispatch_status', ['on_alley', 'on_road']);
+            $table->enum('route', ['silver_creek_to_cogon', 'canitoan_to_cogon']);
+            $table->unsignedBigInteger('fuel_logs_id');
+            $table->unsignedBigInteger('vehicle_assignment_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -28,7 +28,8 @@ return new class extends Migration
             $table->softDeletes();
 
             // Foreign key constraints
-            $table->foreign('vehicle_id')->references('vehicle_id')->on('vehicles')->onDelete('cascade');
+            $table->foreign('fuel_logs_id')->references('fuel_logs_id')->on('fuel_logs')->onDelete('cascade');
+            $table->foreign('vehicle_assignment_id')->references('vehicle_assignment_id')->on('vehicle_assignment')->onDelete('cascade');
             $table->foreign('created_by')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('user_id')->on('users')->onDelete('set null');
             $table->foreign('deleted_by')->references('user_id')->on('users')->onDelete('set null');
@@ -42,12 +43,13 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('fuel_logs', function (Blueprint $table) {
-            $table->dropForeign(['vehicle_id']);
+        Schema::table('dispatch', function (Blueprint $table) {
+            $table->dropForeign(['fuel_logs_id']);
+            $table->dropForeign(['vehicle_assignment_id']);
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
         });
-        Schema::dropIfExists('fuel_logs');
+        Schema::dropIfExists('dispatch');
     }
 };

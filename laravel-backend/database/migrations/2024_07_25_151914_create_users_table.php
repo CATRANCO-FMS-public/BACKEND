@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
             $table->string('username', 150);
+            $table->string('email', 150)->unique()->nullable();
             $table->string('password', 150);
-            $table->string('email', 150)->unique();
             $table->tinyInteger('status');
             $table->tinyInteger('is_logged_in');
+            $table->unsignedBigInteger('user_profile_id')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamps();
         

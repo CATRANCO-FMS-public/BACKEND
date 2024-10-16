@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDispatchLogVehicleAssignmentTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateDispatchLogVehicleAssignmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('dispatch_log_vehicle_assignment', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('dispatch_logs_id');
+        Schema::create('user_profile_vehicle_assignment', function (Blueprint $table) {
+            $table->id('user_profile_vehicle_assignment_id');
+            $table->unsignedBigInteger('user_profile_id');
             $table->unsignedBigInteger('vehicle_assignment_id');
             $table->timestamps();
 
-            $table->foreign('dispatch_logs_id')->references('dispatch_logs_id')->on('dispatch_logs')->onDelete('cascade');
+            $table->foreign('user_profile_id')->references('user_profile_id')->on('user_profile')->onDelete('cascade');
             $table->foreign('vehicle_assignment_id')->references('vehicle_assignment_id')->on('vehicle_assignment')->onDelete('cascade');
         });
     }
@@ -31,7 +31,6 @@ class CreateDispatchLogVehicleAssignmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dispatch_log_vehicle_assignment');
+        Schema::dropIfExists('user_profile_vehicle_assignment');
     }
-}
-
+};
