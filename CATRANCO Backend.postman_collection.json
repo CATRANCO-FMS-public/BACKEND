@@ -20,7 +20,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"last_name\": \"Paler\",\n  \"first_name\": \"Khen Harold\",\n  \"middle_initial\": \"P\",\n  \"license_number\": \"12345\",\n  \"address\": \"123 Main Street, Cityville, State, 12345\",\n  \"date_of_birth\": \"1990-01-01\",\n  \"contact_number\": \"123-456-7890\",\n  \"position\": \"Admin\"\n}\n",
+									"raw": "{\n    \"last_name\": \"Paler\",\n    \"first_name\": \"Khen\",\n    \"middle_initial\": \"P\",\n    \"license_number\": \"123213\",\n    \"address\": \"Admin Address\", \n    \"date_of_birth\": \"1980-01-01\",\n    \"contact_number\": \"1234567890\",\n    \"sex\": \"Male\",\n    \"contact_person\": \"John Doe\",\n    \"contact_person_number\": \"0987654321\",\n    \"user_profile_image\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -78,7 +78,7 @@
 						"bearer": [
 							{
 								"key": "token",
-								"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
+								"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
 								"type": "string"
 							}
 						]
@@ -113,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"admin123\"\n}",
+							"raw": "{\n  \"username\": \"Bond\",\n  \"password\": \"Bond\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
+									"value": "1|ivUzkkSI3VGz8UEW5Wb8d8vETbalRcj5xCbRWFIO57a55a72",
 									"type": "string"
 								}
 							]
@@ -181,7 +181,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "5|O2F9BoGNU1QFb8s0OmjNXSSRmkLLDKqvyJli2z6be15ec290",
+									"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
 									"type": "string"
 								}
 							]
@@ -215,23 +215,35 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|gwOH0WMuZDDTvyQsTrRLWk0zV4ttQc4ELbhYnwkzb1e7ee4d",
+									"value": "2|DvObdazPb2anUAu07CHjhMJNtzPs7zpYcRnqr3UN70dbfd6d",
 									"type": "string"
 								}
 							]
 						},
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "admin"
+									"value": "doe"
+								},
+								{
+									"key": "email",
+									"value": "doe@gmail.com",
+									"disabled": true
 								},
 								{
 									"key": "password",
-									"value": "admin123"
+									"value": "doe12345",
+									"type": "text"
 								}
 							]
 						},
@@ -261,7 +273,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"khenpro123\",\n  \"email\": \"palerkhen@gmail.com\",\n  \"password\": \"palerkhen\",\n  \"role_id\": 1\n}",
+							"raw": "{\n  \"username\": \"khenpro123\",\n  \"email\": \"palerkhen@gmail.com\",\n  \"password\": \"palerkhen\",\n  \"role_id\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,7 +314,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"last_name\": \"Llanera\",\n  \"first_name\": \"J10\",\n  \"middle_initial\": \"A\",\n  \"license_number\": \"222222\",\n  \"address\": \"Iponan\",\n  \"date_of_birth\": \"1990-01-01\",\n  \"contact_number\": \"123-456-7890\",\n  \"position\": \"conductor\"\n}\n",
+									"raw": "{\n    \"last_name\": \"Bond\",\n    \"first_name\": \"John\",\n    \"middle_initial\": \"A\",\n    \"license_number\": \"DL123123\",\n    \"address\": \"789 Pine Street, Gotham\",\n    \"date_of_birth\": \"1990-04-15\",\n    \"contact_number\": \"555-4321\",\n    \"sex\": \"Male\",\n    \"contact_person\": \"Emily Smith\",\n    \"contact_person_number\": \"1234567890\",\n    \"user_profile_image\": null,\n    \"position\": \"dispatcher\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -359,20 +371,10 @@
 						{
 							"name": "showUserProfileById",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "1|oFaJmoOKUhKeuyuGwBNcdmpUQgn0wGHZ6u3QdkRide46de8e",
-											"type": "string"
-										}
-									]
-								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/2",
+									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/3",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -386,7 +388,7 @@
 										"user",
 										"admin",
 										"profiles",
-										"2"
+										"3"
 									]
 								}
 							},
@@ -395,21 +397,11 @@
 						{
 							"name": "updateUserProfile",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "1|7b5vKUPAshfiLCUI0iWbVeqTetovQS7JHr55lt61baf9b02e",
-											"type": "string"
-										}
-									]
-								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"last_name\": \"Doe\",\n  \"first_name\": \"John\",\n  \"middle_initial\": \"A\",\n  \"license_number\": \"ABC123456\",\n  \"address\": \"123 Main Street, Cityville, State, 12345\",\n  \"date_of_birth\": \"1990-01-01\",\n  \"contact_number\": \"123-456-7890\",\n  \"position\": \"Driver\",\n  \"user_id\": 2\n}\n",
+									"raw": "{\n    \"last_name\": \"Smith\",\n    \"first_name\": \"John\",\n    \"middle_initial\": \"A\",\n    \"license_number\": \"DL123456\",\n    \"address\": \"789 Pine Street, Gotham\",\n    \"date_of_birth\": \"1990-04-15\",\n    \"contact_number\": \"555-4321\",\n    \"sex\": \"Male\",\n    \"contact_person\": \"Emily Smith\",\n    \"contact_person_number\": \"1234567890\",\n    \"user_profile_image\": null,\n    \"position\": \"driver\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -417,7 +409,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/update/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/update/3",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -432,7 +424,7 @@
 										"admin",
 										"profiles",
 										"update",
-										"1"
+										"3"
 									]
 								}
 							},
@@ -444,7 +436,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/delete/3",
+									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/delete/2",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -459,170 +451,7 @@
 										"admin",
 										"profiles",
 										"delete",
-										"3"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "AdminManageAccounts",
-					"item": [
-						{
-							"name": "createUser",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"username\": \"conductor\",\r\n  \"email\": \"conductor@gmail.com\",\r\n  \"password\": \"conductor\",\r\n  \"user_profile_id\": 4\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/users/create",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"users",
-										"create"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "viewAllUsers",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/users/all",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"users",
-										"all"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "showUserById",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/users/4",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"users",
-										"4"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "updateUser",
-							"request": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"username\": \"driver\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/users/update/2",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"users",
-										"update",
 										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "deleteUser",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "user_id",
-											"value": "1",
-											"type": "default"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/delete",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"delete"
 									]
 								}
 							},
@@ -637,10 +466,16 @@
 							"name": "createVehicle",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"vehicle_type\": \"Minibus\",\n    \"model\": \"Toyota Hiace\",\n    \"purchase_cost\": 35000.00,\n    \"purchase_date\": \"2023-07-28\",\n    \"license_plate\": \"ABC1234\",\n    \"capacity\": 15,\n    \"current_mileage\": 50000,\n    \"vehicle_status\": \"idle\"\n}\n",
+									"raw": "{\n    \"vehicle_id\": \"001\",\n    \"or_id\": \"OR004567890\",\n    \"cr_id\": \"CR004567890\",\n    \"plate_number\": \"XYZ-4005\",\n    \"engine_number\": \"EN0045678901\",\n    \"chasis_number\": \"CH0045678901\",\n    \"third_pli\": \"Sure Safe TPLI\",\n    \"third_pli_policy_no\": \"TPL-004567890\",\n    \"third_pli_validity\": \"2025-01-15\",\n    \"ci\": \"Ultimate Insurance Group\",\n    \"ci_validity\": \"2025-05-30\",\n    \"date_purchased\": \"2021-08-12\",\n    \"supplier\": \"Global Bus Supplier\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -700,7 +535,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/002",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -714,7 +549,7 @@
 										"user",
 										"admin",
 										"vehicles",
-										"1"
+										"002"
 									]
 								}
 							},
@@ -724,10 +559,16 @@
 							"name": "updateVehicle",
 							"request": {
 								"method": "PATCH",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"vehicle_type\": \"Minibus\",\r\n    \"model\": \"Toyota Hiace\",\r\n    \"purchase_cost\": 35000.00,\r\n    \"purchase_date\": \"2023-07-28\",\r\n    \"license_plate\": \"ABC1234\",\r\n    \"capacity\": 15,\r\n    \"current_mileage\": 50000,\r\n    \"vehicle_status\": \"idle\"\r\n}\r\n",
+									"raw": "{\r\n    \"third_pli\": \"Hotdog TPLI\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -735,7 +576,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/update/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/update/002",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -750,7 +591,7 @@
 										"admin",
 										"vehicles",
 										"update",
-										"1"
+										"002"
 									]
 								}
 							},
@@ -762,7 +603,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/delete/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/delete/002",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -777,7 +618,7 @@
 										"admin",
 										"vehicles",
 										"delete",
-										"1"
+										"002"
 									]
 								}
 							},
@@ -792,10 +633,16 @@
 							"name": "createAssignment",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_profile_id\": 4,\n    \"vehicle_id\": 1\n}\n",
+									"raw": "{\n    \"vehicle_id\": \"001\",\n    \"user_profile_ids\": [2, 3]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -855,7 +702,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/2",
+									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/4",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -869,7 +716,7 @@
 										"user",
 										"admin",
 										"assignments",
-										"2"
+										"4"
 									]
 								}
 							},
@@ -878,21 +725,17 @@
 						{
 							"name": "updateAssignment",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "2|jazxtLiyL8QwOprgm1h6IAyGBDUCPnghvQhB4EYv2173a389",
-											"type": "string"
-										}
-									]
-								},
 								"method": "PATCH",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"assignment_date\": \"2024-09-01 08:00:00\",\r\n    \"return_date\": \"2024-09-15 17:00:00\",\r\n    \"user_profile_id\": 1,\r\n    \"vehicle_id\": 2\r\n}\r\n",
+									"raw": "{\r\n    \"vehicle_id\": \"001\",\r\n    \"user_profile_ids\": [2,3]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -900,7 +743,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/update/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/update/4",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -915,7 +758,7 @@
 										"admin",
 										"assignments",
 										"update",
-										"1"
+										"4"
 									]
 								}
 							},
@@ -924,20 +767,10 @@
 						{
 							"name": "deleteAssignment",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "2|jazxtLiyL8QwOprgm1h6IAyGBDUCPnghvQhB4EYv2173a389",
-											"type": "string"
-										}
-									]
-								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/delete/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/delete/4",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -952,7 +785,7 @@
 										"admin",
 										"assignments",
 										"delete",
-										"1"
+										"4"
 									]
 								}
 							},
@@ -967,10 +800,16 @@
 							"name": "createFuelLog",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"purchase_date\": \"2024-08-03T12:00:00\",\n    \"fuel_cost\": 50.25,\n    \"fuel_type\": \"Unleaded\",\n    \"fuel_quantity\": 30.75,\n    \"odometer_km\": 15000,\n    \"vehicle_id\": 1\n}\n",
+									"raw": "{\n    \"purchase_date\": \"2024-10-16 15:30:00\",\n    \"distance_travelled\": 150,\n    \"odometer_km\": 12000,\n    \"fuel_type\": \"unleaded\",\n    \"fuel_quantity\": 40.5,\n    \"fuel_price\": 50.5,\n    \"vehicle_id\": \"001\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1030,7 +869,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/3",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1044,7 +883,7 @@
 										"user",
 										"admin",
 										"fuel-logs",
-										"1"
+										"3"
 									]
 								}
 							},
@@ -1053,21 +892,11 @@
 						{
 							"name": "updateFuelLog",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "1|7b5vKUPAshfiLCUI0iWbVeqTetovQS7JHr55lt61baf9b02e",
-											"type": "string"
-										}
-									]
-								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"purchase_date\": \"2024-08-03T12:00:00\",\n    \"fuel_cost\": 50.25,\n    \"fuel_type\": \"Unleaded\",\n    \"fuel_quantity\": 30.75,\n    \"odometer_km\": 15000,\n    \"vehicle_id\": 1\n}\n",
+									"raw": "{\n    \"purchase_date\": \"2024-10-16 15:30:00\",\n    \"distance_travelled\": 150,\n    \"odometer_km\": 12000,\n    \"fuel_type\": \"unleaded\",\n    \"fuel_quantity\": 40.5,\n    \"fuel_price\": 60,\n    \"vehicle_id\": \"001\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1075,7 +904,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/update/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/update/3",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1090,7 +919,7 @@
 										"admin",
 										"fuel-logs",
 										"update",
-										"1"
+										"3"
 									]
 								}
 							},
@@ -1099,20 +928,10 @@
 						{
 							"name": "deleteFuelLog",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "1|7b5vKUPAshfiLCUI0iWbVeqTetovQS7JHr55lt61baf9b02e",
-											"type": "string"
-										}
-									]
-								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/delete/1",
+									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/delete/3",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -1127,7 +946,7 @@
 										"admin",
 										"fuel-logs",
 										"delete",
-										"1"
+										"3"
 									]
 								}
 							},
@@ -1145,7 +964,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"maintenance_type\": \"brake_inspection\",\r\n    \"maintenance_cost\": 100.00,\r\n    \"maintenance_date\": \"2024-08-03T14:00:00\",\r\n    \"vehicle_id\": 1\r\n}",
+									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1500.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"vehicle_id\": \"001\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1232,7 +1051,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"maintenance_type\": \"brake_inspection\",\r\n    \"maintenance_cost\": 100.00,\r\n    \"maintenance_date\": \"2024-08-03T14:00:00\",\r\n    \"vehicle_id\": 1\r\n}\r\n",
+									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1500.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"maintenance_status\": \"inactive\",\r\n    \"vehicle_id\": \"001\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1283,99 +1102,6 @@
 										"maintenance-scheduling",
 										"delete",
 										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "AdminDispatchLog",
-					"item": [
-						{
-							"name": "showAllDispatchLogs",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatch_logs/all",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"dispatch_logs",
-										"all"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "showDispatchLogById",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatch_logs/2",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"dispatch_logs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "deleteDispatchLog",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatch_logs/delete/3",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"admin",
-										"dispatch_logs",
-										"delete",
-										"3"
 									]
 								}
 							},
@@ -1557,7 +1283,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "5|O2F9BoGNU1QFb8s0OmjNXSSRmkLLDKqvyJli2z6be15ec290",
+						"value": "1|ivUzkkSI3VGz8UEW5Wb8d8vETbalRcj5xCbRWFIO57a55a72",
 						"type": "string"
 					}
 				]
@@ -1588,181 +1314,6 @@
 		{
 			"name": "Dispatcher_Priviledges",
 			"item": [
-				{
-					"name": "DispatcherDispatchLog",
-					"item": [
-						{
-							"name": "createDispatchLog",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"fuel_logs_id\": 1,\n    \"vehicle_assignment_ids\": [1, 2, 3]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/create",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"dispatcher",
-										"dispatch-logs",
-										"create"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "showAllDispatchLogs",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/all",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"dispatcher",
-										"dispatch-logs",
-										"all"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "showDispatchLogById",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/2",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"dispatcher",
-										"dispatch-logs",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "updateDispatchLog",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "5|tuKbifEQwu3cWdXaXFb7vtTbqqsxx8Fk2gpmmkdqe15a8505",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"vehicle_assignment_id\": 1,\n  \"fuel_logs_id\": 1\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/update/2",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"dispatcher",
-										"dispatch-logs",
-										"update",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "deleteDispatchLog",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "5|tuKbifEQwu3cWdXaXFb7vtTbqqsxx8Fk2gpmmkdqe15a8505",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatch-logs/delete/2",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"dispatcher",
-										"dispatch-logs",
-										"delete",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "DispatcherDispatch",
 					"item": [
@@ -1803,9 +1354,21 @@
 						},
 						{
 							"name": "showAllDispatch",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/all",
 									"protocol": "http",
@@ -1957,7 +1520,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "3|7rtpSSStP7Shm86AfSYZPltSW5OrM1s9DTPmSgDU309b1b06",
+						"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
 						"type": "string"
 					}
 				]

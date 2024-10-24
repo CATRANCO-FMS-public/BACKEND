@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MaintenanceSchedulingRequest;
+use App\Http\Requests\MaintenanceSchedulingRequest\MaintenanceSchedulingRequest;
+use App\Http\Requests\MaintenanceSchedulingRequest\MaintenanceSchedulingUpdateRequest;
 use App\Models\MaintenanceScheduling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class MaintenanceSchedulingController extends Controller
         try {
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
-            $schedule = MaintenanceScheduling::create($data);
+            $schedule = MaintenanceScheduling::create(attributes: $data);
             return response()->json(["message" => "Maintenance Schedule Successfully Created", "schedule" => $schedule], 201);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
@@ -38,7 +39,7 @@ class MaintenanceSchedulingController extends Controller
     }
 
     // Update a specific maintenance schedule by ID
-    public function updateMaintenanceScheduling(MaintenanceSchedulingRequest $request, $id) {
+    public function updateMaintenanceScheduling(MaintenanceSchedulingUpdateRequest $request, $id) {
         try {
             $schedule = MaintenanceScheduling::findOrFail($id);
             $data = $request->validated();

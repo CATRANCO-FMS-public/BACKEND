@@ -69,11 +69,11 @@ Route::prefix('user')->group(function () {
 
             // Admin can create and manage maintenance scheduling
             Route::prefix('maintenance-scheduling')->group(function () {
-                Route::post('create', [MaintenanceSchedulingController::class, 'createMaintenanceScheduling']);
-                Route::get('all', [MaintenanceSchedulingController::class, 'getAllMaintenanceScheduling']);
-                Route::get('{id}', [MaintenanceSchedulingController::class, 'getMaintenanceSchedulingById']);
-                Route::patch('update/{id}', [MaintenanceSchedulingController::class, 'updateMaintenanceScheduling']);
-                Route::delete('delete/{id}', [MaintenanceSchedulingController::class, 'deleteMaintenanceScheduling']);
+                Route::post('create', [MaintenanceSchedulingController::class, 'createMaintenanceScheduling']); //Check
+                Route::get('all', [MaintenanceSchedulingController::class, 'getAllMaintenanceScheduling']); //Check
+                Route::get('{id}', [MaintenanceSchedulingController::class, 'getMaintenanceSchedulingById']); //Check
+                Route::patch('update/{id}', [MaintenanceSchedulingController::class, 'updateMaintenanceScheduling']); //Check
+                Route::delete('delete/{id}', [MaintenanceSchedulingController::class, 'deleteMaintenanceScheduling']); //Check
             });
 
             // Admin can view and delete dispatch
@@ -109,10 +109,10 @@ Route::prefix('user')->group(function () {
 
         });
         
-        // Driver Routes
-        Route::middleware(['driver'])->prefix('driver')->group(function () {
-            Route::post('updateReturn', [VehicleAssignmentController::class, 'updateReturnDate']);
-        });        
+        // // Driver Routes
+        // Route::middleware(['driver'])->prefix('driver')->group(function () {
+        //     Route::post('updateReturn', [VehicleAssignmentController::class, 'updateReturnDate']);
+        // });        
         
     }); 
 

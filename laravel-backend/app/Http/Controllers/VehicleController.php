@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\VehicleStoreRequest;
-use App\Http\Requests\VehicleUpdateRequest;
+use App\Http\Requests\VehicleRequest\VehicleStoreRequest;
+use App\Http\Requests\VehicleRequest\VehicleUpdateRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
