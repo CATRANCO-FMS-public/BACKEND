@@ -27,7 +27,7 @@ class FeedbackLogsController extends Controller
 
             return response()->json([
                 "message" => "Feedback partially submitted. Please enter your phone number to verify.",
-                "feedback_log_id" => $feedbackLog->feedback_logs_id
+                "feedback_logs_id" => $feedbackLog->feedback_logs_id
             ], 201);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
