@@ -116,11 +116,7 @@ Route::prefix('user')->group(function () {
         
     }); 
 
-    // OTP routes (public)
-    Route::post('generate-otp', [OTPController::class, 'generateOTP']);
-    Route::post('verify-otp', [OTPController::class, 'verifyOTP']);
-    Route::get('show-otp', [OTPController::class, 'showOTP']);
-
-    // Feedback logs routes (public)
-    Route::post('submit-feedback', [FeedbackLogsController::class, 'createFeedbackLog']);
+    Route::post('/feedback', [FeedbackLogsController::class, 'createFeedbackLog']);
+    Route::post('/otp/generate', [OTPController::class, 'generateOTP']);
+    Route::post('/feedback/{feedback_logs_id}/verify-phone', [FeedbackLogsController::class, 'verifyPhoneNumber']);
 });

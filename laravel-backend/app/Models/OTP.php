@@ -18,7 +18,14 @@ class OTP extends Model
         'otp',
         'is_verified',
         'expires_at',
+        'feedback_logs_id'
     ];
 
     protected $dates = ['expires_at'];
+
+
+    public function feedbackLog()
+    {
+        return $this->belongsTo(FeedbackLogs::class, 'feedback_logs_id');
+    }
 }

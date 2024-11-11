@@ -17,11 +17,15 @@ class FeedbackLogs extends Model
         "phone_number",
         "rating",
         "comments",
-        "created_date",
         "vehicle_id",
     ];
 
     public function vehicle() {
         return $this ->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function otp()
+    {
+        return $this->hasOne(OTP::class, 'feedback_logs_id');
     }
 }

@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('feedback_logs', function (Blueprint $table) {
             $table->id('feedback_logs_id');
-            $table->string('phone_number', 20);
+            $table->string('phone_number', 20)->nullable();
             $table->integer('rating');
             $table->text('comments');
-            $table->dateTime('created_date');
             $table->string('vehicle_id', 10);
             $table->timestamps();
 
