@@ -78,7 +78,7 @@
 						"bearer": [
 							{
 								"key": "token",
-								"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
+								"value": "1|3tzcgR3rrMV6z3oPm78XkOof00qgSGrUZ6XGuVsz51fe8c5b",
 								"type": "string"
 							}
 						]
@@ -113,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"Bond\",\n  \"password\": \"Bond\"\n}",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|ivUzkkSI3VGz8UEW5Wb8d8vETbalRcj5xCbRWFIO57a55a72",
+									"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
 									"type": "string"
 								}
 							]
@@ -181,7 +181,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
+									"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
 									"type": "string"
 								}
 							]
@@ -465,6 +465,16 @@
 						{
 							"name": "createVehicle",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1283,7 +1293,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "1|ivUzkkSI3VGz8UEW5Wb8d8vETbalRcj5xCbRWFIO57a55a72",
+						"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
 						"type": "string"
 					}
 				]
@@ -1619,13 +1629,13 @@
 			"name": "GuestUserFeedback",
 			"item": [
 				{
-					"name": "submitFeedback",
+					"name": "feedback",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"rating\": 5,\r\n    \"comments\": \"Great!\",\r\n    \"vehicle_id\": 1\r\n}",
+							"raw": "{\r\n    \"vehicle_id\": \"001\",\r\n    \"rating\": 5,\r\n    \"comments\": \"Testing!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1633,7 +1643,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/submit-feedback",
+							"raw": "http://127.0.0.1:8000/api/user/feedback",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1645,56 +1655,29 @@
 							"path": [
 								"api",
 								"user",
-								"submit-feedback"
+								"feedback"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "generateOTP",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/generate-otp",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"generate-otp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "showOTP",
+					"name": "otpGenerate",
 					"protocolProfileBehavior": {
-						"disableBodyPruning": true
+						"disabledSystemHeaders": {}
 					},
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\"\r\n}",
+							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"feedback_logs_id\": 20\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1702,7 +1685,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/show-otp",
+							"raw": "http://127.0.0.1:8000/api/user/otp/generate",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1714,20 +1697,21 @@
 							"path": [
 								"api",
 								"user",
-								"show-otp"
+								"otp",
+								"generate"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "verifyOTP",
+					"name": "verifyPhoneNumber",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"725972\"\r\n}",
+							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"537934\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1735,7 +1719,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/verify-otp",
+							"raw": "http://127.0.0.1:8000/api/user/feedback/20/verify-phone",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1747,7 +1731,9 @@
 							"path": [
 								"api",
 								"user",
-								"verify-otp"
+								"feedback",
+								"20",
+								"verify-phone"
 							]
 						}
 					},
