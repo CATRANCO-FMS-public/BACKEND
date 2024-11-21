@@ -115,12 +115,24 @@ class FuelLogsController extends Controller
 
             // Handle odometer distance proof file upload
             if ($request->hasFile('odometer_distance_proof')) {
+                // Delete the old file if it exists
+                if ($fuelLog->odometer_distance_proof) {
+                    Storage::disk('public')->delete($fuelLog->odometer_distance_proof);
+                }
+
+                // Store the new file
                 $odometerProofPath = $request->file('odometer_distance_proof')->store('fuel_logs', 'public');
                 $data['odometer_distance_proof'] = $odometerProofPath;
             }
 
             // Handle fuel receipt proof file upload
             if ($request->hasFile('fuel_receipt_proof')) {
+                // Delete the old file if it exists
+                if ($fuelLog->fuel_receipt_proof) {
+                    Storage::disk('public')->delete($fuelLog->fuel_receipt_proof);
+                }
+
+                // Store the new file
                 $receiptProofPath = $request->file('fuel_receipt_proof')->store('fuel_logs', 'public');
                 $data['fuel_receipt_proof'] = $receiptProofPath;
             }
@@ -128,12 +140,17 @@ class FuelLogsController extends Controller
             // Calculate total expense
             $data['total_expense'] = $data['fuel_liters_quantity'] * $data['fuel_price'];
 
+            // Update the fuel log
             $fuelLog->update($data);
+
             // Format the price and total expense for response
             $fuelLog->fuel_price = '₱' . number_format($fuelLog->fuel_price, 2);
             $fuelLog->total_expense = '₱' . number_format($fuelLog->total_expense, 2);
 
-            return response()->json(["message" => "Fuel Log Updated Successfully", "fuel_log" => $fuelLog], 200);
+            return response()->json([
+                "message" => "Fuel Log Updated Successfully",
+                "fuel_log" => $fuelLog,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
