@@ -14,7 +14,30 @@ class UserProfileController extends Controller
     // Admin view all profiles
     public function getAllProfiles()
     {
-        $profiles = UserProfile::with('user')->get()->map(function ($profile) {
+        $admin = Auth::user(); // Get the logged-in user
+
+        // Get role IDs dynamically using mapPositionToRoleId
+        $dispatcherRoleId = $this->mapPositionToRoleId('dispatcher');
+        $driverRoleId = $this->mapPositionToRoleId('driver');
+        $passengerAssistantRoleId = $this->mapPositionToRoleId('passenger_assistant_officer');
+        
+        $profilesQuery = UserProfile::with('user');
+
+        // Check if the logged-in user is an operation manager
+        if ($admin && $this->mapPositionToRoleId($admin->profile->position) === $this->mapPositionToRoleId('operation_manager')) {
+            // Exclude the logged-in admin from the query
+            $profilesQuery->whereHas('user', function ($query) use ($admin) {
+                $query->where('user_id', '<>', $admin->user_id);
+            });
+        }
+
+        // Filter profiles dynamically by roles for driver, passenger assistant officer, and dispatcher
+        $profilesQuery->whereHas('user', function ($query) use ($dispatcherRoleId, $driverRoleId, $passengerAssistantRoleId) {
+            $query->whereIn('role_id', [$dispatcherRoleId, $driverRoleId, $passengerAssistantRoleId]);
+        });
+
+        // Fetch and map the profiles
+        $profiles = $profilesQuery->get()->map(function ($profile) {
             return [
                 'user' => [
                     'user_id' => $profile->user->user_id ?? 'N/A',
