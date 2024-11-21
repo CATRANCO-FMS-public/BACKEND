@@ -86,11 +86,11 @@ Route::prefix('user')->group(function () {
                 Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
             });
 
-            // Admin can view and delete dispatch
+            // Admin can view and delete feedbacks
             Route::prefix('feedbacks')->group(function () {
-                Route::get('all', [FeedbackLogsController::class, 'getAllFeedbackLogs']);
-                Route::get('{id}', [FeedbackLogsController::class, 'getFeedbackLogById']);
-                Route::delete('delete/{id}', [FeedbackLogsController::class, 'deleteFeedbackLog']);
+                Route::get('all', [FeedbackLogsController::class, 'getAllFeedbackLogs']); //Check
+                Route::get('{id}', [FeedbackLogsController::class, 'getFeedbackLogById']); //Check
+                Route::delete('delete/{id}', [FeedbackLogsController::class, 'deleteFeedbackLog']); //Check
             });
 
         });
@@ -119,7 +119,7 @@ Route::prefix('user')->group(function () {
         
     }); 
 
-    Route::post('/feedback', [FeedbackLogsController::class, 'createFeedbackLog']);
-    Route::post('/otp/generate', [OTPController::class, 'generateOTP']);
-    Route::post('/feedback/{feedback_logs_id}/verify-phone', [FeedbackLogsController::class, 'verifyPhoneNumber']);
+    Route::post('/feedback', [FeedbackLogsController::class, 'createFeedbackLog']); //Check
+    Route::post('/otp/generate', [OTPController::class, 'generateOTP']); //Check
+    Route::post('/feedback/{feedback_logs_id}/verify-phone', [FeedbackLogsController::class, 'verifyPhoneNumber']); //Check
 });

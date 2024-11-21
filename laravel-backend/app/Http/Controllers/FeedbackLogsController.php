@@ -63,4 +63,62 @@ class FeedbackLogsController extends Controller
 
         return response()->json(["message" => "Feedback fully submitted", "feedback" => $feedbackLog], 200);
     }
+
+
+    public function getAllFeedbackLogs(Request $request)
+    {
+        try {
+            // Fetch all feedback logs, including optional filters if provided
+            $feedbackLogs = FeedbackLogs::query();
+
+            // Optional: Filter by phone number (if provided in the query string)
+            if ($request->has('phone_number')) {
+                $feedbackLogs->where('phone_number', $request->input('phone_number'));
+            }
+
+            // Fetch the results (paginate if necessary)
+            $feedbackLogs = $feedbackLogs->get();
+
+            return response()->json(['data' => $feedbackLogs], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function getFeedbackLogById($id)
+    {
+        try {
+            // Find the feedback log by ID
+            $feedbackLog = FeedbackLogs::find($id);
+
+            if (!$feedbackLog) {
+                return response()->json(['message' => 'Feedback log not found'], 404);
+            }
+
+            return response()->json(['data' => $feedbackLog], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function deleteFeedbackLog($id)
+    {
+        try {
+            // Find the feedback log by ID
+            $feedbackLog = FeedbackLogs::find($id);
+
+            if (!$feedbackLog) {
+                return response()->json(['message' => 'Feedback log not found'], 404);
+            }
+
+            // Delete the feedback log
+            $feedbackLog->delete();
+
+            return response()->json(['message' => 'Feedback log successfully deleted'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+
 }
