@@ -7,6 +7,7 @@ use App\Http\Requests\ProfileRequest\UpdateOwnProfile;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
 class UserProfileController extends Controller
@@ -241,7 +242,63 @@ class UserProfileController extends Controller
             return response()->json(["message" => "Profile not found"], 404);
         }
 
-        $profile->update($request->validated());
-        return response()->json(["message" => "User Profile Updated Successfully", "profile" => $profile], 200);
+        try {
+            $data = $request->validated();
+
+            // Handle user profile image upload if present
+            if ($request->hasFile('user_profile_image')) {
+                // Store the uploaded image in the public storage
+                $imagePath = $request->file('user_profile_image')->store('user_profiles', 'public');
+                $data['user_profile_image'] = $imagePath;
+
+                // Optionally, delete the old image if it exists
+                if ($profile->user_profile_image) {
+                    Storage::disk('public')->delete($profile->user_profile_image);
+                }
+            }
+
+            // Update the profile with the validated data
+            $profile->update($data);
+
+            return response()->json([
+                "message" => "User Profile Updated Successfully",
+                "profile" => $profile,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Failed to update profile",
+                "error" => $e->getMessage(),
+            ], 400);
+        }
     }
+
+    public function deleteUserProfileImage($id)
+    {
+        try {
+            // Fetch the user profile by ID
+            $profile = UserProfile::findOrFail($id);
+
+            // Check if the profile has an associated image
+            if ($profile->user_profile_image) {
+                // Delete the image from storage
+                Storage::disk('public')->delete($profile->user_profile_image);
+
+                // Set the profile image field to null
+                $profile->update(['user_profile_image' => null]);
+
+                return response()->json([
+                    "message" => "User profile image deleted successfully.",
+                    "profile" => $profile,
+                ], 200);
+            } else {
+                return response()->json(["message" => "No profile image to delete."], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Failed to delete profile image",
+                "error" => $e->getMessage(),
+            ], 400);
+        }
+    }
+
 }

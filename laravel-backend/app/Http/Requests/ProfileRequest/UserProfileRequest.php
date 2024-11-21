@@ -34,7 +34,7 @@ class UserProfileRequest extends FormRequest
             'contact_number' => 'required|string|max:20',
             'contact_person' => 'nullable|string|max:255',
             'contact_person_number' => 'nullable|string|max:20',
-            'user_profile_image' => 'nullable|image|max:2048',
+            'user_profile_image' => 'nullable|file|image|mimes:jpg,jpeg,png|max:2048',
             'position' => 'required|in:operation_manager,dispatcher,driver,passenger_assistant_officer',
         ];
     }

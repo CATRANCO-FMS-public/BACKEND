@@ -25,7 +25,8 @@ Route::prefix('user')->group(function () {
         // User profile routes
         Route::prefix('profile')->group(function () {
             Route::get('view', [UserProfileController::class, 'viewOwnProfile']); //Check
-            Route::patch('update', [UserProfileController::class, 'updateOwnProfile']); //Check
+            Route::post('update', [UserProfileController::class, 'updateOwnProfile']); //Check
+            Route::delete('{id}/delete-image', [UserProfileController::class, 'deleteUserProfileImage']); //Check
         });
 
         // Admin routes
