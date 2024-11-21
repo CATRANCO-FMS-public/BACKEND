@@ -4,50 +4,100 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FuelLogsStoreRequest;
 use App\Models\FuelLogs;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class FuelLogsController extends Controller
 {
     // Get all fuel logs
-    public function getAllFuelLogs() {
-        $fuelLogs = FuelLogs::all()->map(function($fuelLog) {
-            // Format the price and total cost
+    public function getAllFuelLogs()
+    {
+        $fuelLogs = FuelLogs::all()->map(function ($fuelLog) {
+            // Format the price and total expense
             $fuelLog->fuel_price = '₱' . number_format($fuelLog->fuel_price, 2);
-            $fuelLog->total_cost = '₱' . number_format($fuelLog->total_cost, 2);
+            $fuelLog->total_expense = '₱' . number_format($fuelLog->total_expense, 2);
             return $fuelLog;
         });
-        
+
         return response()->json($fuelLogs);
     }
 
     // Create a new fuel log
-    public function createFuelLog(FuelLogsStoreRequest $request) {
+    public function createFuelLog(FuelLogsStoreRequest $request)
+    {
         try {
+            // Log the raw input for debugging
+            Log::info('Raw Input:', $request->all());
+
+            // Check if Laravel recognizes file inputs
+            if ($request->hasFile('odometer_distance_proof')) {
+                Log::info('Odometer Proof Uploaded:', [$request->file('odometer_distance_proof')]);
+            } else {
+                Log::warning('Odometer Proof NOT Uploaded.');
+            }
+
+            if ($request->hasFile('fuel_receipt_proof')) {
+                Log::info('Fuel Receipt Proof Uploaded:', [$request->file('fuel_receipt_proof')]);
+            } else {
+                Log::warning('Fuel Receipt Proof NOT Uploaded.');
+            }
+
+            // Check all request fields
+            Log::info('Request Data:', $request->all());
+
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
 
-            // Calculate total_cost
-            $data['total_cost'] = $data['fuel_quantity'] * $data['fuel_price'];
+            // Retrieve the previous odometer reading for the same vehicle
+            $previousLog = FuelLogs::where('vehicle_id', $data['vehicle_id'])
+                ->orderBy('purchase_date', 'desc')
+                ->first();
 
+            // Calculate distance_traveled
+            $data['distance_traveled'] = $previousLog
+                ? $data['odometer_km'] - $previousLog->odometer_km
+                : 0;
+
+            // Handle odometer distance proof file upload
+            if ($request->hasFile('odometer_distance_proof')) {
+                $odometerProofPath = $request->file('odometer_distance_proof')->store('fuel_logs', 'public');
+                $data['odometer_distance_proof'] = $odometerProofPath;
+            }
+
+            // Handle fuel receipt proof file upload
+            if ($request->hasFile('fuel_receipt_proof')) {
+                $receiptProofPath = $request->file('fuel_receipt_proof')->store('fuel_logs', 'public');
+                $data['fuel_receipt_proof'] = $receiptProofPath;
+            }
+
+            // Calculate total expense
+            $data['total_expense'] = $data['fuel_liters_quantity'] * $data['fuel_price'];
+
+            // Create a new fuel log
             $fuelLog = FuelLogs::create($data);
-            // Format the price and total cost for response
+
+            // Format the price and total expense for response
             $fuelLog->fuel_price = '₱' . number_format($fuelLog->fuel_price, 2);
-            $fuelLog->total_cost = '₱' . number_format($fuelLog->total_cost, 2);
+            $fuelLog->total_expense = '₱' . number_format($fuelLog->total_expense, 2);
 
             return response()->json(["message" => "Fuel Log Successfully Created", "fuel_log" => $fuelLog], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
 
+
     // Get a specific fuel log by ID
-    public function getFuelLogById($id) {
+    public function getFuelLogById($id)
+    {
         try {
             $fuelLog = FuelLogs::findOrFail($id);
-            // Format the price and total cost
+            // Format the price and total expense
             $fuelLog->fuel_price = '₱' . number_format($fuelLog->fuel_price, 2);
-            $fuelLog->total_cost = '₱' . number_format($fuelLog->total_cost, 2);
+            $fuelLog->total_expense = '₱' . number_format($fuelLog->total_expense, 2);
 
             return response()->json($fuelLog);
         } catch (\Exception $e) {
@@ -56,19 +106,32 @@ class FuelLogsController extends Controller
     }
 
     // Update a specific fuel log by ID
-    public function updateFuelLog(FuelLogsStoreRequest $request, $id) {
+    public function updateFuelLog(FuelLogsStoreRequest $request, $id)
+    {
         try {
             $fuelLog = FuelLogs::findOrFail($id);
             $data = $request->validated();
             $data['updated_by'] = Auth::id(); // Automatically set updated_by
-            
-            // Calculate total_cost
-            $data['total_cost'] = $data['fuel_quantity'] * $data['fuel_price'];
+
+            // Handle odometer distance proof file upload
+            if ($request->hasFile('odometer_distance_proof')) {
+                $odometerProofPath = $request->file('odometer_distance_proof')->store('fuel_logs', 'public');
+                $data['odometer_distance_proof'] = $odometerProofPath;
+            }
+
+            // Handle fuel receipt proof file upload
+            if ($request->hasFile('fuel_receipt_proof')) {
+                $receiptProofPath = $request->file('fuel_receipt_proof')->store('fuel_logs', 'public');
+                $data['fuel_receipt_proof'] = $receiptProofPath;
+            }
+
+            // Calculate total expense
+            $data['total_expense'] = $data['fuel_liters_quantity'] * $data['fuel_price'];
 
             $fuelLog->update($data);
-            // Format the price and total cost for response
+            // Format the price and total expense for response
             $fuelLog->fuel_price = '₱' . number_format($fuelLog->fuel_price, 2);
-            $fuelLog->total_cost = '₱' . number_format($fuelLog->total_cost, 2);
+            $fuelLog->total_expense = '₱' . number_format($fuelLog->total_expense, 2);
 
             return response()->json(["message" => "Fuel Log Updated Successfully", "fuel_log" => $fuelLog], 200);
         } catch (\Exception $e) {
@@ -77,7 +140,8 @@ class FuelLogsController extends Controller
     }
 
     // Delete a specific fuel log by ID
-    public function deleteFuelLog($id) {
+    public function deleteFuelLog($id)
+    {
         try {
             $fuelLog = FuelLogs::findOrFail($id);
             $fuelLog->deleted_by = Auth::id(); // Automatically set deleted_by

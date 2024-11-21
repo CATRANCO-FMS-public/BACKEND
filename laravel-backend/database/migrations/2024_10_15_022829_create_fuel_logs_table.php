@@ -16,13 +16,15 @@ return new class extends Migration
         Schema::create('fuel_logs', function (Blueprint $table) {
             $table->id('fuel_logs_id');
             $table->dateTime( 'purchase_date');
-            $table->integer('distance_travelled');
             $table->integer('odometer_km');
+            $table->integer('distance_traveled');
             $table->enum('fuel_type', ['unleaded', 'premium', 'diesel']);
-            $table->decimal('fuel_quantity', 10, 2);
             $table->decimal('fuel_price', 10, 2); 
-            $table->decimal('total_cost', 10, 2); 
+            $table->decimal('fuel_liters_quantity', 10, 2);
+            $table->decimal('total_expense', 10, 2); 
             $table->string('vehicle_id', 10);
+            $table->string('odometer_distance_proof');
+            $table->string('fuel_receipt_proof');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

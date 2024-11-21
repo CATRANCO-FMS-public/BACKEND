@@ -25,12 +25,13 @@ class FuelLogsStoreRequest extends FormRequest
     {
         return [
             'purchase_date' => 'required|date',
-            'distance_travelled' => 'required|integer|min:0',
             'odometer_km' => 'required|integer|min:0',
-            'fuel_type' => 'required|in:unleaded,premium,diesel',
-            'fuel_quantity' => 'required|numeric|min:0',
-            'fuel_price' => 'required|numeric|min:0', 
+            'fuel_type' => 'required|in:unleaded,premium,diesel', // Dropdown
+            'fuel_liters_quantity' => 'required|numeric|min:0',
+            'fuel_price' => 'required|numeric|min:0',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
+            'odometer_distance_proof' => 'required|file|mimes:jpg,jpeg,png|max:2048', 
+            'fuel_receipt_proof' => 'required|file|mimes:jpg,jpeg,png|max:2048', 
         ];
     }
 }
