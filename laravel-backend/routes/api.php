@@ -31,6 +31,9 @@ Route::prefix('user')->group(function () {
         // Admin routes
         Route::middleware(['admin'])->prefix('admin')->group(function () {
 
+            Route::patch('/activate-account/{id}', [AuthController::class, 'activateAccount']);
+            Route::patch('/deactivate-account/{id}', [AuthController::class, 'deactivateAccount']);
+
             // Admin can create and manage user profiles and user accounts
             Route::prefix('profiles')->group(function () {
                 Route::post('create', [UserProfileController::class, 'createProfile']); //Check
