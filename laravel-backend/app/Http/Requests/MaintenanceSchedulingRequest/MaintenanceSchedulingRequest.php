@@ -27,7 +27,7 @@ class MaintenanceSchedulingRequest extends FormRequest
             'maintenance_type' => 'required|in:oil_change,tire_rotation,brake_inspection,engine_check,transmission_service',
             'maintenance_cost' => 'required|numeric|min:0',
             'maintenance_date' => 'required|date',
-            'maintenance_status' => 'required|in:active,inactive',
+            'maintenance_status' => 'nullable|in:active,inactive',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
         ];
     }

@@ -21,8 +21,14 @@ class MaintenanceSchedulingController extends Controller
         try {
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
-            $schedule = MaintenanceScheduling::create(attributes: $data);
-            return response()->json(["message" => "Maintenance Schedule Successfully Created", "schedule" => $schedule], 201);
+            $data['maintenance_status'] = 'active'; // Default maintenance status to 'active'
+
+            $schedule = MaintenanceScheduling::create($data);
+
+            return response()->json([
+                "message" => "Maintenance Schedule Successfully Created",
+                "schedule" => $schedule
+            ], 201);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
@@ -63,4 +69,27 @@ class MaintenanceSchedulingController extends Controller
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
+
+    // Toggle the maintenance status between 'active' and 'inactive'
+    public function toggleMaintenanceStatus($id)
+    {
+        try {
+            // Find the maintenance schedule by ID
+            $schedule = MaintenanceScheduling::findOrFail($id);
+
+            // Toggle the maintenance status
+            $schedule->maintenance_status = $schedule->maintenance_status === 'active' ? 'inactive' : 'active';
+
+            // Save the updated status
+            $schedule->save();
+
+            return response()->json([
+                "message" => "Maintenance status updated successfully",
+                "schedule" => $schedule
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
+
 }
