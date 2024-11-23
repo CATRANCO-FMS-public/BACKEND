@@ -23,8 +23,8 @@ return new class extends Migration
             $table->decimal('fuel_liters_quantity', 10, 2);
             $table->decimal('total_expense', 10, 2); 
             $table->string('vehicle_id', 10);
-            $table->string('odometer_distance_proof');
-            $table->string('fuel_receipt_proof');
+            $table->string('odometer_distance_proof')->nullable();
+            $table->string('fuel_receipt_proof')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

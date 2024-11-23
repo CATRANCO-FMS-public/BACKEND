@@ -30,8 +30,8 @@ class FuelLogsStoreRequest extends FormRequest
             'fuel_liters_quantity' => 'required|numeric|min:0',
             'fuel_price' => 'required|numeric|min:0',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
-            'odometer_distance_proof' => 'required|file|mimes:jpg,jpeg,png|max:2048', 
-            'fuel_receipt_proof' => 'required|file|mimes:jpg,jpeg,png|max:2048', 
+            'odometer_distance_proof' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', 
+            'fuel_receipt_proof' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', 
         ];
     }
 }
