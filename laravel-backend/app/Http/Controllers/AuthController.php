@@ -62,7 +62,18 @@ class AuthController extends Controller
             // Create a personal access token
             $token = $user->createToken("Personal Access Token")->plainTextToken;
 
-            return response(['token' => $token, 'role' => $user->role_id], 200);
+            return response([
+                'token' => $token,
+                'user' => [
+                    'user_id' => $user->user_id,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'role' => [
+                        'role_id' => $user->role->role_id,
+                        'role' => $user->role->role,
+                    ]
+                ]
+            ], 200);
         } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], 400);
         }
