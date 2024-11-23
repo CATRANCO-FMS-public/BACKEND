@@ -161,13 +161,27 @@ class FuelLogsController extends Controller
     {
         try {
             $fuelLog = FuelLogs::findOrFail($id);
+
+            // Delete the associated files if they exist
+            if ($fuelLog->odometer_distance_proof) {
+                Storage::disk('public')->delete($fuelLog->odometer_distance_proof);
+            }
+
+            if ($fuelLog->fuel_receipt_proof) {
+                Storage::disk('public')->delete($fuelLog->fuel_receipt_proof);
+            }
+
+            // Mark the log as deleted and save the user who deleted it
             $fuelLog->deleted_by = Auth::id(); // Automatically set deleted_by
             $fuelLog->save(); // Save the deleted_by field
-            $fuelLog->delete(); // Then delete the record
 
-            return response()->json(["message" => "Fuel Log Deleted Successfully"], 200);
+            // Delete the record from the database
+            $fuelLog->delete();
+
+            return response()->json(["message" => "Fuel Log and Associated Files Deleted Successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
+
 }
