@@ -25,7 +25,7 @@ class FuelLogsStoreRequest extends FormRequest
     {
         return [
             'purchase_date' => 'required|date',
-            'odometer_km' => 'required|integer|min:0',
+            'odometer_km' => 'required|numeric|min:1',
             'fuel_type' => 'required|in:unleaded,premium,diesel', // Dropdown
             'fuel_liters_quantity' => 'required|numeric|min:0',
             'fuel_price' => 'required|numeric|min:0',

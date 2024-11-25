@@ -27,36 +27,26 @@ class FuelLogsController extends Controller
     public function createFuelLog(FuelLogsStoreRequest $request)
     {
         try {
-            // Log the raw input for debugging
-            Log::info('Raw Input:', $request->all());
-
-            // Check if Laravel recognizes file inputs
-            if ($request->hasFile('odometer_distance_proof')) {
-                Log::info('Odometer Proof Uploaded:', [$request->file('odometer_distance_proof')]);
-            } else {
-                Log::warning('Odometer Proof NOT Uploaded.');
-            }
-
-            if ($request->hasFile('fuel_receipt_proof')) {
-                Log::info('Fuel Receipt Proof Uploaded:', [$request->file('fuel_receipt_proof')]);
-            } else {
-                Log::warning('Fuel Receipt Proof NOT Uploaded.');
-            }
-
-            // Check all request fields
-            Log::info('Request Data:', $request->all());
-
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
 
             // Retrieve the previous odometer reading for the same vehicle
             $previousLog = FuelLogs::where('vehicle_id', $data['vehicle_id'])
-                ->orderBy('purchase_date', 'desc')
+                ->orderBy('odometer_km', 'desc') // Get the most recent log
                 ->first();
+
+            // Validate that the current odometer_km is greater than the previous one
+            if ($previousLog && $data['odometer_km'] <= $previousLog->odometer_km) {
+                return response()->json([
+                    'message' => "The odometer reading must be greater than the previous value.",
+                    'previous_odometer' => $previousLog->odometer_km,
+                    'current_odometer' => $data['odometer_km'],
+                ], 422);
+            }
 
             // Calculate distance_traveled
             $data['distance_traveled'] = $previousLog
-                ? $data['odometer_km'] - $previousLog->odometer_km
+                ? max(0, $data['odometer_km'] - $previousLog->odometer_km)
                 : 0;
 
             // Handle odometer distance proof file upload
