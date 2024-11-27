@@ -28,6 +28,8 @@ class MaintenanceSchedulingUpdateRequest extends FormRequest
             'maintenance_cost' => 'required|numeric|min:0',
             'maintenance_date' => 'required|date',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
+            'mechanic_company' => 'required|string|max:100',
+            'mechanic_company_address' => 'required|string|max:255',
         ];
     }
 }
