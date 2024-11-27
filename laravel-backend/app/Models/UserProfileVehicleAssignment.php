@@ -10,4 +10,12 @@ class UserProfileVehicleAssignment extends Pivot
     
     // Make sure timestamps are enabled
     public $timestamps = true;
+
+    // Specify fillable fields if additional data is stored in the pivot table
+    protected $fillable = [
+        'user_profile_id',
+        'vehicle_assignment_id',
+        'created_at',
+        'updated_at',
+    ];
 }

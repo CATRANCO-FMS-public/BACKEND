@@ -5,6 +5,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleAssignmentController;
 use App\Http\Controllers\FuelLogsController;
+use App\Http\Controllers\TimerController;
+use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\MaintenanceSchedulingController;
 use App\Http\Controllers\OTPController;
@@ -101,6 +103,24 @@ Route::prefix('user')->group(function () {
         // Dispatcher Routes
         Route::middleware(['dispatcher'])->prefix('dispatcher')->group(function () {
 
+            // Dispatcher can create and manage timers
+            Route::prefix('timers')->group(function () {
+                Route::get('all', [TimerController::class, 'getAllTimers']); // Fetch all timers
+                Route::get('{id}', [TimerController::class, 'getTimerById']); // Fetch a timer by ID
+                Route::post('create', [TimerController::class, 'createTimer']); // Create a timer
+                Route::patch('update/{id}', [TimerController::class, 'updateTimer']); // Update a timer by ID
+                Route::delete('delete/{id}', [TimerController::class, 'deleteTimer']); // Delete a timer by ID
+            });
+
+            // Dispatcher can create and manage terminals
+            Route::prefix('terminals')->group(function () {
+                Route::get('all', [TerminalController::class, 'getAllTerminals']); // Fetch all terminals
+                Route::get('{id}', [TerminalController::class, 'getTerminalById']); // Fetch terminal by ID
+                Route::post('create', [TerminalController::class, 'createTerminal']); // Create a terminal
+                Route::patch('update/{id}', [TerminalController::class, 'updateTerminal']); // Update terminal by ID
+                Route::delete('delete/{id}', [TerminalController::class, 'deleteTerminal']); // Delete terminal by ID
+            });
+
             // Dispatcher can create and manage dispatch logs
             Route::prefix('dispatches')->group(function () {
                 Route::post('start', [DispatchController::class, 'startDispatch']);
@@ -111,14 +131,7 @@ Route::prefix('user')->group(function () {
                 Route::patch('cancel/{id}', [DispatchController::class, 'cancelDispatch']);
                 Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
             });
-
-        });
-        
-        // // Driver Routes
-        // Route::middleware(['driver'])->prefix('driver')->group(function () {
-        //     Route::post('updateReturn', [VehicleAssignmentController::class, 'updateReturnDate']);
-        // });        
-        
+        });       
     }); 
 
     Route::post('/feedback', [FeedbackLogsController::class, 'createFeedbackLog']); //Check

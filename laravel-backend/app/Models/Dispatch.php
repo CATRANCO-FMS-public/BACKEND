@@ -17,16 +17,16 @@ class Dispatch extends Model
         "start_time",
         "end_time",
         "dispatch_status",
-        "fuel_logs_id",
+        "terminal_id", 
         "vehicle_assignment_id",
         "created_by",
         "updated_by",
         "deleted_by",
     ];
-    
-    public function fuelLogs()
+
+    public function terminal()
     {
-        return $this->belongsTo(FuelLogs::class, 'fuel_logs_id');
+        return $this->belongsTo(Terminal::class, 'terminal_id');
     }
 
     public function vehicleAssignments()

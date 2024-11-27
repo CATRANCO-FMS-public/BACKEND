@@ -45,6 +45,8 @@ class UserProfile extends Model
 
     public function vehicleAssignments()
     {
-        return $this->belongsToMany(VehicleAssignment::class, 'user_profile_vehicle_assignment', 'user_profile_id', 'vehicle_assignment_id')->using(UserProfileVehicleAssignment::class);
+        return $this->belongsToMany(VehicleAssignment::class, 'user_profile_vehicle_assignment', 'user_profile_id', 'vehicle_assignment_id')
+            ->using(UserProfileVehicleAssignment::class)
+            ->withTimestamps(); // Include timestamps if they exist
     }
 }

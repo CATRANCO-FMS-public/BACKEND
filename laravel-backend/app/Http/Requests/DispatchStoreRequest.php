@@ -26,8 +26,9 @@ class DispatchStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'end_time' => 'nullable|date|after:start_time',
-            'fuel_logs_id' => 'required|exists:fuel_logs,fuel_logs_id',
+            'end_time' => 'nullable|date|after_or_equal:now', // Validate that end_time is a valid date and in the future
+            'dispatch_status' => 'required|in:on_alley,on_road,completed', // Validate dispatch_status
+            'terminal_id' => 'required|exists:terminals,terminal_id',
             'vehicle_assignment_id' => 'required|exists:vehicle_assignment,vehicle_assignment_id',
         ];
     }
