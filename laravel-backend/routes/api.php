@@ -39,11 +39,18 @@ Route::prefix('user')->group(function () {
 
             // Admin can create and manage user profiles and user accounts
             Route::prefix('profiles')->group(function () {
+                // General Profile Management
                 Route::post('create', [UserProfileController::class, 'createProfile']); //Check
                 Route::get('all', [UserProfileController::class, 'getAllProfiles']); //Check
                 Route::get('{id}', [UserProfileController::class, 'getProfileById']); //Check
                 Route::patch('update/{id}', [UserProfileController::class, 'updateProfile']); //Check
                 Route::delete('delete/{id}', [UserProfileController::class, 'deleteProfile']); //Check
+
+                // Profiles grouped by position
+                Route::prefix('position')->group(function () {
+                    Route::get('drivers', [UserProfileController::class, 'getDriver']); // Fetch all drivers
+                    Route::get('passenger-assistant-officers', [UserProfileController::class, 'getPSO']); // Fetch all Passenger Assistant Officers
+                });
             });
 
             // Admin can create and manage vehicles

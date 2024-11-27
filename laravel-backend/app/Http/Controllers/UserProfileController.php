@@ -301,4 +301,72 @@ class UserProfileController extends Controller
         }
     }
 
+    // Get all drivers
+    public function getDriver()
+    {
+        $drivers = UserProfile::with('user')
+            ->where('position', 'driver') // Filter by position
+            ->get()
+            ->map(function ($profile) {
+                return [
+                    'user' => [
+                        'user_id' => $profile->user->user_id ?? 'N/A',
+                        'username' => $profile->user->username ?? 'N/A',
+                        'email' => $profile->user->email ?? 'N/A',
+                    ],
+                    'profile' => $profile->only([
+                        'user_profile_id',
+                        'last_name',
+                        'first_name',
+                        'middle_initial',
+                        'license_number',
+                        'address',
+                        'date_of_birth',
+                        'contact_number',
+                        'sex',
+                        'contact_person',
+                        'contact_person_number',
+                        'user_profile_image',
+                        'position',
+                    ]),
+                ];
+            });
+
+        return response()->json($drivers, 200);
+    }
+
+    // Get all Passenger Assistant Officers
+    public function getPSO()
+    {
+        $passengerAssistantOfficers = UserProfile::with('user')
+            ->where('position', 'passenger_assistant_officer') // Filter by position
+            ->get()
+            ->map(function ($profile) {
+                return [
+                    'user' => [
+                        'user_id' => $profile->user->user_id ?? 'N/A',
+                        'username' => $profile->user->username ?? 'N/A',
+                        'email' => $profile->user->email ?? 'N/A',
+                    ],
+                    'profile' => $profile->only([
+                        'user_profile_id',
+                        'last_name',
+                        'first_name',
+                        'middle_initial',
+                        'license_number',
+                        'address',
+                        'date_of_birth',
+                        'contact_number',
+                        'sex',
+                        'contact_person',
+                        'contact_person_number',
+                        'user_profile_image',
+                        'position',
+                    ]),
+                ];
+            });
+
+        return response()->json($passengerAssistantOfficers, 200);
+    }
+
 }
