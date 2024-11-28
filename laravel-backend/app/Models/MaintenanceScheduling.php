@@ -27,6 +27,10 @@ class MaintenanceScheduling extends Model
         "deleted_by",
     ];
 
+    protected $casts = [
+        'maintenance_status' => 'string',
+    ];
+
     // Relationship with the Vehicle model
     public function vehicle()
     {

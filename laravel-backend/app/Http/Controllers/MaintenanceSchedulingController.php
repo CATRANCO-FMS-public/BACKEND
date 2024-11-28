@@ -70,7 +70,7 @@ class MaintenanceSchedulingController extends Controller
         }
     }
 
-    // Toggle the maintenance status between 'active' and 'inactive'
+    // Toggle the maintenance status between 'active' and 'completed'
     public function toggleMaintenanceStatus($id)
     {
         try {
@@ -78,13 +78,15 @@ class MaintenanceSchedulingController extends Controller
             $schedule = MaintenanceScheduling::findOrFail($id);
 
             // Toggle the maintenance status
-            $schedule->maintenance_status = $schedule->maintenance_status === 'active' ? 'inactive' : 'active';
+            $schedule->maintenance_status = $schedule->maintenance_status === 'active' ? 'completed' : 'active';
+
+            $schedule->updated_by = Auth::id();
 
             // Save the updated status
             $schedule->save();
 
             return response()->json([
-                "message" => "Maintenance status updated successfully",
+                "message" => "Maintenance Status Toggled Successfully",
                 "schedule" => $schedule
             ], 200);
         } catch (\Exception $e) {
@@ -92,4 +94,27 @@ class MaintenanceSchedulingController extends Controller
         }
     }
 
+    // Get all active maintenance schedules
+    public function getAllActiveMaintenance() {
+        try {
+            $activeSchedules = MaintenanceScheduling::where('maintenance_status', 'active')->get();
+            return response()->json([
+                "data" => $activeSchedules
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
+
+    // Get all completed maintenance schedules
+    public function getAllCompletedMaintenance() {
+        try {
+            $completedSchedules = MaintenanceScheduling::where('maintenance_status', 'completed')->get();
+            return response()->json([
+                "data" => $completedSchedules
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
 }

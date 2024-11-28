@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleAssignmentController;
@@ -17,6 +18,8 @@ Route::prefix('user')->group(function () {
     // Public routes
     Route::post('register', [AuthController::class, 'registerAccount']); //Check
     Route::post('login', [AuthController::class, 'loginAccount']); //Check
+    Route::post('password/forgot', [PasswordResetController::class, 'sendResetLink']);
+    Route::post('password/reset', [PasswordResetController::class, 'resetPassword']);
 
     // Routes that require authentication
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -88,6 +91,9 @@ Route::prefix('user')->group(function () {
                 Route::patch('update/{id}', [MaintenanceSchedulingController::class, 'updateMaintenanceScheduling']); //Check
                 Route::delete('delete/{id}', [MaintenanceSchedulingController::class, 'deleteMaintenanceScheduling']); //Check
                 Route::patch('toggle-status/{id}', [MaintenanceSchedulingController::class, 'toggleMaintenanceStatus']); //Check
+
+                    Route::get('all/active', [MaintenanceSchedulingController::class, 'getAllActiveMaintenance']);
+                    Route::get('all/completed', [MaintenanceSchedulingController::class, 'getAllCompletedMaintenance']);
             });
 
             // Admin can view and delete dispatch

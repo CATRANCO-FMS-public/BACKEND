@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('maintenance_type', ['oil_change', 'tire_rotation', 'brake_inspection', 'engine_check', 'transmission_service']);
             $table->decimal('maintenance_cost', 10, 2);
             $table->dateTime('maintenance_date');
-            $table->enum('maintenance_status', ['active', 'inactive']);
+            $table->enum('maintenance_status', ['active', 'completed']);
             $table->string('vehicle_id', 10);
             $table->string('mechanic_company', 100);
             $table->text('mechanic_company_address');
