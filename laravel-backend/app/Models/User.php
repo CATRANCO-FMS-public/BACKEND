@@ -22,7 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'is_logged_in',
         'user_profile_id',
         'role_id',
     ];
@@ -37,7 +36,6 @@ class User extends Authenticatable
             'password' => 'hashed',
             'role_id' => 'integer',
             'status' => 'boolean',
-            'is_logged_in' => 'boolean',
         ];
     }
 

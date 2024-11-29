@@ -4,7 +4,7 @@
 		"name": "CATRANCO Backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26556087",
-		"_collection_link": "https://solar-resonance-634320.postman.co/workspace/Khen~08f1c13e-25e5-4f6e-a283-8d1be8d62188/collection/26556087-7b2205b9-dcfb-4955-84aa-6ff1417c982e?action=share&source=collection_link&creator=26556087"
+		"_collection_link": "https://solar-resonance-634320.postman.co/workspace/08f1c13e-25e5-4f6e-a283-8d1be8d62188/collection/26556087-7b2205b9-dcfb-4955-84aa-6ff1417c982e?action=share&source=collection_link&creator=26556087"
 	},
 	"item": [
 		{
@@ -15,28 +15,89 @@
 					"item": [
 						{
 							"name": "updateOwnProfile",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
 							"request": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"last_name\": \"Paler\",\n    \"first_name\": \"Khen\",\n    \"middle_initial\": \"P\",\n    \"license_number\": \"123213\",\n    \"address\": \"Admin Address\", \n    \"date_of_birth\": \"1980-01-01\",\n    \"contact_number\": \"1234567890\",\n    \"sex\": \"Male\",\n    \"contact_person\": \"John Doe\",\n    \"contact_person_number\": \"0987654321\",\n    \"user_profile_image\": null\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "multipart/form-data",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
 									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "last_name",
+											"value": "Admin1",
+											"type": "text"
+										},
+										{
+											"key": "first_name",
+											"value": "Admin1",
+											"type": "text"
+										},
+										{
+											"key": "middle_initial",
+											"value": "P",
+											"type": "text"
+										},
+										{
+											"key": "license_number",
+											"value": "123123e",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Admin Address",
+											"type": "text"
+										},
+										{
+											"key": "date_of_birth",
+											"value": "1980-01-01",
+											"type": "text"
+										},
+										{
+											"key": "sex",
+											"value": "Male",
+											"type": "text"
+										},
+										{
+											"key": "contact_number",
+											"value": "1111232",
+											"type": "text"
+										},
+										{
+											"key": "contact_person",
+											"value": "John Doe",
+											"type": "text"
+										},
+										{
+											"key": "contact_person_number",
+											"value": "0987654321",
+											"type": "text"
+										},
+										{
+											"key": "user_profile_image",
+											"type": "file",
+											"src": "postman-cloud:///1efa7cac-de5b-4330-a708-607e87924e66"
+										}
+									]
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/profile/update",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/profile/update",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -53,15 +114,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/profile/view",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/profile/view",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -71,18 +127,35 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "deleteImage",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/profile/1/delete-image",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"profile",
+										"1",
+										"delete-image"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "1|3tzcgR3rrMV6z3oPm78XkOof00qgSGrUZ6XGuVsz51fe8c5b",
-								"type": "string"
-							}
-						]
-					},
 					"event": [
 						{
 							"listen": "prerequest",
@@ -113,7 +186,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
+							"raw": "{\n  \"username\": \"dispatcher\",\n  \"password\": \"dispatcher123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,15 +194,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/login",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/login",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -147,7 +215,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
+									"value": "4|YEyzmpEX2kek9IN0XboybaFO7b63tKMrE8ksXZFSd715d1da",
 									"type": "string"
 								}
 							]
@@ -155,15 +223,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/logout",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/logout",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -181,7 +244,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
+									"value": "4|YEyzmpEX2kek9IN0XboybaFO7b63tKMrE8ksXZFSd715d1da",
 									"type": "string"
 								}
 							]
@@ -189,15 +252,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/me",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/me",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -248,15 +306,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/update",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/update",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -281,15 +334,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/register",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/register",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -299,14 +347,154 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "3|wvlSJ4v52uqpm5MFuWpk1oXYuuixsiAuquRnU7FR723ee5a9",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
 			"name": "Admin_Priviledges",
 			"item": [
 				{
+					"name": "AdminUserAccountManagement",
+					"item": [
+						{
+							"name": "deactivateAccount",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/admin/deactivate-account/2",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"admin",
+										"deactivate-account",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "activateAccount",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/admin/activate-account/2",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"admin",
+										"activate-account",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "AdminManageAccountProfiles",
 					"item": [
+						{
+							"name": "showPosition",
+							"item": [
+								{
+									"name": "showAllDrivers",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{APP_URL}}/api/user/admin/profiles/position/drivers",
+											"host": [
+												"{{APP_URL}}"
+											],
+											"path": [
+												"api",
+												"user",
+												"admin",
+												"profiles",
+												"position",
+												"drivers"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "showAllPSO",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{APP_URL}}/api/user/admin/profiles/position/passenger-assistant-officers",
+											"host": [
+												"{{APP_URL}}"
+											],
+											"path": [
+												"api",
+												"user",
+												"admin",
+												"profiles",
+												"position",
+												"passenger-assistant-officers"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "createUserProfile",
 							"request": {
@@ -314,7 +502,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"last_name\": \"Bond\",\n    \"first_name\": \"John\",\n    \"middle_initial\": \"A\",\n    \"license_number\": \"DL123123\",\n    \"address\": \"789 Pine Street, Gotham\",\n    \"date_of_birth\": \"1990-04-15\",\n    \"contact_number\": \"555-4321\",\n    \"sex\": \"Male\",\n    \"contact_person\": \"Emily Smith\",\n    \"contact_person_number\": \"1234567890\",\n    \"user_profile_image\": null,\n    \"position\": \"dispatcher\"\n}",
+									"raw": "{\n    \"last_name\": \"Smith\",\n    \"first_name\": \"Jane\",\n    \"middle_initial\": \"C\",\n    \"license_number\": \"DL456789\",\n    \"address\": \"456 Oak Avenue, Star City\",\n    \"date_of_birth\": \"1992-09-10\",\n    \"contact_number\": \"555-1234\",\n    \"sex\": \"Female\",\n    \"contact_person\": \"Robert Brown\",\n    \"contact_person_number\": \"6543219870\",\n    \"user_profile_image\": null,\n    \"position\": \"passenger_assistant_officer\"\n}\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -322,15 +510,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/create",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/profiles/create",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -348,15 +531,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/profiles/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -374,15 +552,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/3",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/profiles/3",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -409,15 +582,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/update/3",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/profiles/update/3",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -436,15 +604,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/profiles/delete/2",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/profiles/delete/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -465,16 +628,6 @@
 						{
 							"name": "createVehicle",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [
 									{
@@ -485,7 +638,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"vehicle_id\": \"001\",\n    \"or_id\": \"OR004567890\",\n    \"cr_id\": \"CR004567890\",\n    \"plate_number\": \"XYZ-4005\",\n    \"engine_number\": \"EN0045678901\",\n    \"chasis_number\": \"CH0045678901\",\n    \"third_pli\": \"Sure Safe TPLI\",\n    \"third_pli_policy_no\": \"TPL-004567890\",\n    \"third_pli_validity\": \"2025-01-15\",\n    \"ci\": \"Ultimate Insurance Group\",\n    \"ci_validity\": \"2025-05-30\",\n    \"date_purchased\": \"2021-08-12\",\n    \"supplier\": \"Global Bus Supplier\"\n}",
+									"raw": "{\n    \"vehicle_id\": \"002\",\n    \"or_id\": \"OR004567890\",\n    \"cr_id\": \"CR004567890\",\n    \"plate_number\": \"XYZ-4006\",\n    \"engine_number\": \"EN0045678901\",\n    \"chasis_number\": \"CH0045678901\",\n    \"third_pli\": \"Sure Safe TPLI\",\n    \"third_pli_policy_no\": \"TPL-004567890\",\n    \"third_pli_validity\": \"2025-01-15\",\n    \"ci\": \"Ultimate Insurance Group\",\n    \"ci_validity\": \"2025-05-30\",\n    \"date_purchased\": \"2021-08-12\",\n    \"supplier\": \"Global Bus Supplier\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -493,15 +646,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/create",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/vehicles/create",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -519,15 +667,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/vehicles/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -545,15 +688,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/002",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/vehicles/002",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -586,15 +724,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/update/002",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/vehicles/update/002",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -613,15 +746,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/vehicles/delete/002",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/vehicles/delete/002",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -652,7 +780,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"vehicle_id\": \"001\",\n    \"user_profile_ids\": [2, 3]\n}",
+									"raw": "{\n    \"vehicle_id\": \"001\",\n    \"user_profile_ids\": [3, 4]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -660,15 +788,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/create",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/assignments/create",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -682,19 +805,21 @@
 						},
 						{
 							"name": "showAllAssignment",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/assignments/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -712,21 +837,16 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/4",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/assignments/5",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"assignments",
-										"4"
+										"5"
 									]
 								}
 							},
@@ -745,7 +865,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"vehicle_id\": \"001\",\r\n    \"user_profile_ids\": [2,3]\r\n}",
+									"raw": "{\r\n    \"vehicle_id\": \"001\",\r\n    \"user_profile_ids\": [3, 4]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -753,22 +873,17 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/update/4",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/assignments/update/5",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"assignments",
 										"update",
-										"4"
+										"5"
 									]
 								}
 							},
@@ -780,22 +895,17 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/assignments/delete/4",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/assignments/delete/5",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"assignments",
 										"delete",
-										"4"
+										"5"
 									]
 								}
 							},
@@ -808,6 +918,9 @@
 					"item": [
 						{
 							"name": "createFuelLog",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -818,24 +931,55 @@
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"purchase_date\": \"2024-10-16 15:30:00\",\n    \"distance_travelled\": 150,\n    \"odometer_km\": 12000,\n    \"fuel_type\": \"unleaded\",\n    \"fuel_quantity\": 40.5,\n    \"fuel_price\": 50.5,\n    \"vehicle_id\": \"001\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "purchase_date",
+											"value": "2024-11-25 08:30:00",
+											"type": "text"
+										},
+										{
+											"key": "odometer_km",
+											"value": "2300",
+											"type": "text"
+										},
+										{
+											"key": "fuel_type",
+											"value": "diesel",
+											"type": "text"
+										},
+										{
+											"key": "fuel_liters_quantity",
+											"value": "50.0",
+											"type": "text"
+										},
+										{
+											"key": "fuel_price",
+											"value": "65.50",
+											"type": "text"
+										},
+										{
+											"key": "vehicle_id",
+											"value": "001",
+											"type": "text"
+										},
+										{
+											"key": "odometer_distance_proof",
+											"type": "file",
+											"src": "postman-cloud:///1efa7cac-16a5-4b60-8610-718e12268105"
+										},
+										{
+											"key": "fuel_receipt_proof",
+											"type": "file",
+											"src": "postman-cloud:///1efa7cac-de5b-4330-a708-607e87924e66"
 										}
-									}
+									]
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/create",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/fuel-logs/create",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -853,15 +997,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/fuel-logs/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -879,21 +1018,16 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/3",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/fuel-logs/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"fuel-logs",
-										"3"
+										"1"
 									]
 								}
 							},
@@ -902,34 +1036,71 @@
 						{
 							"name": "updateFuelLog",
 							"request": {
-								"method": "PATCH",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"purchase_date\": \"2024-10-16 15:30:00\",\n    \"distance_travelled\": 150,\n    \"odometer_km\": 12000,\n    \"fuel_type\": \"unleaded\",\n    \"fuel_quantity\": 40.5,\n    \"fuel_price\": 60,\n    \"vehicle_id\": \"001\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
 									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "purchase_date",
+											"value": "2024-11-21 08:30:00",
+											"type": "text"
+										},
+										{
+											"key": "odometer_km",
+											"value": "160000",
+											"type": "text"
+										},
+										{
+											"key": "fuel_type",
+											"value": "diesel",
+											"type": "text"
+										},
+										{
+											"key": "fuel_liters_quantity",
+											"value": "50.0",
+											"type": "text"
+										},
+										{
+											"key": "fuel_price",
+											"value": "70.00",
+											"type": "text"
+										},
+										{
+											"key": "vehicle_id",
+											"value": "001",
+											"type": "text"
+										},
+										{
+											"key": "odometer_distance_proof",
+											"type": "file",
+											"src": "/C:/Users/paler/Pictures/Screenshots/Screenshot (1).png"
+										},
+										{
+											"key": "fuel_receipt_proof",
+											"type": "file",
+											"src": "/C:/Users/paler/Pictures/Screenshots/Screenshot (2).png"
+										}
+									]
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/update/3",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/fuel-logs/update/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"fuel-logs",
 										"update",
-										"3"
+										"2"
 									]
 								}
 							},
@@ -941,15 +1112,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/fuel-logs/delete/3",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/fuel-logs/delete/3",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -971,10 +1137,16 @@
 							"name": "createMaintenance",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1500.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"vehicle_id\": \"001\"\r\n}",
+									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1600.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"vehicle_id\": \"001\",\r\n    \"mechanic_company\": \"AutoFix Solutions\",\r\n    \"mechanic_company_address\": \"123 Main Street, Springfield, IL\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -982,15 +1154,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/maintenance-scheduling/create",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/create",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1008,15 +1175,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/maintenance-scheduling/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1034,15 +1196,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/maintenance-scheduling/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1061,7 +1218,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1500.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"maintenance_status\": \"inactive\",\r\n    \"vehicle_id\": \"001\"\r\n}",
+									"raw": "{\r\n    \"maintenance_type\": \"oil_change\",\r\n    \"maintenance_cost\": 1500.50,\r\n    \"maintenance_date\": \"2024-10-20 10:30:00\",\r\n    \"vehicle_id\": \"001\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1069,15 +1226,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/maintenance-scheduling/update/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/update/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1096,15 +1248,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/maintenance-scheduling/delete/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/delete/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1112,6 +1259,84 @@
 										"maintenance-scheduling",
 										"delete",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "toggleStatus",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/toggle-status/1",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"admin",
+										"maintenance-scheduling",
+										"toggle-status",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllActive",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/all/active",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"admin",
+										"maintenance-scheduling",
+										"all",
+										"active"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllCompleted",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/admin/maintenance-scheduling/all/completed",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"admin",
+										"maintenance-scheduling",
+										"all",
+										"completed"
 									]
 								}
 							},
@@ -1128,15 +1353,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatches/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/dispatches/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1154,15 +1374,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatches/2",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/dispatches/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1180,15 +1395,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/dispatches/delete/2",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/dispatches/delete/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1212,15 +1422,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/feedbacks/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/feedbacks/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1238,15 +1443,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/feedbacks/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/feedbacks/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1264,22 +1464,17 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/admin/feedbacks/delete/2",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/admin/feedbacks/delete/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"admin",
 										"feedbacks",
 										"delete",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -1293,7 +1488,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "1|SXCYxjUbmdKgewTwBPsoVQOha45uKpzuoRgDH6hxbed4a2f7",
+						"value": "1|E4O8xSSUPh5qDKQgNQMg18prjiP1UYVI1N4yR6gA76cc5b0b",
 						"type": "string"
 					}
 				]
@@ -1325,6 +1520,302 @@
 			"name": "Dispatcher_Priviledges",
 			"item": [
 				{
+					"name": "DispatcherTimer",
+					"item": [
+						{
+							"name": "getAllTimers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/timers/all",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"timers",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTimerById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/timers/2",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"timers",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createTimer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Rush Hour Interval Delete\",\r\n    \"time_in_minutes\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/timers/create",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"timers",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateTimer",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Rush Hour Interval\",\r\n    \"time_in_minutes\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/timers/update/2",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"timers",
+										"update",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteTimer",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/timers/delete/4",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"timers",
+										"delete",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DispatcherTerminal",
+					"item": [
+						{
+							"name": "getAllTerminal",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/terminals/all",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"terminals",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTerminalById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/terminals/3",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"terminals",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createTerminal",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"terminal_name\": \"New Terminal\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/terminals/create",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"terminals",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateTerminal",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"terminal_name\": \"Update New Terminal\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/terminals/update/1",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"terminals",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteTerminal",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{APP_URL}}/api/user/dispatcher/terminals/delete/1",
+									"host": [
+										"{{APP_URL}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"dispatcher",
+										"terminals",
+										"delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "DispatcherDispatch",
 					"item": [
 						{
@@ -1334,7 +1825,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"dispatch_logs_id\": 2\n}",
+									"raw": "{\n  \"terminal_id\": 3,\n  \"vehicle_assignment_id\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1342,15 +1833,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/start",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/start",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1380,15 +1866,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/all",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/all",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1406,21 +1887,16 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"dispatcher",
 										"dispatches",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1431,8 +1907,20 @@
 							"request": {
 								"method": "PATCH",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": ""
+									"raw": "{{APP_URL}}",
+									"host": [
+										"{{APP_URL}}"
+									]
 								}
 							},
 							"response": []
@@ -1443,15 +1931,10 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/delete/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/delete/1",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1470,22 +1953,17 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/end/1",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/end/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
 										"dispatcher",
 										"dispatches",
 										"end",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -1497,15 +1975,10 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/dispatcher/dispatches/cancel/2",
-									"protocol": "http",
+									"raw": "{{APP_URL}}/api/user/dispatcher/dispatches/cancel/2",
 									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
+										"{{APP_URL}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"user",
@@ -1519,10 +1992,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "ViewVehicleStatus",
-					"item": []
 				}
 			],
 			"auth": {
@@ -1530,74 +1999,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "2|UvXGZYb3aa3hph65xAzZVD8yZkthan4iM7AvlaJyc3ea0cf2",
-						"type": "string"
-					}
-				]
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Driver_Priviledges",
-			"item": [
-				{
-					"name": "Return",
-					"item": [
-						{
-							"name": "updateReturn",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://127.0.0.1:8000/api/user/driver/updateReturn",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"api",
-										"user",
-										"driver",
-										"updateReturn"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			],
-			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "4|tZs7iJG6y5Uq9vB7aC1w5TzsageBy1hmo75NV4Hfeae772f0",
+						"value": "2|6BWNmT14kfeYdkgjOlgxD9c9xXyosWDbzfz7hvQg521927fc",
 						"type": "string"
 					}
 				]
@@ -1643,15 +2045,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/feedback",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/feedback",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -1677,7 +2074,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"feedback_logs_id\": 20\r\n}",
+							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"feedback_logs_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1685,15 +2082,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/otp/generate",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/otp/generate",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
@@ -1711,7 +2103,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"537934\"\r\n}",
+							"raw": "{\r\n    \"phone_number\": \"09299556160\",\r\n    \"otp\": \"107064\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1719,20 +2111,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/user/feedback/20/verify-phone",
-							"protocol": "http",
+							"raw": "{{APP_URL}}/api/user/feedback/1/verify-phone",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{APP_URL}}"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"user",
 								"feedback",
-								"20",
+								"1",
 								"verify-phone"
 							]
 						}
@@ -1740,6 +2127,35 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "APP_URL",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
 		}
 	]
 }

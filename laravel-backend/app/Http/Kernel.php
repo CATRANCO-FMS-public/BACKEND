@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'dispatcher' => \App\Http\Middleware\DispatcherMiddleware::class,
         'driver' => \App\Http\Middleware\DriverMiddleware::class,
+        'custom.headers' => \App\Http\Middleware\AddCustomHeaders::class,
     ];
 }

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('email', 150)->unique()->nullable();
             $table->string('password', 150);
             $table->tinyInteger('status');
-            $table->tinyInteger('is_logged_in');
             $table->unsignedBigInteger('user_profile_id')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamps();

@@ -17,7 +17,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             \App\Models\OTP::where('expires_at', '<', now())->delete();
-        })->daily(); // Or adjust frequency as needed
+        })->daily();
+        $schedule->command('logs:clear')->daily(); 
+        // Or adjust frequency as needed
     }
 
     /**

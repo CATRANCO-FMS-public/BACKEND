@@ -12,7 +12,11 @@ use App\Http\Controllers\DispatchController;
 use App\Http\Controllers\MaintenanceSchedulingController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\FeedbackLogsController;
+use App\Http\Controllers\FlespiController;
 use Illuminate\Support\Facades\Route;
+
+// Flespi Integration Route
+Route::post('flespi-data', [FlespiController::class, 'handleData'])->middleware('custom.headers');
 
 Route::prefix('user')->group(function () {
     // Public routes
