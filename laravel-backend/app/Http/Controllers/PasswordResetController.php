@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class PasswordResetController extends Controller
 {
@@ -17,15 +17,36 @@ class PasswordResetController extends Controller
         $status = Password::sendResetLink($request->only('email'));
 
         if ($status === Password::RESET_LINK_SENT) {
+            // Return success message
             return response()->json(['message' => __($status)], 200);
         }
 
         return response()->json(['message' => __($status)], 400);
     }
 
+    public function showResetForm(Request $request)
+    {
+        $token = $request->query('token');
+        $email = $request->query('email');
+
+        Log::info('Reset form data', ['token' => $token, 'email' => $email]);
+
+        // Check if token and email are available
+        if (!$token || !$email) {
+            return redirect()->route('password.request')->with('error', 'Invalid password reset request.');
+        }
+
+        return view('auth.passwords.reset')->with([
+            'token' => $token,
+            'email' => $email
+        ]);
+    }
+
     // Reset the password
     public function resetPassword(Request $request)
     {
+        Log::info('Reset password data:', $request->all());
+        
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',

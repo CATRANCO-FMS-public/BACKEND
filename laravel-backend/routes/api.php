@@ -23,7 +23,6 @@ Route::prefix('user')->group(function () {
     Route::post('register', [AuthController::class, 'registerAccount']); //Check
     Route::post('login', [AuthController::class, 'loginAccount']); //Check
     Route::post('password/forgot', [PasswordResetController::class, 'sendResetLink']);
-    Route::post('password/reset', [PasswordResetController::class, 'resetPassword']);
 
     // Routes that require authentication
     Route::middleware(['auth:sanctum'])->group(function () {

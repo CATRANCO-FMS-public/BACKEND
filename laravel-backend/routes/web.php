@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PasswordResetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Display the reset password form
+Route::get('password/reset', [PasswordResetController::class, 'showResetForm'])->name('password.request');
+
+// Handle the password reset (POST)
+Route::post('password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.update');
+
+

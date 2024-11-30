@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 {
@@ -47,6 +48,12 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->belongsTo(UserProfile::class, 'user_profile_id');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        Log::info('Sending password reset notification', ['email' => $this->email, 'token' => $token]);
+        $this->notify(new \App\Notifications\CustomResetPasswordNotification($token));
     }
 
     // VehicleAssignments relationships
