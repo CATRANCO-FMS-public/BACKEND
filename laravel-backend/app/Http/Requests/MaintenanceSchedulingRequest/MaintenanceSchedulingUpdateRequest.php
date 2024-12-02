@@ -24,7 +24,7 @@ class MaintenanceSchedulingUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'maintenance_type' => 'required|in:oil_change,tire_rotation,brake_inspection,engine_check,transmission_service',
+            'maintenance_type' => 'required|string|max:255',
             'maintenance_cost' => 'required|numeric|min:0',
             'maintenance_date' => 'required|date',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',

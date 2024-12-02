@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('maintenance_scheduling', function (Blueprint $table) {
             $table->id('maintenance_scheduling_id');
-            $table->enum('maintenance_type', ['oil_change', 'tire_rotation', 'brake_inspection', 'engine_check', 'transmission_service']);
+            $table->string('maintenance_type');
             $table->decimal('maintenance_cost', 10, 2);
             $table->dateTime('maintenance_date');
             $table->enum('maintenance_status', ['active', 'completed']);
             $table->string('vehicle_id', 10);
             $table->string('mechanic_company', 100);
             $table->text('mechanic_company_address');
+            $table->string('maintenance_complete_proof')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

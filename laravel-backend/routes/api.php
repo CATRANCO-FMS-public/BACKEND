@@ -93,7 +93,7 @@ Route::prefix('user')->group(function () {
                 Route::get('{id}', [MaintenanceSchedulingController::class, 'getMaintenanceSchedulingById']); //Check
                 Route::patch('update/{id}', [MaintenanceSchedulingController::class, 'updateMaintenanceScheduling']); //Check
                 Route::delete('delete/{id}', [MaintenanceSchedulingController::class, 'deleteMaintenanceScheduling']); //Check
-                Route::patch('toggle-status/{id}', [MaintenanceSchedulingController::class, 'toggleMaintenanceStatus']); //Check
+                Route::post('toggle-status/{id}', [MaintenanceSchedulingController::class, 'toggleMaintenanceStatus']); //Check
 
                     Route::get('all/active', [MaintenanceSchedulingController::class, 'getAllActiveMaintenance']);
                     Route::get('all/completed', [MaintenanceSchedulingController::class, 'getAllCompletedMaintenance']);

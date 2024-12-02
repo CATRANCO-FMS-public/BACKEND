@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MaintenanceSchedulingRequest\MaintenanceSchedulingRequest;
 use App\Http\Requests\MaintenanceSchedulingRequest\MaintenanceSchedulingUpdateRequest;
+use App\Http\Requests\MaintenanceSchedulingRequest\ToggleMaintenanceStatusRequest;
 use App\Models\MaintenanceScheduling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,23 +71,42 @@ class MaintenanceSchedulingController extends Controller
         }
     }
 
-    // Toggle the maintenance status between 'active' and 'completed'
-    public function toggleMaintenanceStatus($id)
+    // Toggle the maintenance status from active to completed
+    public function toggleMaintenanceStatus(ToggleMaintenanceStatusRequest $request, $id)
     {
         try {
             // Find the maintenance schedule by ID
             $schedule = MaintenanceScheduling::findOrFail($id);
 
-            // Toggle the maintenance status
-            $schedule->maintenance_status = $schedule->maintenance_status === 'active' ? 'completed' : 'active';
+            // Ensure the status can only be toggled from 'active' to 'completed'
+            if ($schedule->maintenance_status === 'completed') {
+                return response()->json([
+                    "message" => "Maintenance status is already completed and cannot be changed back to active."
+                ], 400);
+            }
 
+            // Check if proof file is required for toggling to 'completed'
+            if ($schedule->maintenance_status === 'active' && $request->hasFile('maintenance_complete_proof')) {
+                // Handle proof file upload
+                $proofPath = $request->file('maintenance_complete_proof')->store('maintenance_proofs', 'public');
+                $schedule->maintenance_complete_proof = $proofPath;
+            } elseif ($schedule->maintenance_status === 'active' && !$request->hasFile('maintenance_complete_proof')) {
+                return response()->json([
+                    "message" => "Proof is required to mark maintenance as completed."
+                ], 400);
+            }
+
+            // Update the status to 'completed'
+            $schedule->maintenance_status = 'completed';
+
+            // Update the user who toggled the status
             $schedule->updated_by = Auth::id();
 
-            // Save the updated status
+            // Save the updated schedule
             $schedule->save();
 
             return response()->json([
-                "message" => "Maintenance Status Toggled Successfully",
+                "message" => "Maintenance status successfully updated to completed.",
                 "schedule" => $schedule
             ], 200);
         } catch (\Exception $e) {
