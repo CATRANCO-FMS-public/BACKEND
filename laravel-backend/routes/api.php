@@ -33,13 +33,16 @@ Route::prefix('user')->group(function () {
         // User profile routes
         Route::prefix('profile')->group(function () {
             Route::get('view', [UserProfileController::class, 'viewOwnProfile']); //Check
-            Route::post('update', [UserProfileController::class, 'updateOwnProfile']); //Check
             Route::delete('{id}/delete-image', [UserProfileController::class, 'deleteUserProfileImage']); //Check
         });
 
         // Admin routes
         Route::middleware(['admin'])->prefix('admin')->group(function () {
 
+            // Admin Update Own Profile
+            Route::post('updateOwnProfile', [UserProfileController::class, 'updateOwnProfile']); //Check
+
+            // Admin can activate and deactivate accounts
             Route::patch('/activate-account/{id}', [AuthController::class, 'activateAccount']);
             Route::patch('/deactivate-account/{id}', [AuthController::class, 'deactivateAccount']);
 
@@ -118,6 +121,9 @@ Route::prefix('user')->group(function () {
 
         // Dispatcher Routes
         Route::middleware(['dispatcher'])->prefix('dispatcher')->group(function () {
+
+            // Dispatcher can add their profile image
+            Route::post('updateProfileImage', [UserProfileController::class, 'updateProfileImage']); //Check
 
             // Dispatcher can create and manage timers
             Route::prefix('timers')->group(function () {

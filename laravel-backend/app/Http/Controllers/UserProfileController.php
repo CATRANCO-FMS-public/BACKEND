@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest\UserProfileRequest;
-use App\Http\Requests\ProfileRequest\UpdateOwnProfile;
+use App\Http\Requests\ProfileRequest\Admin\UpdateOwnProfile;
+use App\Http\Requests\ProfileRequest\Dispatcher\UpdateProfileImage;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -234,6 +235,46 @@ class UserProfileController extends Controller
 
     // Update the logged-in user's profile
     public function updateOwnProfile(UpdateOwnProfile $request)
+    {
+        $user = Auth::user();
+        $profile = $user->profile;
+
+        if (!$profile) {
+            return response()->json(["message" => "Profile not found"], 404);
+        }
+
+        try {
+            $data = $request->validated();
+
+            // Handle user profile image upload if present
+            if ($request->hasFile('user_profile_image')) {
+                // Store the uploaded image in the public storage
+                $imagePath = $request->file('user_profile_image')->store('user_profiles', 'public');
+                $data['user_profile_image'] = $imagePath;
+
+                // Optionally, delete the old image if it exists
+                if ($profile->user_profile_image) {
+                    Storage::disk('public')->delete($profile->user_profile_image);
+                }
+            }
+
+            // Update the profile with the validated data
+            $profile->update($data);
+
+            return response()->json([
+                "message" => "User Profile Updated Successfully",
+                "profile" => $profile,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Failed to update profile",
+                "error" => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    // Update the logged-in user's profile
+    public function updateProfileImage(UpdateProfileImage $request)
     {
         $user = Auth::user();
         $profile = $user->profile;

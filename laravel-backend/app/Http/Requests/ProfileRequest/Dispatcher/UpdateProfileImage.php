@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\AuthRequest;
+namespace App\Http\Requests\ProfileRequest\Dispatcher;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AccountUpdateRequest extends FormRequest
+class UpdateProfileImage extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class AccountUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'nullable|string|email|max:150|unique:users,email',
-            'password' => 'nullable|string|min:8',
+            'user_profile_image' => 'nullable|file|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }
