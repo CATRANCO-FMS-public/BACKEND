@@ -25,6 +25,9 @@ class User extends Authenticatable
         'status',
         'user_profile_id',
         'role_id',
+        "created_by",
+        "updated_by",
+        "deleted_by",
     ];
 
     protected $hidden = [

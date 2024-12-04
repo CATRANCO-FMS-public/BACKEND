@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->enum('dispatch_status', ['on_alley', 'on_road', 'completed']);
-            $table->unsignedBigInteger('terminal_id');
+            $table->enum('route', ['Cogon', 'Canitoan', 'Silver Creek']);
             $table->unsignedBigInteger('vehicle_assignment_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->softDeletes();
 
             // Foreign key constraints
-            $table->foreign('terminal_id')->references('terminal_id')->on('terminals')->onDelete('cascade');
             $table->foreign('vehicle_assignment_id')->references('vehicle_assignment_id')->on('vehicle_assignment')->onDelete('cascade');
             $table->foreign('created_by')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('user_id')->on('users')->onDelete('set null');

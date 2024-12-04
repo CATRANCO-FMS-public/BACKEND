@@ -79,6 +79,7 @@ class AuthController extends Controller
                 'user_id' => $user->user_id,
                 'username' => $user->username,
                 'email' => $user->email,
+                'role_id' => $user->role->role_id,
                 'role' => $user->role->role,
                 'status' => $user->status
             ], 200);
@@ -93,15 +94,34 @@ class AuthController extends Controller
             $user = $request->user();
             $data = $request->validated();
 
-            if (isset($data['password']) && !empty($data['password'])) {
-                $data['password'] = bcrypt($data['password']);
+            // Track if any fields were actually changed
+            $changesMade = false;
+
+            // Check if email has been changed
+            if (isset($data['email']) && $data['email'] !== $user->email) {
+                $changesMade = true;
             } else {
-                unset($data['password']);
+                unset($data['email']); // Do not update email if no change
             }
 
+            // Check if password has been changed
+            if (isset($data['password']) && !empty($data['password'])) {
+                $data['password'] = bcrypt($data['password']);
+                $changesMade = true;
+            } else {
+                unset($data['password']); // Do not update password if no change
+            }
+
+            // If no changes were made, return a "no changes" message
+            if (!$changesMade) {
+                return response(['message' => 'No changes were applied.'], 200);
+            }
+
+            // Update the user with the changes
             $user->update($data);
 
             return response(['message' => 'User Updated Successfully'], 200);
+
         } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], 400);
         }

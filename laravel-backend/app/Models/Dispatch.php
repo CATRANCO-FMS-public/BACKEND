@@ -24,11 +24,6 @@ class Dispatch extends Model
         "deleted_by",
     ];
 
-    public function terminal()
-    {
-        return $this->belongsTo(Terminal::class, 'terminal_id');
-    }
-
     public function vehicleAssignments()
     {
         return $this->belongsTo(VehicleAssignment::class, 'vehicle_assignment_id');
