@@ -12,7 +12,7 @@ class VehicleAssignmentController extends Controller
 {
     // Get all vehicle assignments
     public function getAllAssignments() {
-        $assignments = VehicleAssignment::with('userProfiles')->get(); // Load user profiles
+        $assignments = VehicleAssignment::with('vehicle', 'userProfiles')->get(); // Load user profiles
         return response()->json($assignments);
     }
 
@@ -46,7 +46,7 @@ class VehicleAssignmentController extends Controller
                 $assignment->userProfiles()->attach($request->input('user_profile_ids'));
             }
 
-            return response()->json(["message" => "Vehicle Assignment Successfully Created", "assignment" => $assignment->load('userProfiles')], 201);
+            return response()->json(["message" => "Vehicle Assignment Successfully Created", "assignment" => $assignment->load('vehicle', 'userProfiles')], 201);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
@@ -55,7 +55,7 @@ class VehicleAssignmentController extends Controller
     // Get a specific vehicle assignment by ID
     public function getAssignmentById($id) {
         try {
-            $assignment = VehicleAssignment::with('userProfiles')->findOrFail($id); // Load user profiles
+            $assignment = VehicleAssignment::with('vehicle', 'userProfiles')->findOrFail($id); // Load user profiles
             return response()->json($assignment);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 404);
@@ -84,7 +84,6 @@ class VehicleAssignmentController extends Controller
                         'invalid_user_profiles' => $invalidProfiles, // Provide the invalid user profile IDs
                     ], 400);
                 }
-
                 // Sync user profiles
                 $assignment->userProfiles()->sync($userProfiles);
             }
@@ -94,7 +93,7 @@ class VehicleAssignmentController extends Controller
 
             return response()->json([
                 "message" => "Vehicle Assignment Updated Successfully",
-                "assignment" => $assignment->load('userProfiles')
+                "assignment" => $assignment->load('vehicle', 'userProfiles')
             ], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
