@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('ci', 50);
             $table->dateTime('ci_validity');
             $table->date('date_purchased');
-            $table->string('supplier', 20);
+            $table->string('supplier', 255);
             $table->timestamps();
         });
     }
