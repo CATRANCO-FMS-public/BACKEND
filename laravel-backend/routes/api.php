@@ -140,15 +140,6 @@ Route::prefix('user')->group(function () {
                 Route::delete('delete/{id}', [TimerController::class, 'deleteTimer']); // Delete a timer by ID
             });
 
-            // Dispatcher can create and manage terminals
-            Route::prefix('terminals')->group(function () {
-                Route::get('all', [TerminalController::class, 'getAllTerminals']); // Fetch all terminals
-                Route::get('{id}', [TerminalController::class, 'getTerminalById']); // Fetch terminal by ID
-                Route::post('create', [TerminalController::class, 'createTerminal']); // Create a terminal
-                Route::patch('update/{id}', [TerminalController::class, 'updateTerminal']); // Update terminal by ID
-                Route::delete('delete/{id}', [TerminalController::class, 'deleteTerminal']); // Delete terminal by ID
-            });
-
             // Dispatcher can create and manage dispatch logs
             Route::prefix('dispatches')->group(function () {
                 Route::post('start', [DispatchController::class, 'startDispatch']);
