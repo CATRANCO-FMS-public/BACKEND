@@ -125,6 +125,12 @@ Route::prefix('user')->group(function () {
             // Dispatcher can add their profile image
             Route::post('updateProfileImage', [UserProfileController::class, 'updateProfileImage']); //Check
 
+            // Dispatcher can view vehicle assignments
+            Route::prefix('assignments')->group(function () {
+                Route::get('all', [VehicleAssignmentController::class, 'getAllAssignments']); //Check
+                Route::get('{id}', [VehicleAssignmentController::class, 'getAssignmentById']); //Check
+            });
+
             // Dispatcher can create and manage timers
             Route::prefix('timers')->group(function () {
                 Route::get('all', [TimerController::class, 'getAllTimers']); // Fetch all timers
