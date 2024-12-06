@@ -150,25 +150,25 @@ class DispatchLogsController extends Controller
             $ids = $request->validated()['ids'];
 
             // Optionally check business logic before deletion
-            $dispatches = DispatchLogs::whereIn('dispatch_id', $ids)->get();
-            foreach ($dispatches as $dispatch) {
-                if ($dispatch->status === 'completed') {
+            $dispatches = DispatchLogs::whereIn('dispatch_logs_id', $ids)->get();
+            foreach ($dispatches as $dispatch_logs) {
+                if ($dispatch_logs->status === 'completed') {
                     return response()->json([
                         'error' => 'Cannot delete a completed dispatch.',
-                        'dispatch_id' => $dispatch->dispatch_id,
+                        'dispatch_logs_id' => $dispatch_logs->dispatch_logs_id,
                     ], 400);
                 }
             }
 
             // Perform the deletion
-            $deletedCount = DispatchLogs::whereIn('dispatch_id', $ids)->delete();
+            $deletedCount = DispatchLogs::whereIn('dispatch_logs_id', $ids)->delete();
 
             return response()->json([
                 'message' => $deletedCount === 1 
                     ? 'Dispatch record deleted successfully.' 
                     : 'Dispatch records deleted successfully.',
                 'deleted_ids' => $ids,
-            ], 200);
+            ], status: 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete records.',

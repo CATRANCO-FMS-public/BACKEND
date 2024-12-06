@@ -23,7 +23,7 @@ class DeleteDispatchRequest extends FormRequest
     {
         return [
             'ids' => 'required|array|min:1',
-            'ids.*' => 'integer|exists:dispatch,dispatch_id',
+            'ids.*' => 'integer|exists:dispatch_logs,dispatch_logs_id',
         ];
     }
 }
