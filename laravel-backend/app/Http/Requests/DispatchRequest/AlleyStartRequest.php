@@ -4,7 +4,7 @@ namespace App\Http\Requests\DispatchRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DispatchStartRequest extends FormRequest
+class AlleyStartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

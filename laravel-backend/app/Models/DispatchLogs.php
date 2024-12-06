@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dispatch extends Model
+class DispatchLogs extends Model
 {
     use HasFactory;
 
-    protected $table = "dispatch";
+    protected $table = "dispatch_logs";
 
-    protected $primaryKey = "dispatch_id";
+    protected $primaryKey = "dispatch_logs_id";
 
     protected $fillable = [
         "start_time",
         "end_time",
-        "dispatch_status",
-        "terminal_id", 
+        "status",
+        "route",
         "vehicle_assignment_id",
         "created_by",
         "updated_by",

@@ -4,7 +4,7 @@ namespace App\Http\Requests\DispatchRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DispatchStartRequest extends FormRequest
+class DeleteDispatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class DispatchStartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'route' => 'required|in:Cogon,Canitoan,Silver Creek',
-            'vehicle_assignment_id' => 'required|exists:vehicle_assignment,vehicle_assignment_id',
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:dispatch,dispatch_id',
         ];
     }
 }

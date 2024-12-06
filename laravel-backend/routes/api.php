@@ -8,7 +8,7 @@ use App\Http\Controllers\VehicleAssignmentController;
 use App\Http\Controllers\FuelLogsController;
 use App\Http\Controllers\TimerController;
 use App\Http\Controllers\TerminalController;
-use App\Http\Controllers\DispatchController;
+use App\Http\Controllers\DispatchLogsController;
 use App\Http\Controllers\MaintenanceSchedulingController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\FeedbackLogsController;
@@ -103,10 +103,10 @@ Route::prefix('user')->group(function () {
             });
 
             // Admin can view and delete dispatch
-            Route::prefix('dispatches')->group(function () {
-                Route::get('all', [DispatchController::class, 'getAllDispatches']);
-                Route::get('{id}', [DispatchController::class, 'getDispatchById']);
-                Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
+            Route::prefix('dispatch_logs')->group(function () {
+                Route::get('all', [DispatchLogsController::class, 'getAllDispatches']);
+                Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']);
+                Route::delete('delete', [DispatchLogsController::class, 'deleteRecords']);
             });
 
             // Admin can view and delete feedbacks
@@ -141,16 +141,15 @@ Route::prefix('user')->group(function () {
             });
 
             // Dispatcher can create and manage dispatch logs
-            Route::prefix('dispatches')->group(function () {
-                Route::post('start', [DispatchController::class, 'startDispatch']);
-                Route::get('all', [DispatchController::class, 'getAllDispatches']);
-                Route::get('{id}', [DispatchController::class, 'getDispatchById']);
-                Route::patch('update/{id}', [DispatchController::class, 'updateDispatch']);
-                Route::patch('end/{id}', [DispatchController::class, 'endDispatch']);
-                Route::patch('cancel/{id}', [DispatchController::class, 'cancelDispatch']);
-                Route::delete('delete/{id}', [DispatchController::class, 'deleteDispatch']);
+            Route::prefix('dispatch_logs')->group(function () {
+                Route::post('alley/start', [DispatchLogsController::class, 'startAlley']);
+                Route::post('dispatch/start', [DispatchLogsController::class, 'startDispatch']); 
+                Route::get('all', [DispatchLogsController::class, 'getAllDispatches']); 
+                Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']); 
+                Route::patch('alley/end/{id}', [DispatchLogsController::class, 'endAlley']); 
+                Route::patch('dispatch/end/{id}', [DispatchLogsController::class, 'endDispatch']);
             });
-        });       
+        });
     }); 
 
     Route::post('/feedback', [FeedbackLogsController::class, 'createFeedbackLog']); //Check

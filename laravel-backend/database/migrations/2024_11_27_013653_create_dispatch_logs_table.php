@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dispatch', function (Blueprint $table) {
-            $table->id('dispatch_id');
+        Schema::create('dispatch_logs', function (Blueprint $table) {
+            $table->id('dispatch_logs_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
-            $table->enum('dispatch_status', ['on_alley', 'on_road', 'completed']);
+            $table->enum('status', ['on alley','on road','alley_completed', "dispatch_completed"]);
             $table->enum('route', ['Cogon', 'Canitoan', 'Silver Creek']);
             $table->unsignedBigInteger('vehicle_assignment_id');
             $table->unsignedBigInteger('created_by');
@@ -41,14 +41,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('dispatch', function (Blueprint $table) {
-            $table->dropForeign(['timer_id']);
-            $table->dropForeign(['route_id']);
+        Schema::table('dispatch_logs', function (Blueprint $table) {
             $table->dropForeign(['vehicle_assignment_id']);
             $table->dropForeign(['created_by']);
             $table->dropForeign(['updated_by']);
             $table->dropForeign(['deleted_by']);
         });
-        Schema::dropIfExists('dispatch');
+        Schema::dropIfExists('dispatch_logs');
     }
 };
