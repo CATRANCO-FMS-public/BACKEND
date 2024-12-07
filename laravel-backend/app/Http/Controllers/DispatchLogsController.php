@@ -14,7 +14,7 @@ class DispatchLogsController extends Controller
     // Get all dispatches
     public function getAllDispatches()
     {
-        $dispatches = DispatchLogs::with(['vehicleAssignments.userProfiles'])->get();
+        $dispatches = DispatchLogs::with(['createdDispatch','updatedDispatch','deletedDispatch','vehicleAssignments.userProfiles'])->get();
         return response()->json($dispatches);
     }
 
@@ -104,6 +104,7 @@ class DispatchLogsController extends Controller
 
             // Set end_time and mark as completed
             $dispatch->end_time = now();
+            $dispatch['updated_by'] = Auth::id();
             $dispatch->status = 'alley_completed';
             $dispatch->save();
 

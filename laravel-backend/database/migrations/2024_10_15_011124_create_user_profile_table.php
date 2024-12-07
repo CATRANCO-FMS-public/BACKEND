@@ -23,8 +23,8 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->enum('sex', ['Male', 'Female']);
             $table->string('contact_number', 20);
-            $table->string('contact_person', 20); 
-            $table->string('contact_person_number', 20);
+            $table->string('contact_person', 20)->nullable();
+            $table->string('contact_person_number', 20)->nullable();
             $table->string('user_profile_image', 255)->nullable();
             $table->enum('position', [
                 'operation_manager', 

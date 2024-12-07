@@ -14,8 +14,10 @@ class Timer extends Model
     protected $primaryKey = "timer_id";
 
     protected $fillable = [
-        "title",
-        "time_in_minutes"
+        "title",           
+        "start_time",     
+        "end_time",        
+        "minutes_interval"
     ];
     
 }

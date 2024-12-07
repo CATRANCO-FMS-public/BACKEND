@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('timers', function (Blueprint $table) {
             $table->id('timer_id');
-            $table->string('title'); // Timer name (e.g., "Normal Interval")
-            $table->integer('time_in_minutes'); // Store time in minutes
-            $table->timestamps();
+            $table->string('title'); 
+            $table->string('start_time'); 
+            $table->string('end_time'); 
+            $table->integer('minutes_interval'); 
+            $table->timestamps(); 
         });
     }
 

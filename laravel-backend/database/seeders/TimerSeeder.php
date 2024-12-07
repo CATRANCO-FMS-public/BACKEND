@@ -17,13 +17,17 @@ class TimerSeeder extends Seeder
         DB::table('timers')->insert([
             [
                 "title" => "Normal Interval",
-                "time_in_minutes" => 5,
+                "start_time" => "05:00 AM", 
+                "end_time" => "10:00 PM", 
+                "minutes_interval" => 10,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 "title" => "Rush Hour Interval",
-                "time_in_minutes" => 10,
+                "start_time" => "07:00 AM",
+                "end_time" => "09:00 AM",  
+                "minutes_interval" => 5,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

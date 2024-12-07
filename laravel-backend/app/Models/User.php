@@ -111,16 +111,16 @@ class User extends Authenticatable
     // Dispatch relationships
     public function createDispatch()
     {
-        return $this->hasMany(Dispatch::class, 'created_by');
+        return $this->hasMany(DispatchLogs::class, 'created_by');
     }
 
     public function updateDispatch()
     {
-        return $this->hasMany(Dispatch::class, 'updated_by');
+        return $this->hasMany(DispatchLogs::class, 'updated_by');
     }
 
     public function deleteDispatch()
     {
-        return $this->hasMany(Dispatch::class, 'deleted_by');
+        return $this->hasMany(DispatchLogs::class, 'deleted_by');
     }
 }

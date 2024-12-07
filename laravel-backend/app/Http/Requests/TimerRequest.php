@@ -23,7 +23,9 @@ class TimerRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'time_in_minutes' => 'required|integer|min:1',
+            'start_time' => 'required|date_format:g:i A',  
+            'end_time' => 'required|date_format:g:i A',    
+            'minutes_interval' => 'required|integer|min:1',
         ];
     }
 }
