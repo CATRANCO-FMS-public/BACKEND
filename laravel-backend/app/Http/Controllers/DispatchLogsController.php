@@ -14,7 +14,7 @@ class DispatchLogsController extends Controller
     // Get all dispatches
     public function getAllDispatches()
     {
-        $dispatches = DispatchLogs::with(['createdDispatch','updatedDispatch','deletedDispatch','vehicleAssignments.userProfiles'])->get();
+        $dispatches = DispatchLogs::with(['vehicleAssignments.vehicle.trackerMapping','createdDispatch','updatedDispatch','deletedDispatch','vehicleAssignments.userProfiles'])->get();
         return response()->json($dispatches);
     }
 

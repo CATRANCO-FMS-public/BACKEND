@@ -45,4 +45,10 @@ class Vehicle extends Model
     public function feedback() {
         return $this->hasMany(FeedbackLogs::class,'vehicle_id');
     }
+
+    // Add the relationship with TrackerVehicleMapping
+    public function trackerMapping()
+    {
+        return $this->hasOne(TrackerVehicleMapping::class, 'vehicle_id', 'vehicle_id');
+    }
 }

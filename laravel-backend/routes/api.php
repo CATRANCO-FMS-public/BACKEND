@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\TrackerVehicleMappingController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleAssignmentController;
 use App\Http\Controllers\FuelLogsController;
 use App\Http\Controllers\TimerController;
-use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\DispatchLogsController;
 use App\Http\Controllers\MaintenanceSchedulingController;
 use App\Http\Controllers\OTPController;
@@ -46,6 +46,14 @@ Route::prefix('user')->group(function () {
             Route::patch('/activate-account/{id}', [AuthController::class, 'activateAccount']);
             Route::patch('/deactivate-account/{id}', [AuthController::class, 'deactivateAccount']);
 
+            // Admin can select the tracker for the vehicle
+            Route::prefix('tracker-vehicle')->group(function() {
+                Route::get('all', [TrackerVehicleMappingController::class, 'getAllTrackerVehicleMappings']);
+                Route::post('create', [TrackerVehicleMappingController::class, 'createTrackerVehicleMapping']);
+                Route::put('update/{id}', [TrackerVehicleMappingController::class, 'updateTrackerVehicleMapping']);
+                Route::delete('delete/{id}', [TrackerVehicleMappingController::class, 'deleteTrackerVehicleMapping']);
+            });
+        
             // Admin can create and manage user profiles and user accounts
             Route::prefix('profiles')->group(function () {
                 // General Profile Management

@@ -12,7 +12,7 @@ class VehicleAssignmentController extends Controller
 {
     // Get all vehicle assignments
     public function getAllAssignments() {
-        $assignments = VehicleAssignment::with('vehicle', 'userProfiles')->get(); // Load user profiles
+        $assignments = VehicleAssignment::with('vehicle.trackerMapping', 'userProfiles')->get(); // Load user profiles
         return response()->json($assignments);
     }
 
