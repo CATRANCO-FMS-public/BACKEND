@@ -85,7 +85,7 @@ class FlespiController extends Controller
         // Broadcast data to the frontend
         broadcast(new FlespiDataReceived($broadcastData));
 
-        sleep(5);
+        // sleep(5);
 
         return response()->json(['status' => 'success']);
     }
