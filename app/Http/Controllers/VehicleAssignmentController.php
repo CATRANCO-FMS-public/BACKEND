@@ -43,7 +43,17 @@ class VehicleAssignmentController extends Controller
 
             // Attach the user profiles
             if ($request->has('user_profile_ids')) {
-                $assignment->userProfiles()->attach($request->input('user_profile_ids'));
+                $userProfileIds = $request->input('user_profile_ids');
+                $assignment->userProfiles()->attach($userProfileIds);
+
+                // Update the status of the user profiles to 'on_duty'
+                foreach ($userProfileIds as $userProfileId) {
+                    $userProfile = UserProfile::find($userProfileId);
+                    if ($userProfile) {
+                        $userProfile->status = 'on_duty';
+                        $userProfile->save();
+                    }
+                }
             }
 
             return response()->json(["message" => "Vehicle Assignment Successfully Created", "assignment" => $assignment->load('vehicle', 'userProfiles')], 201);
@@ -103,13 +113,27 @@ class VehicleAssignmentController extends Controller
     // Delete a specific vehicle assignment by ID
     public function deleteAssignment($id) {
         try {
+            // Find the vehicle assignment by ID
             $assignment = VehicleAssignment::findOrFail($id);
+            
+            // Update the status of the user profiles to 'off_duty'
+            $userProfiles = $assignment->userProfiles;
+            foreach ($userProfiles as $userProfile) {
+                $userProfile->status = 'off_duty';
+                $userProfile->save();
+            }
+
+            // Set deleted_by to the authenticated user
             $assignment->deleted_by = Auth::id(); // Automatically set deleted_by
             $assignment->save();
+            
+            // Delete the assignment
             $assignment->delete();
+
             return response()->json(["message" => "Vehicle Assignment Deleted Successfully"], 200);
         } catch (\Exception $e) {
             return response()->json(["message" => $e->getMessage()], 400);
         }
     }
+
 }
