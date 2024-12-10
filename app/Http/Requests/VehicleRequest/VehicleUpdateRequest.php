@@ -37,6 +37,7 @@ class VehicleUpdateRequest extends FormRequest
             'ci_validity' => 'nullable|date',
             'date_purchased' => 'nullable|date',
             'supplier' => 'nullable|string|max:20',
+            'route' => 'nullable|in:Cogon,Canitoan,Silver Creek',
         ];
     }
 }

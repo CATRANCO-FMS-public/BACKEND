@@ -30,6 +30,7 @@ class Vehicle extends Model
         "ci_validity",
         "date_purchased",
         "supplier",
+        "route"
     ];
 
     public function assignments()
