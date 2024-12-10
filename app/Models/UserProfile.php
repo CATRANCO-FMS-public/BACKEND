@@ -26,6 +26,8 @@ class UserProfile extends Model
         "contact_person_number",
         "user_profile_image",
         "position",
+        "date_hired",
+        "status",
     ];
 
     protected $casts = [

@@ -32,6 +32,8 @@ return new class extends Migration
                 'driver', 
                 'passenger_assistant_officer'
             ]);
+            $table->date('date_hired');
+            $table->enum('status', ['terminate', 'on_duty', 'off_duty']);
             $table->timestamps();
         });
     }

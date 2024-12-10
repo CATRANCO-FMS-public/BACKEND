@@ -60,6 +60,8 @@ class UserProfileController extends Controller
                     'contact_person_number',
                     'user_profile_image',
                     'position',
+                    'date_hired',
+                    'status',
                 ]),
             ];
         });
@@ -73,18 +75,23 @@ class UserProfileController extends Controller
         try {
             DB::beginTransaction();
 
-            // Create the profile with validated data
+            // Prepare profile data with defaults
             $profileData = $request->validated();
+            $profileData['date_hired'] = now()->toDateString(); // Set date_hired to today's date
+            $profileData['status'] = 'off_duty'; // Set default status
+
+            // Create the profile
             $profile = UserProfile::create($profileData);
 
             // Map position to role ID
             $roleId = $this->mapPositionToRoleId($profile->position);
 
-            // Create a user and link with profile
-            $username = $profile->last_name;
-            $password = bcrypt(($profile->last_name));
+            // Create a unique username and password based on last name and date hired
+            $dateHiredFormatted = now()->format('Ymd'); // Format date_hired as Ymd
+            $username = $profile->last_name . '_' . $dateHiredFormatted;
+            $password = bcrypt($username);
 
-            // Create the user account and associate the profile
+            // Create the user account and associate it with the profile
             $user = User::create([
                 'username' => $username,
                 'password' => $password,
@@ -149,6 +156,8 @@ class UserProfileController extends Controller
                 'contact_person_number',
                 'user_profile_image',
                 'position',
+                'date_hired',
+                'status',
             ]),
         ]);
     }
@@ -205,6 +214,8 @@ class UserProfileController extends Controller
                     'sex' => 'N/A',
                     'contact_person' => 'N/A',
                     'contact_person_number' => 'N/A',
+                    'date_hired' => 'N/A',
+                    'status' => 'N/A',
                 ]
             ]);
         }
@@ -229,6 +240,8 @@ class UserProfileController extends Controller
                 'contact_person_number',
                 'user_profile_image',
                 'position',
+                'date_hired',
+                'status',
             ]),
         ]);
     }
@@ -369,6 +382,8 @@ class UserProfileController extends Controller
                         'contact_person_number',
                         'user_profile_image',
                         'position',
+                        'date_hired',
+                        'status',
                     ]),
                 ];
             });
@@ -403,6 +418,8 @@ class UserProfileController extends Controller
                         'contact_person_number',
                         'user_profile_image',
                         'position',
+                        'date_hired',
+                        'status',
                     ]),
                 ];
             });

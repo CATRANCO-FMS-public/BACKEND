@@ -32,6 +32,8 @@ class UserProfileSeeder extends Seeder
                 'position' => 'operation_manager',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'date_hired' => Carbon::now(),
+                'status' => 'off_duty',
             ],
             [
                 'last_name' => 'Dispatcher',
@@ -48,6 +50,8 @@ class UserProfileSeeder extends Seeder
                 'position' => 'dispatcher',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'date_hired' => Carbon::now(),
+                'status' => 'off_duty',
             ],
             [
                 'last_name' => 'Driver',
@@ -64,6 +68,8 @@ class UserProfileSeeder extends Seeder
                 'position' => 'driver',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'date_hired' => Carbon::now(),
+                'status' => 'off_duty',
             ],
             [
                 'last_name' => 'Passenger_Assistant_Officer',
@@ -80,6 +86,8 @@ class UserProfileSeeder extends Seeder
                 'position' => 'passenger_assistant_officer',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'date_hired' => Carbon::now(),
+                'status' => 'off_duty',
             ],
         ]);
     }
