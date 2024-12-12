@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Cache;
 
 class FlespiController extends Controller
 {
-
-    // Predefined blacklist of coordinates
-    protected $blacklistedCoordinates = [
-        ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
-    ];
     /**
      * Handle incoming data from the Flespi stream.
      */
@@ -32,9 +27,6 @@ class FlespiController extends Controller
             return response()->json(['status' => 'failed', 'message' => 'No data found']);
         }
 
-        // Log the extracted data for debugging
-        // Log::info("Extracted Flespi Data:", $data);
-
         // Extract individual fields from the data
         $trackerIdent = $data['Ident'] ?? null;
         $latitude = $data['PositionLatitude'] ?? null;
@@ -45,28 +37,37 @@ class FlespiController extends Controller
         if (!$trackerIdent) {
             Log::warning("Tracker identifier is missing.");
             return response()->json(['status' => 'failed', 'message' => 'Tracker identifier missing']);
-        }
+        } 
+
+        // Cache key for dynamic blacklisted coordinates
+        $blacklistCacheKey = "dynamic_blacklist_coordinates";
+        $blacklistedCoordinates = Cache::get($blacklistCacheKey, []);
 
         // Check if the coordinates are blacklisted
-        foreach ($this->blacklistedCoordinates as $blacklisted) {
+        foreach ($blacklistedCoordinates as $blacklisted) {
             if ($blacklisted['latitude'] == $latitude && $blacklisted['longitude'] == $longitude) {
                 Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
                 return response()->json(['status' => 'ignored', 'message' => 'Coordinates are blacklisted']);
             }
         }
 
-        // Cache key for tracker
+        // Cache key for tracker coordinates
         $cacheKey = "tracker_coordinates_$trackerIdent";
 
         // Retrieve last known coordinates from the cache
         $lastCoordinates = Cache::get($cacheKey);
 
         if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
-            Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
-            return response()->json(['status' => 'ignored', 'message' => 'Repeated coordinates']);
+            Log::info("Ignoring repeated coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
+            
+            // Dynamically add these coordinates to the blacklist if repeating
+            $blacklistedCoordinates[] = ['latitude' => $latitude, 'longitude' => $longitude];
+            Cache::put($blacklistCacheKey, $blacklistedCoordinates, now()->addDays(1)); // Save for 1 day
+            
+            return response()->json(['status' => 'ignored', 'message' => 'Repeated coordinates added to blacklist']);
         }
 
-        // Update cache
+        // Update the last known coordinates in the cache
         Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
         
         // Log tracker movement status
