@@ -24,6 +24,17 @@ class DispatchLogsController extends Controller
         try {
             $data = $request->validated();
 
+            // Check if the vehicle_assignment_id is already on alley
+            $existingAlley = DispatchLogs::where('vehicle_assignment_id', $data['vehicle_assignment_id'])
+                ->where('status', 'on alley')
+                ->first();
+
+            if ($existingAlley) {
+                return response()->json([
+                    'error' => 'The selected vehicle assignment is already on alley.',
+                ], 400);
+            }
+
             // Automatically set start_time to now
             $data['start_time'] = now();
 
@@ -38,7 +49,7 @@ class DispatchLogsController extends Controller
 
             return response()->json([
                 'message' => 'Alley started successfully.',
-                'dispatch' => $dispatch->load( 'vehicleAssignments.userProfiles'),
+                'dispatch' => $dispatch->load('vehicleAssignments.userProfiles'),
             ], 201);
         } catch (\Throwable $e) {
             return response()->json([
@@ -53,6 +64,17 @@ class DispatchLogsController extends Controller
     {
         try {
             $data = $request->validated();
+
+            // Check if the vehicle_assignment_id is already on road
+            $existingAlley = DispatchLogs::where('vehicle_assignment_id', $data['vehicle_assignment_id'])
+                ->where('status', 'on road')
+                ->first();
+
+            if ($existingAlley) {
+                return response()->json([
+                    'error' => 'The selected vehicle assignment is already on road.',
+                ], 400);
+            }
 
             // Automatically set start_time to now
             $data['start_time'] = now();
