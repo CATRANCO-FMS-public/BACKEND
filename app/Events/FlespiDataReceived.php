@@ -11,23 +11,17 @@ class FlespiDataReceived implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $tracker_ident;
-    public $location;
-    public $timestamp;
-    public $dispatch_log;
+    public $tracker_data;
 
     /**
      * Create a new event instance.
      *
-     * @param array $data
+     * @param array $trackerData
      */
-    public function __construct(array $data)
+    public function __construct(array $trackerData)
     {
-        // Assign the data values for easier access in the frontend
-        $this->tracker_ident = $data['tracker_ident'] ?? null;
-        $this->location = $data['location'] ?? null;  // Contains latitude, longitude, and speed
-        $this->timestamp = $data['timestamp'] ?? null;
-        $this->dispatch_log = $data['dispatch_log'] ?? null;  // Contains the related dispatch log
+        // Assign the tracker data for easier access in the frontend
+        $this->tracker_data = $trackerData;
     }
 
     /**
@@ -47,11 +41,6 @@ class FlespiDataReceived implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return [
-            'tracker_ident' => $this->tracker_ident,
-            'location' => $this->location,
-            'timestamp' => $this->timestamp,
-            'dispatch_log' => $this->dispatch_log,  // Send dispatch log data for sync with map
-        ];
+        return $this->tracker_data;
     }
 }
