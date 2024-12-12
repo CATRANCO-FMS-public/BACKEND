@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Cache;
 
 class FlespiController extends Controller
 {
+
+    // Predefined blacklist of coordinates
+    protected $blacklistedCoordinates = [
+        ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate\\
+    ];
     /**
      * Handle incoming data from the Flespi stream.
      */
@@ -39,35 +44,26 @@ class FlespiController extends Controller
             return response()->json(['status' => 'failed', 'message' => 'Tracker identifier missing']);
         } 
 
-        // Cache key for dynamic blacklisted coordinates
-        $blacklistCacheKey = "dynamic_blacklist_coordinates";
-        $blacklistedCoordinates = Cache::get($blacklistCacheKey, []);
-
         // Check if the coordinates are blacklisted
-        foreach ($blacklistedCoordinates as $blacklisted) {
+        foreach ($this->blacklistedCoordinates as $blacklisted) {
             if ($blacklisted['latitude'] == $latitude && $blacklisted['longitude'] == $longitude) {
                 Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
                 return response()->json(['status' => 'ignored', 'message' => 'Coordinates are blacklisted']);
             }
         }
 
-        // Cache key for tracker coordinates
+        // Cache key for tracker
         $cacheKey = "tracker_coordinates_$trackerIdent";
 
         // Retrieve last known coordinates from the cache
         $lastCoordinates = Cache::get($cacheKey);
 
         if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
-            Log::info("Ignoring repeated coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
-            
-            // Dynamically add these coordinates to the blacklist if repeating
-            $blacklistedCoordinates[] = ['latitude' => $latitude, 'longitude' => $longitude];
-            Cache::put($blacklistCacheKey, $blacklistedCoordinates, now()->addDays(1)); // Save for 1 day
-            
-            return response()->json(['status' => 'ignored', 'message' => 'Repeated coordinates added to blacklist']);
+            Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
+            return response()->json(['status' => 'ignored', 'message' => 'Repeated coordinates']);
         }
 
-        // Update the last known coordinates in the cache
+        // Update cache
         Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
         
         // Log tracker movement status
@@ -96,9 +92,9 @@ class FlespiController extends Controller
 
         // Log dispatch log details if found
         if ($dispatchLog) {
-            // Log::info("Dispatch log found for tracker $trackerIdent.", ['dispatch_logs_id' => $dispatchLog->dispatch_logs_id]);
+            Log::info("Dispatch log found for tracker $trackerIdent.", ['dispatch_logs_id' => $dispatchLog->dispatch_logs_id]);
         } else {
-            // Log::warning("No active dispatch log found for tracker $trackerIdent.");
+            Log::warning("No active dispatch log found for tracker $trackerIdent.");
         }
 
         // Prepare data for broadcasting
@@ -118,8 +114,6 @@ class FlespiController extends Controller
 
         // Broadcast data to the frontend
         broadcast(new FlespiDataReceived($broadcastData));
-
-        // sleep(5);
 
         return response()->json(['status' => 'success']);
     }
