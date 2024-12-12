@@ -7,9 +7,15 @@ use Illuminate\Support\Facades\Log;
 use App\Models\TrackerVehicleMapping;
 use App\Models\DispatchLogs;
 use App\Events\FlespiDataReceived;
+use Illuminate\Support\Facades\Cache;
 
 class FlespiController extends Controller
 {
+
+    // Predefined blacklist of coordinates
+    protected $blacklistedCoordinates = [
+        ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
+    ];
     /**
      * Handle incoming data from the Flespi stream.
      */
@@ -27,7 +33,7 @@ class FlespiController extends Controller
         }
 
         // Log the extracted data for debugging
-        Log::info("Extracted Flespi Data:", $data);
+        // Log::info("Extracted Flespi Data:", $data);
 
         // Extract individual fields from the data
         $trackerIdent = $data['Ident'] ?? null;
@@ -35,7 +41,34 @@ class FlespiController extends Controller
         $longitude = $data['PositionLongitude'] ?? null;
         $speed = $data['PositionSpeed'] ?? null;
         $timestamp = $data['Timestamp'] ?? null;
+        
+        if (!$trackerIdent) {
+            Log::warning("Tracker identifier is missing.");
+            return response()->json(['status' => 'failed', 'message' => 'Tracker identifier missing']);
+        }
 
+        // Check if the coordinates are blacklisted
+        foreach ($this->blacklistedCoordinates as $blacklisted) {
+            if ($blacklisted['latitude'] == $latitude && $blacklisted['longitude'] == $longitude) {
+                Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
+                return response()->json(['status' => 'ignored', 'message' => 'Coordinates are blacklisted']);
+            }
+        }
+
+        // Cache key for tracker
+        $cacheKey = "tracker_coordinates_$trackerIdent";
+
+        // Retrieve last known coordinates from the cache
+        $lastCoordinates = Cache::get($cacheKey);
+
+        if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
+            Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
+            return response()->json(['status' => 'ignored', 'message' => 'Repeated coordinates']);
+        }
+
+        // Update cache
+        Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
+        
         // Log tracker movement status
         if ($speed > 0) {
             Log::info("Tracker $trackerIdent is moving.", $data);
@@ -47,9 +80,9 @@ class FlespiController extends Controller
         $vehicleId = null;
         if ($trackerIdent) {
             $vehicleId = TrackerVehicleMapping::where('tracker_ident', $trackerIdent)->value('vehicle_id');
-            Log::info("Found vehicleId: $vehicleId for tracker $trackerIdent");
+            // Log::info("Found vehicleId: $vehicleId for tracker $trackerIdent");
         } else {
-            Log::warning("No tracker_ident provided in the data.");
+            // Log::warning("No tracker_ident provided in the data.");
         }
 
         // Fetch the active dispatch log for the vehicle
@@ -62,9 +95,9 @@ class FlespiController extends Controller
 
         // Log dispatch log details if found
         if ($dispatchLog) {
-            Log::info("Dispatch log found for tracker $trackerIdent.", ['dispatch_logs_id' => $dispatchLog->dispatch_logs_id]);
+            // Log::info("Dispatch log found for tracker $trackerIdent.", ['dispatch_logs_id' => $dispatchLog->dispatch_logs_id]);
         } else {
-            Log::warning("No active dispatch log found for tracker $trackerIdent.");
+            // Log::warning("No active dispatch log found for tracker $trackerIdent.");
         }
 
         // Prepare data for broadcasting
