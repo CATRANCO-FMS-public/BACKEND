@@ -90,6 +90,7 @@ class FlespiController extends Controller
             // Prepare data for broadcasting
             $broadcastData = [
                 'tracker_ident' => $trackerIdent,
+                'vehicle_id' => $vehicleId,
                 'location' => [
                     'latitude' => $latitude,
                     'longitude' => $longitude,
