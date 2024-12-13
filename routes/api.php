@@ -115,6 +115,7 @@ Route::prefix('user')->group(function () {
                 Route::get('all', [DispatchLogsController::class, 'getAllDispatches']);
                 Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']);
                 Route::delete('delete', [DispatchLogsController::class, 'deleteRecords']);
+                Route::get('trips/today', [DispatchLogsController::class, 'tripsToday']);
             });
 
             // Admin can view and delete feedbacks

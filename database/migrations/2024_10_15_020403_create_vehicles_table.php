@@ -27,7 +27,7 @@ return new class extends Migration
             $table->dateTime('ci_validity');
             $table->date('date_purchased');
             $table->string('supplier', 255);
-            $table->enum('route', ['Cogon', 'Canitoan', 'Silver Creek']);
+            $table->enum('route', ['Canitoan', 'Silver Creek']);
             $table->timestamps();
         });
     }

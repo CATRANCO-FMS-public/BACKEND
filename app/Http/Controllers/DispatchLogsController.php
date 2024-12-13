@@ -8,6 +8,8 @@ use App\Http\Requests\DispatchRequest\DeleteDispatchRequest;
 use App\Models\DispatchLogs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DispatchLogsController extends Controller
 {
@@ -199,4 +201,19 @@ class DispatchLogsController extends Controller
             ], 400);
         }
     }
+
+    public function tripsToday()
+    {
+        // Get today's date in a format suitable for the query (YYYY-MM-DD)
+        $today = Carbon::today()->toDateString(); // Ensures today's date in the correct format
+        
+        // Count the number of completed dispatch logs for today
+        $count = DispatchLogs::where('status', 'dispatch_completed')
+            ->whereDate('end_time', $today) // Filters by today's date
+            ->count(); // Get the count of records
+
+        // Return the result as a JSON response
+        return response()->json(['trips_today' => $count]);
+    }
+
 }
