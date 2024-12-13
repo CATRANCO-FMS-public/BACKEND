@@ -16,8 +16,10 @@ class TrackerVehicleMappingSeeder extends Seeder
     {
         DB::table('tracker_vehicle_mapping')->insert([
             [
+                'device_name' => 'Sinotrack ST-901L',
                 'tracker_ident' => '9171006261',
                 'vehicle_id' => '001',
+                'status' => 'active',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

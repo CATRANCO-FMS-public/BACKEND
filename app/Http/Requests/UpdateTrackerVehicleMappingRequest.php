@@ -14,7 +14,8 @@ class UpdateTrackerVehicleMappingRequest extends FormRequest
     public function rules()
     {
         return [
-            'tracker_ident' => 'required|max:50|unique:tracker_vehicle_mapping,tracker_ident,' . $this->route('id'),
+            'device_name' => 'required|string|max:255',
+            'tracker_ident' => 'required|unique:tracker_vehicle_mapping,tracker_ident,' . $this->route('tracker_vehicle_mapping'),
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
         ];
     }

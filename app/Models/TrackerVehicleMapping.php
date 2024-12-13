@@ -10,7 +10,7 @@ class TrackerVehicleMapping extends Model
     use HasFactory;
 
     protected $table = 'tracker_vehicle_mapping';
-    protected $fillable = ['tracker_ident', 'vehicle_id'];
+    protected $fillable = ['device_name',  'tracker_ident', 'vehicle_id', 'status'];
 
     public function vehicle()
     {

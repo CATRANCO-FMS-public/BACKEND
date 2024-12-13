@@ -49,9 +49,11 @@ Route::prefix('user')->group(function () {
             // Admin can select the tracker for the vehicle
             Route::prefix('tracker-vehicle')->group(function() {
                 Route::get('all', [TrackerVehicleMappingController::class, 'getAllTrackerVehicleMappings']);
+                Route::get('{id}', [TrackerVehicleMappingController::class, 'getTrackerVehicleMappingById']);
                 Route::post('create', [TrackerVehicleMappingController::class, 'createTrackerVehicleMapping']);
-                Route::put('update/{id}', [TrackerVehicleMappingController::class, 'updateTrackerVehicleMapping']);
+                Route::patch('update/{id}', [TrackerVehicleMappingController::class, 'updateTrackerVehicleMapping']);
                 Route::delete('delete/{id}', [TrackerVehicleMappingController::class, 'deleteTrackerVehicleMapping']);
+                Route::patch('set_inactive/{id}', [TrackerVehicleMappingController::class, 'setStatusInactive']); // New route to set status to inactive
             });
         
             // Admin can create and manage user profiles and user accounts

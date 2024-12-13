@@ -10,8 +10,10 @@ return new class extends Migration
     {
         Schema::create('tracker_vehicle_mapping', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->string('tracker_ident', 50)->unique(); // Unique identifier for the tracker
-            $table->string('vehicle_id', 10); // Link to the vehicle table
+            $table->string('device_name');
+            $table->string('tracker_ident', 50)->unique();
+            $table->string('vehicle_id', 10); 
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
 
             // Foreign key constraint

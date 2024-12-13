@@ -16,10 +16,23 @@ class TrackerVehicleMappingController extends Controller
         return response()->json(['data' => $mappings]);
     }
 
-    // Create a new tracker-to-vehicle mapping
+    // Fetch a specific tracker-to-vehicle mapping by ID
+    public function getTrackerVehicleMappingById($id)
+    {
+        $mapping = TrackerVehicleMapping::with('vehicle')->findOrFail($id);
+
+        return response()->json(['data' => $mapping]);
+    }
+
+    // Create a new tracker-to-vehicle mapping and set status to active
     public function createTrackerVehicleMapping(StoreTrackerVehicleMappingRequest $request)
     {
-        $mapping = TrackerVehicleMapping::create($request->validated());
+        // Add status as active when creating
+        $data = $request->validated();
+        $data['status'] = 'active'; // Set status to active by default
+
+        // Create the mapping
+        $mapping = TrackerVehicleMapping::create($data);
 
         return response()->json(['message' => 'Tracker-to-Vehicle Mapping created successfully', 'data' => $mapping], 201);
     }
@@ -40,5 +53,14 @@ class TrackerVehicleMappingController extends Controller
         $mapping->delete();
 
         return response()->json(['message' => 'Tracker-to-Vehicle Mapping deleted successfully']);
+    }
+
+    // Set the status of a tracker-to-vehicle mapping to inactive
+    public function setStatusInactive($id)
+    {
+        $mapping = TrackerVehicleMapping::findOrFail($id);
+        $mapping->update(['status' => 'inactive']); // Set status to inactive
+
+        return response()->json(['message' => 'Tracker-to-Vehicle Mapping status updated to inactive', 'data' => $mapping]);
     }
 }
