@@ -14,6 +14,7 @@ class FlespiController extends Controller
     // Predefined blacklist of coordinates
     protected $blacklistedCoordinates = [
         ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
+        ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
     ];
 
     /**
@@ -54,20 +55,20 @@ class FlespiController extends Controller
                 }
             }
 
-            // Cache key for tracker
-            $cacheKey = "tracker_coordinates_$trackerIdent";
+            // // Cache key for tracker
+            // $cacheKey = "tracker_coordinates_$trackerIdent";
 
-            // Retrieve last known coordinates from the cache
-            $lastCoordinates = Cache::get($cacheKey);
+            // // Retrieve last known coordinates from the cache
+            // $lastCoordinates = Cache::get($cacheKey);
 
-            if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
-                Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
-                $responses[] = ['status' => 'ignored', 'message' => 'Repeated coordinates'];
-                continue;
-            }
+            // if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
+            //     Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
+            //     $responses[] = ['status' => 'ignored', 'message' => 'Repeated coordinates'];
+            //     continue;
+            // }
 
-            // Update cache
-            Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
+            // // Update cache
+            // Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
 
             // Log tracker movement status
             if ($speed > 0) {
