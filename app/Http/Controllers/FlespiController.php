@@ -86,10 +86,11 @@ class FlespiController extends Controller
             if ($vehicleId) {
                 $dispatchLog = DispatchLogs::where('vehicle_assignment_id', $vehicleId)
                     ->whereIn('status', ['on alley', 'on road'])
+                    ->with(['vehicleAssignments.vehicle', 'vehicleAssignments.userProfiles'])
                     ->first();
             }
 
-            // Prepare data for broadcasting
+            // Prepare data for 
             $broadcastData = [
                 'tracker_ident' => $trackerIdent,
                 'vehicle_id' => $vehicleId,
@@ -99,7 +100,24 @@ class FlespiController extends Controller
                     'speed' => $speed,
                 ],
                 'timestamp' => $timestamp,
-                'dispatch_log' => $dispatchLog,
+                'dispatch_log' => $dispatchLog ? [
+                    'dispatch_logs_id' => $dispatchLog->dispatch_logs_id,
+                    'start_time' => $dispatchLog->start_time,
+                    'end_time' => $dispatchLog->end_time,
+                    'status' => $dispatchLog->status,
+                    'route' => $dispatchLog->route,
+                    'vehicle_assignment' => [
+                        'vehicle_assignment_id' => $dispatchLog->vehicleAssignments->vehicle_assignment_id,
+                        'user_profiles' => $dispatchLog->vehicleAssignments->userProfiles->map(function ($profile) {
+                            return [
+                                'user_profile_id' => $profile->user_profile_id,
+                                'name' => "{$profile->first_name} {$profile->last_name}",
+                                'position' => $profile->position,
+                                'status' => $profile->status,
+                            ];
+                        }),
+                    ],
+                ] : null,
             ];
 
             // Log the data being broadcasted
