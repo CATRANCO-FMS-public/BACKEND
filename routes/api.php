@@ -88,6 +88,7 @@ Route::prefix('user')->group(function () {
                 Route::get('{id}', [VehicleAssignmentController::class, 'getAssignmentById']); //Check
                 Route::patch('update/{id}', [VehicleAssignmentController::class, 'updateAssignment']); //Check
                 Route::delete('delete/{id}', [VehicleAssignmentController::class, 'deleteAssignment']); //Check
+                Route::get('user_profiles/{status}', [VehicleAssignmentController::class, 'getUserProfilesByStatus']);
             });
 
             // Admin can create and manage fuel logs
