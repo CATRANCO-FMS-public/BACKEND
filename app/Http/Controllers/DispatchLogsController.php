@@ -74,7 +74,7 @@ class DispatchLogsController extends Controller
 
             if ($existingAlley) {
                 return response()->json([
-                    'error' => 'The selected vehicle assignment is already on road.',
+                    'error' => 'The selected bus is already on road.',
                 ], 400);
             }
 
