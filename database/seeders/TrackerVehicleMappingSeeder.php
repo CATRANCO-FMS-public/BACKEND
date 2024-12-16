@@ -20,6 +20,7 @@ class TrackerVehicleMappingSeeder extends Seeder
                 'tracker_ident' => '9171006261',
                 'vehicle_id' => '001',
                 'status' => 'active',
+                'created_by' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],

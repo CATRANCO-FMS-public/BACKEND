@@ -53,7 +53,7 @@ Route::prefix('user')->group(function () {
                 Route::post('create', [TrackerVehicleMappingController::class, 'createTrackerVehicleMapping']);
                 Route::patch('update/{id}', [TrackerVehicleMappingController::class, 'updateTrackerVehicleMapping']);
                 Route::delete('delete/{id}', [TrackerVehicleMappingController::class, 'deleteTrackerVehicleMapping']);
-                Route::patch('set_inactive/{id}', [TrackerVehicleMappingController::class, 'setStatusInactive']); // New route to set status to inactive
+                Route::patch('toggle_status/{id}', [TrackerVehicleMappingController::class, 'toggleTrackerVehicleMappingStatus']); // New route to set status to inactive
             });
         
             // Admin can create and manage user profiles and user accounts

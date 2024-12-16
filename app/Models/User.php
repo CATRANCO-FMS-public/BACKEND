@@ -123,4 +123,36 @@ class User extends Authenticatable
     {
         return $this->hasMany(DispatchLogs::class, 'deleted_by');
     }
+
+    // Timer relationships
+    public function createdTimers()
+    {
+        return $this->hasMany(Timer::class, 'created_by');
+    }
+
+    public function updatedTimers()
+    {
+        return $this->hasMany(Timer::class, 'updated_by');
+    }
+
+    public function deletedTimers()
+    {
+        return $this->hasMany(Timer::class, 'deleted_by');
+    }
+
+    // TrackerVehicleMapping relationships
+    public function createdTrackerVehicleMappings()
+    {
+        return $this->hasMany(TrackerVehicleMapping::class, 'created_by');
+    }
+
+    public function updatedTrackerVehicleMappings()
+    {
+        return $this->hasMany(TrackerVehicleMapping::class, 'updated_by');
+    }
+
+    public function deletedTrackerVehicleMappings()
+    {
+        return $this->hasMany(TrackerVehicleMapping::class, 'deleted_by');
+    }
 }

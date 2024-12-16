@@ -17,7 +17,18 @@ return new class extends Migration
             $table->string('start_time'); 
             $table->string('end_time'); 
             $table->integer('minutes_interval'); 
-            $table->timestamps(); 
+            
+            // Add created_by, updated_by, deleted_by fields
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            // Foreign key constraints
+            $table->foreign('created_by')->references('user_id')->on('users')->onDelete('cascade');
+            $table->foreign('updated_by')->references('user_id')->on('users')->onDelete('set null');
+            $table->foreign('deleted_by')->references('user_id')->on('users')->onDelete('set null');
         });
     }
 
@@ -26,6 +37,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('timers', function (Blueprint $table) {
+            $table->dropForeign(['created_by']);
+            $table->dropForeign(['updated_by']);
+            $table->dropForeign(['deleted_by']);
+        });
         Schema::dropIfExists('timers');
     }
 };
