@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FuelLogs extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = "fuel_logs";
 
@@ -32,11 +33,6 @@ class FuelLogs extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
-    }
-
-    public function dispatch()
-    {
-        return $this->hasMany(Dispatch::class, 'fuel_logs_id');
     }
 
     public function createdFuelLogs()
