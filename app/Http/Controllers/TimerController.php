@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Timer;
 use App\Http\Requests\TimerRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class TimerController extends Controller
 {

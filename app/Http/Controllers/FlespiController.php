@@ -121,10 +121,10 @@ class FlespiController extends Controller
             ];
 
             // Log the data being broadcasted
-            Log::info("Broadcasting data", $broadcastData);
+            // Log::info("Broadcasting data", $broadcastData);
 
             // Broadcast data to the frontend
-            broadcast(new FlespiDataReceived($broadcastData));
+            // broadcast(new FlespiDataReceived($broadcastData));
 
             $responses[] = ['status' => 'success', 'tracker_ident' => $trackerIdent];
         }
