@@ -13,9 +13,9 @@ class FlespiController extends Controller
 {
     // Predefined blacklist of coordinates
     protected $blacklistedCoordinates = [
-        ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
-        ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
-        ['latitude' => 8.458887, 'longitude' => 124.6327], // Example coordinate
+        // ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
+        // ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
+        // ['latitude' => 8.458887, 'longitude' => 124.6327], // Example coordinate
     ];
 
     /**
