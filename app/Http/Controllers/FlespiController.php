@@ -12,17 +12,21 @@ use Illuminate\Support\Facades\Cache;
 class FlespiController extends Controller
 {
     // Predefined blacklist of coordinates
-    protected $blacklistedCoordinates = [
-        ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
-        ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
-        ['latitude' => 8.458887, 'longitude' => 124.6327], // Example coordinate
-    ];
+    // protected $blacklistedCoordinates = [
+    //     ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
+    //     ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
+    //     ['latitude' => 8.458887, 'longitude' => 124.6327], // Example coordinate
+    //     ['latitude' => 8.475603, 'longitude' => 124.644767], / Example coordinate
+    // ];
 
     /**
      * Handle incoming data from the Flespi stream.
      */
     public function handleData(Request $request)
     {
+        // Define a threshold for detecting repeated coordinates
+        $repetitionThreshold = 2; // Adjust this as needed
+
         // Extract Flespi data (assuming it's in an array)
         $dataList = $request->all();
 
@@ -48,19 +52,35 @@ class FlespiController extends Controller
             }
 
             // Check if the coordinates are blacklisted with a tolerance
-            $blacklisted = false;
-            foreach ($this->blacklistedCoordinates as $blacklistedCoord) {
-                // Using a small tolerance for floating point comparison
-                if (abs($blacklistedCoord['latitude'] - $latitude) < 0.0001 &&
-                    abs($blacklistedCoord['longitude'] - $longitude) < 0.0001) {
-                    Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
-                    $responses[] = ['status' => 'ignored', 'message' => 'Coordinates are blacklisted'];
-                    $blacklisted = true;
-                    break; // Skip this tracker if it's blacklisted
-                }
-            }
+            // $blacklisted = false;
+            // foreach ($this->blacklistedCoordinates as $blacklistedCoord) {
+            //     // Using a small tolerance for floating point comparison
+            //     if (abs($blacklistedCoord['latitude'] - $latitude) < 0.0001 &&
+            //         abs($blacklistedCoord['longitude'] - $longitude) < 0.0001) {
+            //         Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
+            //         $responses[] = ['status' => 'ignored', 'message' => 'Coordinates are blacklisted'];
+            //         $blacklisted = true;
+            //         break; // Skip this tracker if it's blacklisted
+            //     }
+            // }
 
-            if ($blacklisted) {
+            // if ($blacklisted) {
+            //     continue;
+            // }
+
+            // Generate a unique key for the latitude and longitude
+            $coordinateKey = "coordinates:{$latitude}:{$longitude}";
+
+            // Increment the frequency count in the cache
+            $currentCount = Cache::increment($coordinateKey);
+
+            // Set an expiration time for the cache key (e.g., 1 hour)
+            Cache::put($coordinateKey, $currentCount, now()->addHour());
+
+            // Check if the coordinate is blacklisted
+            if ($currentCount > $repetitionThreshold) {
+                Log::info("Ignoring repeated coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude. Count: $currentCount.");
+                $responses[] = ['status' => 'ignored', 'message' => 'Coordinates are frequently repeated'];
                 continue;
             }
 
@@ -119,7 +139,7 @@ class FlespiController extends Controller
             // Broadcast data to the frontend
             broadcast(new FlespiDataReceived($broadcastData));
 
-            sleep(5);
+            // sleep(5);
 
             $responses[] = ['status' => 'success', 'tracker_ident' => $trackerIdent];
         }

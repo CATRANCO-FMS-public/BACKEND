@@ -22,7 +22,7 @@ class DispatchStartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'route' => 'required|in:Cogon,Canitoan,Silver Creek',
+            'route' => 'required|in:Canitoan,Silver Creek,Cogon',
             'vehicle_assignment_id' => 'required|exists:vehicle_assignment,vehicle_assignment_id',
         ];
     }
