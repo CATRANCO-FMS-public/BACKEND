@@ -47,29 +47,22 @@ class FlespiController extends Controller
                 continue;
             }
 
-            // Check if the coordinates are blacklisted
-            foreach ($this->blacklistedCoordinates as $blacklisted) {
-                if ($blacklisted['latitude'] == $latitude && $blacklisted['longitude'] == $longitude) {
+            // Check if the coordinates are blacklisted with a tolerance
+            $blacklisted = false;
+            foreach ($this->blacklistedCoordinates as $blacklistedCoord) {
+                // Using a small tolerance for floating point comparison
+                if (abs($blacklistedCoord['latitude'] - $latitude) < 0.0001 &&
+                    abs($blacklistedCoord['longitude'] - $longitude) < 0.0001) {
                     Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
                     $responses[] = ['status' => 'ignored', 'message' => 'Coordinates are blacklisted'];
-                    continue 2; // Skip this tracker
+                    $blacklisted = true;
+                    break; // Skip this tracker if it's blacklisted
                 }
             }
 
-            // // Cache key for tracker
-            // $cacheKey = "tracker_coordinates_$trackerIdent";
-
-            // // Retrieve last known coordinates from the cache
-            // $lastCoordinates = Cache::get($cacheKey);
-
-            // if ($lastCoordinates && $lastCoordinates['latitude'] == $latitude && $lastCoordinates['longitude'] == $longitude) {
-            //     Log::info("Ignoring repeated coordinates for tracker $trackerIdent with latitude: $latitude, longitude: $longitude.");
-            //     $responses[] = ['status' => 'ignored', 'message' => 'Repeated coordinates'];
-            //     continue;
-            // }
-
-            // // Update cache
-            // Cache::put($cacheKey, ['latitude' => $latitude, 'longitude' => $longitude], now()->addMinutes(5));
+            if ($blacklisted) {
+                continue;
+            }
 
             // Log tracker movement status
             if ($speed > 0) {
@@ -90,7 +83,7 @@ class FlespiController extends Controller
                     ->first();
             }
 
-            // Prepare data for 
+            // Prepare data for broadcast
             $broadcastData = [
                 'tracker_ident' => $trackerIdent,
                 'vehicle_id' => $vehicleId,
@@ -121,10 +114,12 @@ class FlespiController extends Controller
             ];
 
             // Log the data being broadcasted
-            // Log::info("Broadcasting data", $broadcastData);
+            Log::info("Broadcasting data", $broadcastData);
 
             // Broadcast data to the frontend
-            // broadcast(new FlespiDataReceived($broadcastData));
+            broadcast(new FlespiDataReceived($broadcastData));
+
+            sleep(5);
 
             $responses[] = ['status' => 'success', 'tracker_ident' => $trackerIdent];
         }
