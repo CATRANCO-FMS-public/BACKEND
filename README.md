@@ -6,10 +6,10 @@ To get started with the laravel backend, follow these steps: (use Command Prompt
 
 ```sh
 # Clone the repository
-git clone https://github.com/CATRANCO-Fleet-Management-System/laravel-backend.git
+git clone https://github.com/CATRANCO-Fleet-Management-System/laravel-backend-deploy.git
 
 # Go the the Directory
-cd laravel-backend
+cd laravel-backend-deploy
 
 # Open the IDE
 code .
