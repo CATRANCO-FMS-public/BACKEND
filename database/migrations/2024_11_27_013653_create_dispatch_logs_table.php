@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->enum('status', ['on alley','on road','alley_completed', "dispatch_completed"]);
-            $table->enum('route', ['Cogon', 'Canitoan', 'Silver Creek']);
+            $table->enum('route', ['Canitoan', 'Silver Creek', 'Cogon']);
             $table->unsignedBigInteger('vehicle_assignment_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();

@@ -24,6 +24,15 @@ class TrackerVehicleMappingSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'device_name' => 'Sinotrack ST-904',
+                'tracker_ident' => '7026051854',
+                'vehicle_id' => '002',
+                'status' => 'active',
+                'created_by' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }
