@@ -96,7 +96,7 @@ Route::prefix('user')->group(function () {
                 Route::post('create', [FuelLogsController::class, 'createFuelLog']); //Check
                 Route::get('all', [FuelLogsController::class, 'getAllFuelLogs']); //Check
                 Route::get('{id}', [FuelLogsController::class, 'getFuelLogById']); //Check
-                Route::post('update/{id}', [FuelLogsController::class, 'updateFuelLog']); //Check
+                Route::patch('update/{id}', [FuelLogsController::class, 'updateFuelLog']); //Check
                 Route::delete('delete/{id}', [FuelLogsController::class, 'deleteFuelLog']); //Check
             });
 

@@ -101,6 +101,7 @@ class FuelLogsController extends Controller
         try {
             $fuelLog = FuelLogs::findOrFail($id);
             $data = $request->validated();
+            
             $data['updated_by'] = Auth::id(); // Automatically set updated_by
 
             // Handle odometer distance proof file upload
