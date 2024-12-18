@@ -102,10 +102,15 @@ class VehicleAssignmentController extends Controller
             $data = $request->validated();
             $data['updated_by'] = Auth::id(); // Automatically set updated_by
 
-            // Filter out invalid user profile IDs
+            // Get the current user profile IDs assigned to the vehicle
+            $currentUserProfileIds = $assignment->userProfiles->pluck('user_profile_id')->toArray();
+
+            // If new user profiles are provided, handle the status updates
             if ($request->has('user_profile_ids')) {
-                $userProfiles = $request->input('user_profile_ids');
-                $invalidProfiles = UserProfile::whereIn('user_profile_id', $userProfiles)
+                $userProfileIds = $request->input('user_profile_ids');
+                
+                // Filter out invalid user profile IDs
+                $invalidProfiles = UserProfile::whereIn('user_profile_id', $userProfileIds)
                     ->where('position', 'dispatcher')
                     ->pluck('user_profile_id')
                     ->toArray();
@@ -113,14 +118,34 @@ class VehicleAssignmentController extends Controller
                 if (!empty($invalidProfiles)) {
                     return response()->json([
                         'error' => 'User profiles with the "dispatcher" position cannot be assigned to vehicles.',
-                        'invalid_user_profiles' => $invalidProfiles, // Provide the invalid user profile IDs
+                        'invalid_user_profiles' => $invalidProfiles,
                     ], 400);
                 }
-                // Sync user profiles
-                $assignment->userProfiles()->sync($userProfiles);
+
+                // Sync the new user profiles to the assignment
+                $assignment->userProfiles()->sync($userProfileIds);
+
+                // Update the status of the newly assigned profiles to 'on_duty'
+                foreach ($userProfileIds as $userProfileId) {
+                    $userProfile = UserProfile::find($userProfileId);
+                    if ($userProfile) {
+                        $userProfile->status = 'on_duty';
+                        $userProfile->save();
+                    }
+                }
+
+                // Update the status of the profiles no longer assigned to 'off_duty'
+                $profilesToOffDuty = array_diff($currentUserProfileIds, $userProfileIds);
+                foreach ($profilesToOffDuty as $userProfileId) {
+                    $userProfile = UserProfile::find($userProfileId);
+                    if ($userProfile) {
+                        $userProfile->status = 'off_duty';
+                        $userProfile->save();
+                    }
+                }
             }
 
-            // Update the vehicle assignment
+            // Update the vehicle assignment with the new data
             $assignment->update($data);
 
             return response()->json([
