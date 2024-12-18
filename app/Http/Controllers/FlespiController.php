@@ -5,19 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\TrackerVehicleMapping;
+use App\Models\VehicleAssignment;
 use App\Models\DispatchLogs;
 use App\Events\FlespiDataReceived;
 use Illuminate\Support\Facades\Cache;
 
 class FlespiController extends Controller
 {
-    // Predefined blacklist of coordinates
-    // protected $blacklistedCoordinates = [
-    //     ['latitude' => 8.458932, 'longitude' => 124.6326], // Example coordinate
-    //     ['latitude' => 8.458825, 'longitude' => 124.632733], // Example coordinate
-    //     ['latitude' => 8.458887, 'longitude' => 124.6327], // Example coordinate
-    //     ['latitude' => 8.475603, 'longitude' => 124.644767], / Example coordinate
-    // ];
 
     /**
      * Handle incoming data from the Flespi stream.
@@ -51,25 +45,43 @@ class FlespiController extends Controller
                 continue;
             }
 
-            // Check if the coordinates are blacklisted with a tolerance
-            // $blacklisted = false;
-            // foreach ($this->blacklistedCoordinates as $blacklistedCoord) {
-            //     // Using a small tolerance for floating point comparison
-            //     if (abs($blacklistedCoord['latitude'] - $latitude) < 0.0001 &&
-            //         abs($blacklistedCoord['longitude'] - $longitude) < 0.0001) {
-            //         Log::info("Ignoring blacklisted coordinates for tracker $trackerIdent: latitude $latitude, longitude $longitude.");
-            //         $responses[] = ['status' => 'ignored', 'message' => 'Coordinates are blacklisted'];
-            //         $blacklisted = true;
-            //         break; // Skip this tracker if it's blacklisted
-            //     }
-            // }
+            // Match tracker to a vehicle using TrackerVehicleMapping
+            $vehicleId = TrackerVehicleMapping::where('tracker_ident', $trackerIdent)->value('vehicle_id');
 
-            // if ($blacklisted) {
-            //     continue;
-            // }
+            if (!$vehicleId) {
+                Log::warning("No vehicle found for tracker identifier: $trackerIdent.");
+                $responses[] = ['status' => 'failed', 'message' => 'No vehicle found for tracker'];
+                continue;
+            }
+
+            // Fetch the vehicle assignment for the vehicle
+            $vehicleAssignment = VehicleAssignment::where('vehicle_id', $vehicleId)->first();
+
+            if (!$vehicleAssignment) {
+                Log::warning("No vehicle assignment found for vehicle ID: $vehicleId.");
+                $responses[] = ['status' => 'failed', 'message' => 'No vehicle assignment found'];
+                continue;
+            }
+
+            // Fetch the active dispatch log for the vehicle assignment
+            $dispatchLog = DispatchLogs::where('vehicle_assignment_id', $vehicleAssignment->vehicle_assignment_id)
+                ->whereIn('status', ['on alley', 'on road'])
+                ->with(['vehicleAssignments.vehicle', 'vehicleAssignments.userProfiles'])
+                ->first();
+
+            // Log if a dispatch log was found or not
+            if ($dispatchLog) {
+                Log::info("Found active dispatch log for vehicle ID: $vehicleId", [
+                    'dispatch_log_id' => $dispatchLog->dispatch_logs_id,
+                    'status' => $dispatchLog->status,
+                    'vehicle_assignment_id' => $dispatchLog->vehicle_assignment_id,
+                ]);
+            } else {
+                Log::info("No active dispatch log found for vehicle ID: $vehicleId.");
+            }
 
             // Generate a unique key for the latitude and longitude
-            $coordinateKey = "coordinates:{$latitude}:{$longitude}";
+            $coordinateKey = "coordinates:{$vehicleId}:{$latitude}:{$longitude}";
 
             // Increment the frequency count in the cache
             $currentCount = Cache::increment($coordinateKey);
@@ -91,16 +103,10 @@ class FlespiController extends Controller
                 Log::info("Tracker $trackerIdent is stationary.", $data);
             }
 
-            // Match tracker to a vehicle using TrackerVehicleMapping
-            $vehicleId = TrackerVehicleMapping::where('tracker_ident', $trackerIdent)->value('vehicle_id');
-
-            // Fetch the active dispatch log for the vehicle
-            $dispatchLog = null;
-            if ($vehicleId) {
-                $dispatchLog = DispatchLogs::where('vehicle_assignment_id', $vehicleId)
-                    ->whereIn('status', ['on alley', 'on road'])
-                    ->with(['vehicleAssignments.vehicle', 'vehicleAssignments.userProfiles'])
-                    ->first();
+            // Check if the dispatch is completed and reset blocked locations
+            if ($vehicleId && $dispatchLog && $dispatchLog->status === 'completed') {
+                $this->resetBlockedLocations($vehicleId);
+                Log::info("Reset blocked locations for vehicle $vehicleId after dispatch completion.");
             }
 
             // Prepare data for broadcast
@@ -139,11 +145,25 @@ class FlespiController extends Controller
             // Broadcast data to the frontend
             broadcast(new FlespiDataReceived($broadcastData));
 
-            // sleep(5);
-
             $responses[] = ['status' => 'success', 'tracker_ident' => $trackerIdent];
         }
 
         return response()->json(['status' => 'processed', 'responses' => $responses]);
+    }
+
+
+    /**
+     * Reset the blocked locations for a given vehicle.
+     */
+    private function resetBlockedLocations($vehicleId)
+    {
+        // Fetch all cache keys related to the vehicle
+        $keys = Cache::getKeysByPattern("coordinates:{$vehicleId}:*"); // Requires custom cache driver support for pattern matching
+
+        foreach ($keys as $key) {
+            Cache::forget($key); // Remove each cached key
+        }
+
+        Log::info("Blocked locations reset for vehicle ID: $vehicleId.");
     }
 }

@@ -116,6 +116,8 @@ Route::prefix('user')->group(function () {
             // Admin can view and delete dispatch
             Route::prefix('dispatch_logs')->group(function () {
                 Route::get('all', [DispatchLogsController::class, 'getAllDispatches']);
+                Route::get('alley', [DispatchLogsController::class, 'getAllOnAlley']); // Get all on-alley dispatches
+                Route::get('road', [DispatchLogsController::class, 'getAllOnRoad']); // Get all on-road dispatches
                 Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']);
                 Route::delete('delete', [DispatchLogsController::class, 'deleteRecords']);
                 Route::get('trips/today', [DispatchLogsController::class, 'tripsToday']);
@@ -157,6 +159,8 @@ Route::prefix('user')->group(function () {
                 Route::post('alley/start', [DispatchLogsController::class, 'startAlley']);
                 Route::post('dispatch/start', [DispatchLogsController::class, 'startDispatch']); 
                 Route::get('all', [DispatchLogsController::class, 'getAllDispatches']); 
+                Route::get('alley', [DispatchLogsController::class, 'getAllOnAlley']); // Get all on-alley dispatches
+                Route::get('road', [DispatchLogsController::class, 'getAllOnRoad']); // Get all on-road dispatches
                 Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']); 
                 Route::patch('alley/end/{id}', [DispatchLogsController::class, 'endAlley']); 
                 Route::patch('dispatch/end/{id}', [DispatchLogsController::class, 'endDispatch']);

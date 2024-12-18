@@ -216,4 +216,38 @@ class DispatchLogsController extends Controller
         return response()->json(['trips_today' => $count]);
     }
 
+    // Get all dispatches that are "on alley"
+    public function getAllOnAlley()
+    {
+        try {
+            $onAlleyDispatches = DispatchLogs::with(['vehicleAssignments.vehicle.trackerMapping', 'createdDispatch', 'updatedDispatch', 'deletedDispatch', 'vehicleAssignments.userProfiles'])
+                ->where('status', 'on alley')
+                ->get();
+
+            return response()->json($onAlleyDispatches, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to fetch dispatches on alley.',
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    // Get all dispatches that are "on road"
+    public function getAllOnRoad()
+    {
+        try {
+            $onRoadDispatches = DispatchLogs::with(['vehicleAssignments.vehicle.trackerMapping', 'createdDispatch', 'updatedDispatch', 'deletedDispatch', 'vehicleAssignments.userProfiles'])
+                ->where('status', 'on road')
+                ->get();
+
+            return response()->json($onRoadDispatches, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to fetch dispatches on road.',
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
 }
