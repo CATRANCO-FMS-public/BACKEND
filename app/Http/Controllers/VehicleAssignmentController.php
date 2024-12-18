@@ -22,6 +22,28 @@ class VehicleAssignmentController extends Controller
             $data = $request->validated();
             $data['created_by'] = Auth::id(); // Automatically set created_by
 
+            // Check if any user profiles are already on duty
+            if ($request->has('user_profile_ids')) {
+                $userProfileIds = $request->input('user_profile_ids');
+                $onDutyProfiles = UserProfile::whereIn('user_profile_id', $userProfileIds)
+                    ->where('status', 'on_duty')
+                    ->get();
+
+                if ($onDutyProfiles->isNotEmpty()) {
+                    $onDutyDetails = $onDutyProfiles->map(function ($profile) {
+                        return [
+                            'user_profile_id' => $profile->user_profile_id,
+                            'name' => $profile->last_name, // Assuming you have a `last_name` field
+                        ];
+                    });
+
+                    return response()->json([
+                        'error' => 'Some user profiles are already assigned.',
+                        'on_duty_profiles' => $onDutyDetails
+                    ], 400);
+                }
+            }
+
             // Filter out invalid user profile IDs
             if ($request->has('user_profile_ids')) {
                 $userProfiles = $request->input('user_profile_ids');
