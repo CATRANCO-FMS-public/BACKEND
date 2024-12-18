@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VehicleAssignmentRequest;
+use App\Http\Requests\UpdateVehicleAssignmentRequest;
 use App\Models\VehicleAssignment;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
@@ -95,7 +96,7 @@ class VehicleAssignmentController extends Controller
     }
 
     // Update a specific vehicle assignment by ID
-    public function updateAssignment(VehicleAssignmentRequest $request, $id)
+    public function updateAssignment(UpdateVehicleAssignmentRequest $request, $id)
     {
         try {
             $assignment = VehicleAssignment::findOrFail($id);
