@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleSeeder::class);
         $this->call(TimerSeeder::class);
         $this->call(TrackerVehicleMappingSeeder::class);
+        $this->call(VehicleAssignmentSeeder::class);
+        $this->call(UserProfileVehicleAssignmentSeeder::class);
     }
 }
