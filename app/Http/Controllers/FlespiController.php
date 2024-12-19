@@ -54,6 +54,9 @@ class FlespiController extends Controller
                 continue;
             }
 
+            // Fetch the vehicle details to get plate number
+            $vehicle = VehicleAssignment::where('vehicle_id', $vehicleId)->first()->vehicle;
+
             // Fetch the vehicle assignment for the vehicle
             $vehicleAssignment = VehicleAssignment::where('vehicle_id', $vehicleId)->first();
 
@@ -113,6 +116,7 @@ class FlespiController extends Controller
             $broadcastData = [
                 'tracker_ident' => $trackerIdent,
                 'vehicle_id' => $vehicleId,
+                'plate_number' => $vehicle->plate_number,
                 'location' => [
                     'latitude' => $latitude,
                     'longitude' => $longitude,
