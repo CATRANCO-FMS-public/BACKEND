@@ -70,6 +70,8 @@ Route::prefix('user')->group(function () {
                     Route::get('drivers', [UserProfileController::class, 'getDriver']); // Fetch all drivers
                     Route::get('passenger-assistant-officers', [UserProfileController::class, 'getPSO']); // Fetch all Passenger Assistant Officers
                 });
+
+                Route::get('user_profiles/{status}', [UserProfileController::class, 'getUserProfilesByStatus']);
             });
 
             // Admin can create and manage vehicles
@@ -88,7 +90,6 @@ Route::prefix('user')->group(function () {
                 Route::get('{id}', [VehicleAssignmentController::class, 'getAssignmentById']); //Check
                 Route::patch('update/{id}', [VehicleAssignmentController::class, 'updateAssignment']); //Check
                 Route::delete('delete/{id}', [VehicleAssignmentController::class, 'deleteAssignment']); //Check
-                Route::get('user_profiles/{status}', [VehicleAssignmentController::class, 'getUserProfilesByStatus']);
             });
 
             // Admin can create and manage fuel logs

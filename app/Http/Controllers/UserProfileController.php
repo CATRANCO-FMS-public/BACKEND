@@ -427,4 +427,21 @@ class UserProfileController extends Controller
         return response()->json($passengerAssistantOfficers, 200);
     }
 
+    // Get user profiles by status (on_duty or off_duty)
+    public function getUserProfilesByStatus($status)
+    {
+        try {
+            // Validate the status input
+            if (!in_array($status, ['on_duty', 'off_duty'])) {
+                return response()->json(["error" => "Invalid status. Use 'on_duty' or 'off_duty'."], 400);
+            }
+
+            // Filter user profiles based on the status
+            $userProfiles = UserProfile::where('status', $status)->get();
+
+            return response()->json($userProfiles);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()], 400);
+        }
+    }
 }
