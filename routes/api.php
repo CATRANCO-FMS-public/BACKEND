@@ -13,6 +13,7 @@ use App\Http\Controllers\MaintenanceSchedulingController;
 use App\Http\Controllers\OTPController;
 use App\Http\Controllers\FeedbackLogsController;
 use App\Http\Controllers\FlespiController;
+use App\Http\Controllers\VehicleOverspeedTrackingController;
 use Illuminate\Support\Facades\Route;
 
 // Flespi Integration Route
@@ -121,6 +122,8 @@ Route::prefix('user')->group(function () {
                 Route::get('road', [DispatchLogsController::class, 'getAllOnRoad']); // Get all on-road dispatches
                 Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']);
                 Route::delete('delete', [DispatchLogsController::class, 'deleteRecords']);
+                Route::delete('delete/{id}', [DispatchLogsController::class, 'deleteDispatchRecord']);
+                Route::delete('delete-by-date/{date}', [DispatchLogsController::class, 'deleteDispatchLogsByDate']);
                 Route::get('trips/today', [DispatchLogsController::class, 'tripsToday']);
             });
 
@@ -165,6 +168,22 @@ Route::prefix('user')->group(function () {
                 Route::get('{id}', [DispatchLogsController::class, 'getDispatchById']); 
                 Route::patch('alley/end/{id}', [DispatchLogsController::class, 'endAlley']); 
                 Route::patch('dispatch/end/{id}', [DispatchLogsController::class, 'endDispatch']);
+                Route::delete('delete/{id}', [DispatchLogsController::class, 'deleteDispatchRecord']);
+                Route::delete('delete_by_date/{date}', [DispatchLogsController::class, 'deleteDispatchLogsByDate']);
+            });
+
+            // Dispatcher can view and manage overspeed records
+            Route::prefix('overspeed_tracking')->group(function () {
+                Route::get('all', [VehicleOverspeedTrackingController::class, 'getVehicleOverspeed']); // Get all overspeed records
+                Route::post('create', [VehicleOverspeedTrackingController::class, 'createVehicleOverspeed']); // Create new overspeed record
+                Route::delete('delete/{id}', [VehicleOverspeedTrackingController::class, 'deleteVehicleOverspeed']); // Delete overspeed record
+
+                Route::delete('delete_by_date/{date}', [VehicleOverspeedTrackingController::class, 'deleteOverspeedByDate']); // Delete overspeed records by date
+            });
+
+            // Dispatcher can view and manage overspeed records
+            Route::prefix('blocked_locations')->group(function () {
+                Route::post('reset', [FlespiController::class, 'resetBlockedLocationsForAllVehicles']);
             });
         });
     }); 

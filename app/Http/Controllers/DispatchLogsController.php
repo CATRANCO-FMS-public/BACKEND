@@ -202,6 +202,42 @@ class DispatchLogsController extends Controller
         }
     }
 
+    // Delete a specific dispatch record
+    public function deleteDispatchRecord($id)
+    {
+        $dispatch = DispatchLogs::find($id);
+
+        if (!$dispatch) {
+            return response()->json(['message' => 'Dispatch record not found'], 404);
+        }
+
+        // Optional: Business logic to check if it can be deleted
+        if ($dispatch->status === 'completed') {
+            return response()->json(['message' => 'Cannot delete a completed dispatch'], 400);
+        }
+
+        $dispatch->delete();
+
+        return response()->json(['message' => 'Dispatch record deleted successfully']);
+    }
+
+    // Delete dispatch records by date
+    public function deleteDispatchLogsByDate($date)
+    {
+        // Ensure the date format is correct
+        $carbonDate = Carbon::createFromFormat('Y-m-d', $date)->startOfDay();
+
+        // Delete records matching the selected date
+        $deletedCount = DispatchLogs::whereDate('start_time', $carbonDate)->delete();
+
+        if ($deletedCount > 0) {
+            return response()->json(['message' => "$deletedCount dispatch records deleted successfully"]);
+        } else {
+            return response()->json(['message' => 'No records found for the given date'], 404);
+        }
+    }
+
+
     public function tripsToday()
     {
         // Get today's date in a format suitable for the query (YYYY-MM-DD)

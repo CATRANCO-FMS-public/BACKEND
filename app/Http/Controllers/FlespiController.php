@@ -19,7 +19,7 @@ class FlespiController extends Controller
     public function handleData(Request $request)
     {
         // Define a threshold for detecting repeated coordinates
-        $repetitionThreshold = 2; // Adjust this as needed
+        $repetitionThreshold = 1; // Adjust this as needed
 
         // Extract Flespi data (assuming it's in an array)
         $dataList = $request->all();
@@ -86,7 +86,13 @@ class FlespiController extends Controller
             // Generate a unique key for the latitude and longitude
             $coordinateKey = "coordinates:{$vehicleId}:{$latitude}:{$longitude}";
 
-            // Increment the frequency count in the cache
+            // Store this key in a separate cache list
+            $vehicleKeysKey = "vehicle:{$vehicleId}:cache_keys";
+            $vehicleKeys = Cache::get($vehicleKeysKey, []);
+            $vehicleKeys[] = $coordinateKey;
+            Cache::put($vehicleKeysKey, $vehicleKeys, now()->addHour()); // Expire after 1 hour
+
+            // Increment the frequency count in the cache (file-based cache)
             $currentCount = Cache::increment($coordinateKey);
 
             // Set an expiration time for the cache key (e.g., 1 hour)
@@ -161,13 +167,35 @@ class FlespiController extends Controller
      */
     private function resetBlockedLocations($vehicleId)
     {
-        // Fetch all cache keys related to the vehicle
-        $keys = Cache::getKeysByPattern("coordinates:{$vehicleId}:*"); // Requires custom cache driver support for pattern matching
+        // Retrieve the list of keys associated with the vehicle
+        $vehicleKeysKey = "vehicle:{$vehicleId}:cache_keys";
+        $vehicleKeys = Cache::get($vehicleKeysKey, []);
 
-        foreach ($keys as $key) {
+        foreach ($vehicleKeys as $key) {
             Cache::forget($key); // Remove each cached key
         }
 
+        // Optionally, remove the vehicle's cache key list
+        Cache::forget($vehicleKeysKey);
+
         Log::info("Blocked locations reset for vehicle ID: $vehicleId.");
     }
+
+
+    
+    /**
+     * Reset the blocked locations for all vehicles.
+     */
+    public function resetBlockedLocationsForAllVehicles()
+    {
+        // Get all vehicle IDs (you can adjust this to match your actual data source)
+        $vehicleIds = VehicleAssignment::pluck('vehicle_id');
+
+        foreach ($vehicleIds as $vehicleId) {
+            $this->resetBlockedLocations($vehicleId);
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Blocked locations reset for all vehicles.']);
+    }
+
 }

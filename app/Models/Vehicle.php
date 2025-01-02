@@ -47,9 +47,15 @@ class Vehicle extends Model
         return $this->hasMany(FeedbackLogs::class,'vehicle_id');
     }
 
-    // Add the relationship with TrackerVehicleMapping
+    // Relationship with TrackerVehicleMapping
     public function trackerMapping()
     {
         return $this->hasOne(TrackerVehicleMapping::class, 'vehicle_id', 'vehicle_id');
+    }
+
+    // Relationship with VehicleOverspeedTracking
+    public function overspeedTrackings()
+    {
+        return $this->hasMany(VehicleOverspeedTracking::class, 'vehicle_id', 'vehicle_id');
     }
 }

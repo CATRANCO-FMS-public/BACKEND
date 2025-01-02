@@ -12,6 +12,8 @@ class TrackerVehicleMapping extends Model
 
     protected $table = 'tracker_vehicle_mapping';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'device_name', 
         'tracker_ident', 

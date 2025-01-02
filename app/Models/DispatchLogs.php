@@ -29,6 +29,12 @@ class DispatchLogs extends Model
         return $this->belongsTo(VehicleAssignment::class, 'vehicle_assignment_id');
     }
 
+    // Relationship to VehicleOverspeedTracking
+    public function overspeedTrackings()
+    {
+        return $this->hasMany(VehicleOverspeedTracking::class, 'dispatch_logs_id');
+    }
+
     public function createdDispatch()
     {
         return $this->belongsTo(User::class, 'created_by');
