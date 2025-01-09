@@ -15,7 +15,7 @@ class StoreTrackerVehicleMappingRequest extends FormRequest
     {
         return [
             'device_name' => 'required|string|max:255',
-            'tracker_ident' => 'required|unique:tracker_vehicle_mapping|max:50',
+            'tracker_ident' => 'nullable|unique:tracker_vehicle_mapping|max:50',
             'vehicle_id' => 'required|exists:vehicles,vehicle_id',
         ];
     }
