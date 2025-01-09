@@ -17,13 +17,13 @@ class UserProfileVehicleAssignmentSeeder extends Seeder
         DB::table('user_profile_vehicle_assignment')->insert([
             // Vehicle 001 Assignment
             [
-                'user_profile_id' => 3,  // Driver1 UserProfile ID
+                'user_profile_id' => 5,  // Driver1 UserProfile ID
                 'vehicle_assignment_id' => 1,  // Vehicle Assignment ID for vehicle 001
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_profile_id' => 8,  // Assistant1 UserProfile ID
+                'user_profile_id' => 10,  // Assistant1 UserProfile ID
                 'vehicle_assignment_id' => 1,  // Vehicle Assignment ID for vehicle 001
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -31,13 +31,13 @@ class UserProfileVehicleAssignmentSeeder extends Seeder
             
             // Vehicle 002 Assignment
             [
-                'user_profile_id' => 4,  // Driver2 UserProfile ID
+                'user_profile_id' => 6,  // Driver2 UserProfile ID
                 'vehicle_assignment_id' => 2,  // Vehicle Assignment ID for vehicle 002
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_profile_id' => 9,  // Assistant2 UserProfile ID
+                'user_profile_id' => 11,  // Assistant2 UserProfile ID
                 'vehicle_assignment_id' => 2,  // Vehicle Assignment ID for vehicle 002
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -45,13 +45,13 @@ class UserProfileVehicleAssignmentSeeder extends Seeder
             
             // Vehicle 003 Assignment
             [
-                'user_profile_id' => 5,  // Driver3 UserProfile ID
+                'user_profile_id' => 7,  // Driver3 UserProfile ID
                 'vehicle_assignment_id' => 3,  // Vehicle Assignment ID for vehicle 003
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_profile_id' => 10,  // Assistant3 UserProfile ID
+                'user_profile_id' => 12,  // Assistant3 UserProfile ID
                 'vehicle_assignment_id' => 3,  // Vehicle Assignment ID for vehicle 003
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -59,13 +59,13 @@ class UserProfileVehicleAssignmentSeeder extends Seeder
             
             // Vehicle 004 Assignment
             [
-                'user_profile_id' => 6,  // Driver4 UserProfile ID
+                'user_profile_id' => 8,  // Driver4 UserProfile ID
                 'vehicle_assignment_id' => 4,  // Vehicle Assignment ID for vehicle 004
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_profile_id' => 11,  // Assistant4 UserProfile ID
+                'user_profile_id' => 13,  // Assistant4 UserProfile ID
                 'vehicle_assignment_id' => 4,  // Vehicle Assignment ID for vehicle 004
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
