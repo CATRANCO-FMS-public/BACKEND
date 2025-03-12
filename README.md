@@ -1,34 +1,80 @@
-# How to run the laravel backend
+# **Welcome to the Laravel Backend for TransitTrack** 👋
 
-## Instructions
+## **About the Application**
 
-To get started with the laravel backend, follow these steps: (use Command Prompt or CMD)
+This backend application is built using Laravel and serves as the core for managing data and operations for the TransitTrack system. It supports various functionalities required by the web and mobile applications.
 
-```sh
-# Clone the repository
-git clone https://github.com/CATRANCO-Fleet-Management-System/laravel-backend-deploy.git
+## **Getting Started**
 
-# Go the the Directory
-cd laravel-backend-deploy
+Follow these steps to set up and run the Laravel backend:
 
-# Open the IDE
-code .
+### **Prerequisites**
 
-# Install composer
-composer install
+- Ensure you have PHP, Composer, and a web server like XAMPP installed on your machine.
+- Install an IDE like Visual Studio Code.
 
-# decrypt the .env
-php artisan env:decrypt --force --key=base64:0rPEg5jGaTu42J4qqE3vTy1MpMsFDy2CxvtDI8eaHrQ=
+### **Setup Instructions**
 
-# Open XAMPP Control Panel
-start the apache and mysql
+1. **Open Command Prompt or Terminal**
 
-# Migrate the database
-php artisan migrate
+   - Navigate to the project directory:
+     ```sh
+     cd CATRANCO-FMS-Backend
+     ```
 
-# Seed the database
-php artisan db:seed
+2. **Open the Project in Your IDE**
 
-# Run the backend
-e.g. php artisan serve --host=192.168.1.102 --port=8000 (if naa nay front end)
-php artisan serve (back-end testing api client)
+   - Use the following command to open the project in Visual Studio Code:
+     ```sh
+     code .
+     ```
+
+3. **Install Composer Dependencies**
+
+   - Run the following command to install all necessary dependencies:
+     ```sh
+     composer install
+     ```
+
+4. **Decrypt the Environment File**
+
+   - Decrypt the `.env` file using the following command:
+     ```sh
+     php artisan env:decrypt --force --key=base64:0rPEg5jGaTu42J4qqE3vTy1MpMsFDy2CxvtDI8eaHrQ=
+     ```
+
+5. **Start XAMPP Control Panel**
+
+   - Start the Apache and MySQL services.
+
+6. **Migrate and Seed the Database**
+
+   - Migrate the database:
+     ```sh
+     php artisan migrate
+     ```
+   - Seed the database:
+     ```sh
+     php artisan db:seed
+     ```
+
+7. **Run the Backend Server**
+
+   - Use the following command to run the backend server:
+     ```sh
+     php artisan serve
+     ```
+   - For specific host and port, use:
+     ```sh
+     php artisan serve --host=192.168.1.102 --port=8000
+     ```
+
+## **Additional Resources**
+
+- [Pusher](https://pusher.com/)
+- [Flespi](https://flespi.io/)
+- [Google API](https://console.developers.google.com/)
+- [Laravel](https://laravel.com/)
+- [PHP](https://www.php.net/)
+- [Composer](https://getcomposer.org/)
+- [XAMPP](https://www.apachefriends.org/download.html)
