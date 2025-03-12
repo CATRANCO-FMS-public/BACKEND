@@ -67,13 +67,20 @@ Follow these steps to set up and run the Laravel backend:
    - For specific host and port, use:
      ```sh
      php artisan serve --host=192.168.1.102 --port=8000
-     ```
+
+8. **Setup the Flespi, Pushers, and Twilio API keys in the .env file.**
+
+
+## **API Testing**
+
+- Use the [Postman collection](https://drive.google.com/drive/folders/1fZ1GIAs7jkucjnq5UP9AzCMy0FUwEd3t?usp=sharing) for backend API testing.
 
 ## **Additional Resources**
 
 - [Pusher](https://pusher.com/)
 - [Flespi](https://flespi.io/)
 - [Google API](https://console.developers.google.com/)
+- [Twilio](https://www.twilio.com/)
 - [Laravel](https://laravel.com/)
 - [PHP](https://www.php.net/)
 - [Composer](https://getcomposer.org/)
