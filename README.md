@@ -67,6 +67,7 @@ Follow these steps to set up and run the Laravel backend:
    - For specific host and port, use:
      ```sh
      php artisan serve --host=192.168.1.102 --port=8000
+     ```
 
 8. **Setup the Flespi, Pushers, and Twilio API keys in the .env file.**
 
@@ -74,6 +75,10 @@ Follow these steps to set up and run the Laravel backend:
 ## **API Testing**
 
 - Use the [Postman collection](https://drive.google.com/drive/folders/1fZ1GIAs7jkucjnq5UP9AzCMy0FUwEd3t?usp=sharing) for backend API testing.
+
+## **Live Location Streaming**
+
+- When connecting the backend for live location streaming, **don't forget to use [ngrok](https://ngrok.com/)** to expose your local server to the internet.
 
 ## **Additional Resources**
 
