@@ -57,6 +57,10 @@ Follow these steps to set up and run the Laravel backend:
      ```sh
      php artisan db:seed
      ```
+   - Create a symbolic link for storage:
+     ```sh
+     php artisan storage:link
+     ```
 
 7. **Run the Backend Server**
 
