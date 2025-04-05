@@ -17,12 +17,16 @@ class DatabaseSeeder extends Seeder
         $this->call(UserProfileSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(VehicleSeeder::class);
+        
         $this->call(TimerSeeder::class);
         $this->call(TrackerVehicleMappingSeeder::class);
         $this->call(VehicleAssignmentSeeder::class);
         $this->call(UserProfileVehicleAssignmentSeeder::class);
         $this->call(MaintenanceSchedulingSeeder::class);
-        $this->call(FuelLogsSeeder::class);
+        
+        // Replace FuelLogsSeeder with Factory
+        \App\Models\FuelLogs::factory(50)->create();
+        
         $this->call(FeedbackLogsSeeder::class);
     }
 }
