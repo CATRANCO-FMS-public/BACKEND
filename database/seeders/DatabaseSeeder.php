@@ -24,9 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserProfileVehicleAssignmentSeeder::class);
         $this->call(MaintenanceSchedulingSeeder::class);
         
-        // Replace FuelLogsSeeder with Factory
+        // Use Factories
         \App\Models\FuelLogs::factory(50)->create();
-        
-        $this->call(FeedbackLogsSeeder::class);
+        \App\Models\FeedbackLogs::factory(50)->create();
     }
 }
